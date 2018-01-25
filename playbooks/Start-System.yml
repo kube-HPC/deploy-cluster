@@ -27,6 +27,9 @@
     debug:
       msg="The System Virtual IP is = {{ virtual_cluster_ip }}"
 
+  - name: add rolebinding for Cluster "{{ cluster_name }}"
+    command: kubectl apply -f ../playbooks/rolebinding-kube-system.yaml
+    tags: rolebinding
 
   - name: Installing Elastic PV On Cluster "{{ cluster_name }}"
     shell: |
