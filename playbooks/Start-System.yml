@@ -116,9 +116,9 @@
     tags: rolebinding
 
   - name: Installing kibana On Cluster "{{ cluster_name }}"
-    command: kubectl apply -f ../deployments/es-cluster-pires/kibana.yaml 
+    command: kubectl apply -f ../deployments/es-pires/kibana.yaml 
     tags: kibana
 
   - name: Installing kibana svc On Cluster "{{ cluster_name }}"
-    command: kubectl apply -f ../deployments/es-cluster-pires/kibana-svc.yaml
+    command: kubectl apply -f ../deployments/es-pires/kibana-svc.yaml
     tags: kibana-svc
