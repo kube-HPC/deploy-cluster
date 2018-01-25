@@ -6,3 +6,4 @@ kubespray/kubectl/*.pem
 
 deployments/elastic.txt
 kubespray/artifacts
+Install
