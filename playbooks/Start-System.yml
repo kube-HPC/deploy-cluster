@@ -34,20 +34,20 @@
       export LOGGING_ES_PV_SIZE={{ LOGGING_ES_PV_SIZE }}
       export NFS_SERVER={{ NFS_SERVER }}
       export NFS_ROOT={{ NFS_ROOT }}
-      envsubst < ../deployments/es.pires/es-pv-nfs.yaml | kubectl apply -f -
+      envsubst < ../deployments/es-pires/es-pv-nfs.yaml | kubectl apply -f -
     tags: es-pv-nfs
 
   - name: Installing Elastic curator-cm On Cluster "{{ cluster_name }}"
-    command: kubectl apply -f ../deployments/es.pires/es-curator-cm.yaml
+    command: kubectl apply -f ../deployments/es-pires/es-curator-cm.yaml
 
   - name: Installing Elastic curator On Cluster "{{ cluster_name }}"
-    command: kubectl apply -f ../deployments/es.pires/es-curator.yaml
+    command: kubectl apply -f ../deployments/es-pires/es-curator.yaml
 
   - name: Installing Elastic PV On Cluster "{{ cluster_name }}" 
-    command: kubectl apply -f ../deployments/es.pires/es-svc.yaml
+    command: kubectl apply -f ../deployments/es-pires/es-svc.yaml
 
   - name: Installing Elastic svc for Cluster "{{ cluster_name }}"
-    command: kubectl apply -f ../deployments/es.pires/es-discovery-svc.yaml
+    command: kubectl apply -f ../deployments/es-pires/es-discovery-svc.yaml
 
   - name: Installing Elastic Master Cluster "{{ cluster_name }}"  
     shell: |
@@ -57,7 +57,7 @@
       export LOGGING_ES_REPLICAS_DATA={{ LOGGING_ES_REPLICAS_DATA }}
       export LOGGING_ES_MINIMUM_MASTERS={{ LOGGING_ES_MINIMUM_MASTERS }}
       export LOGGING_ES_JAVA_HEAP_SIZE={{ LOGGING_ES_JAVA_HEAP_SIZE }}
-      envsubst < ../deployments/es.pires/es-master.yaml | kubectl apply -f -  
+      envsubst < ../deployments/es-pires/es-master.yaml | kubectl apply -f -  
   
   - name: Installing Elastic Client On Cluster "{{ cluster_name }}"
     shell: |
@@ -67,7 +67,7 @@
       export LOGGING_ES_REPLICAS_DATA={{ LOGGING_ES_REPLICAS_DATA }}
       export LOGGING_ES_MINIMUM_MASTERS={{ LOGGING_ES_MINIMUM_MASTERS }}
       export LOGGING_ES_JAVA_HEAP_SIZE={{ LOGGING_ES_JAVA_HEAP_SIZE }}
-      envsubst < ../deployments/es.pires/es-client.yaml | kubectl apply -f -
+      envsubst < ../deployments/es-pires/es-client.yaml | kubectl apply -f -
     tags: Elastic-Client
   
   - name: Installing Elastic Data On  Cluster "{{ cluster_name }}"
@@ -78,7 +78,7 @@
       export LOGGING_ES_REPLICAS_DATA={{ LOGGING_ES_REPLICAS_DATA }}
       export LOGGING_ES_MINIMUM_MASTERS={{ LOGGING_ES_MINIMUM_MASTERS }}
       export LOGGING_ES_JAVA_HEAP_SIZE={{ LOGGING_ES_JAVA_HEAP_SIZE }}
-      envsubst < ../deployments/es.pires/es-data.yaml | kubectl apply -f -
+      envsubst < ../deployments/es-pires/es-data.yaml | kubectl apply -f -
 
   - name: Installing WeaveScope On Cluster "{{ cluster_name }}"
     command: kubectl apply -f ../deployments/weave.scope/scope.yaml
@@ -92,7 +92,7 @@
       export NFS_ROOT={{ NFS_ROOT }}
       envsubst <  ../deployments/monitoring/k8s-prometheus/prometheus-pv-nfs.yml | kubectl apply -f -
       exit 0
-   tags: prometheus 
+    tags: prometheus 
 
   - name: Installing Prometheus On Cluster "{{ cluster_name }}"
     shell: |
@@ -109,15 +109,9 @@
     tags: fluentd
 
   - name: Installing kibana On Cluster "{{ cluster_name }}"
-    shell: |
-      export VIRTUAL_IP={{ virtual_cluster_ip }}
-      envsubst <  ../deployments/es-cluster-pires/kibana.yaml | kubectl apply -f - 
-      exit 0
+    command: kubectl apply -f ../deployments/es-cluster-pires/kibana.yaml 
     tags: kibana
 
   - name: Installing kibana svc On Cluster "{{ cluster_name }}"
-    shell: |
-      export VIRTUAL_IP={{ virtual_cluster_ip }}
-      envsubst <  ../deployments/es-cluster-pires/kibana-svc.yaml | kubectl apply -f - 
-      exit 0
+    command: kubectl apply -f ../deployments/es-cluster-pires/kibana-svc.yaml
     tags: kibana-svc
