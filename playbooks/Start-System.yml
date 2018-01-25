@@ -108,6 +108,10 @@
       exit 0
     tags: fluentd
 
+  - name: add access to Cluster "{{ cluster_name }}"
+    command: kubectl apply -f ../deployments/monitoring/k8s-prometheus/rolebinding-monitoring.yaml 
+    tags: rolebinding
+
   - name: Installing kibana On Cluster "{{ cluster_name }}"
     command: kubectl apply -f ../deployments/es-cluster-pires/kibana.yaml 
     tags: kibana
