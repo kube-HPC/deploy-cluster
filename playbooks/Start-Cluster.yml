@@ -6,7 +6,7 @@
   vars_prompt:
     - name: "cluster_name"
       prompt: "Cluster Name to work on"
-      default: "SF1"
+      default: "dev"
   
   tasks:
   - name: Debug Test
