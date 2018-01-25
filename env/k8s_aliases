@@ -1,9 +1,2 @@
 alias a=alias
 a     c=clear
-export NS=--namespace=kube-system
-export NA=--all-namespaces
-<<<<<<< HEAD
-
-=======
-export NM=--all-namespaces
->>>>>>> a6673c3a691697419c0b6564ddb0490042f00ebe

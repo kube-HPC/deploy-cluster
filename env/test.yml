@@ -13,11 +13,7 @@ virtual_cluster_ip: 10.32.10.120
 # nfs server 
 
 NFS_SERVER: 10.32.10.26
-<<<<<<< HEAD
-NFS_ROOT: /srv/vol_nfs/test/es
-=======
-NFS_ROOT: /srv/vol_nfs/es/test
->>>>>>> a6673c3a691697419c0b6564ddb0490042f00ebe
+NFS_ROOT: /srv/vol_nfs
 USE_PERSISTANT_VOLUMES: True
 
 ##INSTALL_NFS_HOST: False

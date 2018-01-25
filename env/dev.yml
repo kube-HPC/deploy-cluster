@@ -1,4 +1,5 @@
 --- 
+
 # Cluster Info
 
 CLUSTER_ID: dev
@@ -33,10 +34,7 @@ LOGGING_ES_REPLICAS_DATA: 2
 LOGGING_ES_MINIMUM_MASTERS: 1
 LOGGING_ES_JAVA_HEAP_SIZE: 2g
 
-<<<<<<< HEAD
 # Prometheus Defualt Configuration
 
 PROM_PV_SIZE: 100Gi
 
-=======
->>>>>>> a6673c3a691697419c0b6564ddb0490042f00ebe
