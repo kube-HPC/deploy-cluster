@@ -1,0 +1,20 @@
+
+---level---
+http://${API_SERVER}:8080/api/v1/proxy/namespaces/default/services/kibana/?#/visualize/create?type=pie&savedSearchId=all&_g=(refreshInterval:(display:Off,section:0,value:0),time:(from:now-4h,mode:quick,to:now))&_a=(filters:!(),linked:!t,query:(query_string:(query:'*')),vis:(aggs:!((id:'1',params:(),schema:metric,type:count),(id:'2',params:(field:meta.type,order:desc,orderBy:'1',row:!f,size:5),schema:split,type:terms)),listeners:(),params:(addLegend:!t,addTooltip:!t,isDonut:!f,shareYAxis:!t),type:pie))
+
+---services pie---
+http://${API_SERVER}:8080/api/v1/proxy/namespaces/default/services/kibana/?#/visualize/create?type=pie&savedSearchId=all&_g=(refreshInterval:(display:Off,section:0,value:0),time:(from:now-4h,mode:quick,to:now))&_a=(filters:!(),linked:!t,query:(query_string:(query:'*')),vis:(aggs:!((id:'1',params:(),schema:metric,type:count),(id:'2',params:(field:meta.type,order:desc,orderBy:'1',row:!f,size:5),schema:split,type:terms),(id:'3',params:(field:level,order:desc,orderBy:'1',size:5),schema:segment,type:terms)),listeners:(),params:(addLegend:!t,addTooltip:!t,isDonut:!f,shareYAxis:!t),type:pie))
+
+---services bar---
+http://${API_SERVER}:8080/api/v1/proxy/namespaces/default/services/kibana/?#/visualize/create?type=histogram&savedSearchId=all&_g=(refreshInterval:(display:Off,section:0,value:0),time:(from:now-4h,mode:quick,to:now))&_a=(filters:!(),linked:!t,query:(query_string:(query:'*')),vis:(aggs:!((id:'1',params:(),schema:metric,type:count),(id:'2',params:(field:kubernetes.pod_name,order:desc,orderBy:'1',size:1500),schema:segment,type:terms),(id:'3',params:(field:level,order:desc,orderBy:'1',size:5),schema:group,type:terms)),listeners:(),params:(addLegend:!t,addTooltip:!t,defaultYExtents:!f,mode:stacked,shareYAxis:!t),type:histogram))
+
+---catalog---
+http://${API_SERVER}:8080/api/v1/proxy/namespaces/default/services/kibana/?#/visualize/create?type=table&savedSearchId=catalog&_g=(refreshInterval:(display:Off,section:0,value:0),time:(from:now-4h,mode:quick,to:now))&_a=(filters:!(),linked:!t,query:(query_string:(query:'*')),vis:(aggs:!((id:'1',params:(),schema:metric,type:count),(id:'2',params:(field:meta.internal.videoData.vid,order:desc,orderBy:'1',size:5000),schema:bucket,type:terms)),listeners:(),params:(perPage:10,showMeticsAtAllLevels:!f,showPartialRows:!f),type:table))
+
+---users metric---
+http://${API_SERVER}:8080/api/v1/proxy/namespaces/default/services/kibana/?#/visualize/create?type=metric&savedSearchId=users&_g=(refreshInterval:(display:Off,section:0,value:0),time:(from:now-1h,mode:quick,to:now))&_a=(filters:!(),linked:!t,query:(query_string:(query:'*')),vis:(aggs:!((id:'1',params:(field:meta.internal.usersCatalog.count),schema:metric,type:sum)),listeners:(),params:(fontSize:60),type:metric))
+
+---users table---
+http://${API_SERVER}:8080/api/v1/proxy/namespaces/default/services/kibana/?#/visualize/create?type=table&savedSearchId=users&_g=(refreshInterval:(display:Off,section:0,value:0),time:(from:now-1h,mode:quick,to:now))&_a=(filters:!(),linked:!t,query:(query_string:(query:'*')),vis:(aggs:!((id:'1',params:(field:meta.internal.usersCatalog.count),schema:metric,type:sum),(id:'2',params:(field:meta.internal.usersCatalog.vid,order:desc,orderBy:'1',size:5000),schema:bucket,type:terms)),listeners:(),params:(perPage:10,showMeticsAtAllLevels:!f,showPartialRows:!f),type:table))
+
+

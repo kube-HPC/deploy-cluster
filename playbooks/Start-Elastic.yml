@@ -1,0 +1,76 @@
+---
+
+- hosts: localhost
+  name: Installing Cluster
+  become: no
+  vars_prompt:
+    - name: "cluster_name"
+      prompt: "Type The Cluster Name you are  working"
+      default: "dev"
+  
+  tasks:
+  - name: Inport Vars form Cluster Config yaml
+    debug:
+      msg="{{ lookup('env','ENV_NAME') }}"
+  - include_vars: ../env/{{ lookup('env','ENV_NAME') }}.yml
+
+  - name: Debug Test2
+    debug:
+      msg="You are Working On {{ cluster_name }} Cluster"
+
+  - name: Debug ENV_NAME 
+    debug:
+      msg="{{ lookup('env','ENV_NAME') }}"  
+
+  - name: Installing Elastic PV On Cluster "{{ cluster_name }}"
+    shell: |
+      export CLUSTER_ID={{ cluster_name }}
+      export LOGGING_ES_PV_SIZE={{ LOGGING_ES_PV_SIZE }}
+      export NFS_SERVER={{ NFS_SERVER }}
+      export NFS_ROOT={{ NFS_ROOT }}
+      envsubst < ../deployments/es-pires/es-pv-nfs.yaml | kubectl apply -f -
+    tags: es-pv-nfs
+
+  - name: Installing Elastic curator-cm On Cluster "{{ cluster_name }}"
+    command: kubectl apply -f ../deployments/es-pires/es-curator-cm.yaml
+
+  - name: Installing Elastic curator On Cluster "{{ cluster_name }}"
+    command: kubectl apply -f ../deployments/es-pires/es-curator.yaml
+
+  - name: Installing Elastic PV On Cluster "{{ cluster_name }}" 
+    command: kubectl apply -f ../deployments/es-pires/es-svc.yaml
+
+  - name: Installing Elastic svc for Cluster "{{ cluster_name }}"
+    command: kubectl apply -f ../deployments/es-pires/es-discovery-svc.yaml
+
+  - name: Installing Elastic Master Cluster "{{ cluster_name }}"  
+    shell: |
+      export LOGGING_ES_PV_SIZE={{ LOGGING_ES_PV_SIZE }}
+      export LOGGING_ES_REPLICAS_MASTER={{ LOGGING_ES_REPLICAS_MASTER }}
+      export LOGGING_ES_REPLICAS_CLIENT={{ LOGGING_ES_REPLICAS_CLIENT }}
+      export LOGGING_ES_REPLICAS_DATA={{ LOGGING_ES_REPLICAS_DATA }}
+      export LOGGING_ES_MINIMUM_MASTERS={{ LOGGING_ES_MINIMUM_MASTERS }}
+      export LOGGING_ES_JAVA_HEAP_SIZE={{ LOGGING_ES_JAVA_HEAP_SIZE }}
+      envsubst < ../deployments/es-pires/es-master.yaml | kubectl apply -f -  
+  
+  - name: Installing Elastic Client On Cluster "{{ cluster_name }}"
+    shell: |
+      export LOGGING_ES_PV_SIZE={{ LOGGING_ES_PV_SIZE }}
+      export LOGGING_ES_REPLICAS_MASTER={{ LOGGING_ES_REPLICAS_MASTER }}
+      export LOGGING_ES_REPLICAS_CLIENT={{ LOGGING_ES_REPLICAS_CLIENT }}
+      export LOGGING_ES_REPLICAS_DATA={{ LOGGING_ES_REPLICAS_DATA }}
+      export LOGGING_ES_MINIMUM_MASTERS={{ LOGGING_ES_MINIMUM_MASTERS }}
+      export LOGGING_ES_JAVA_HEAP_SIZE={{ LOGGING_ES_JAVA_HEAP_SIZE }}
+      envsubst < ../deployments/es-pires/es-client.yaml | kubectl apply -f -
+    tags: Elastic-Client
+  
+  - name: Installing Elastic Data On  Cluster "{{ cluster_name }}"
+    shell: |
+      export LOGGING_ES_PV_SIZE={{ LOGGING_ES_PV_SIZE }}
+      export LOGGING_ES_REPLICAS_MASTER={{ LOGGING_ES_REPLICAS_MASTER }}
+      export LOGGING_ES_REPLICAS_CLIENT={{ LOGGING_ES_REPLICAS_CLIENT }}
+      export LOGGING_ES_REPLICAS_DATA={{ LOGGING_ES_REPLICAS_DATA }}
+      export LOGGING_ES_MINIMUM_MASTERS={{ LOGGING_ES_MINIMUM_MASTERS }}
+      export LOGGING_ES_JAVA_HEAP_SIZE={{ LOGGING_ES_JAVA_HEAP_SIZE }}
+      envsubst < ../deployments/es-pires/es-data.yaml | kubectl apply -f -
+    tags: es-data 

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+ENV_NAME=$1
+
+if [[ -z "${KUBESPRAY_HOME}" ]]; then
+  KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
+  source ${KUBESPRAY_HOME}/scripts/util
+fi
+
+source ${KUBESPRAY_HOME}/env/$1
+
+echo_blue "Get Cert for cluster '$1'" 
+
+ansible-playbook --ask-become-pass -i ${KUBESPRAY_HOME}/env/inventory.$1 ../playbooks/get-certs.yml
+
+echo_green 'Done.'

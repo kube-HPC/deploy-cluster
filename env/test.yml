@@ -1,0 +1,39 @@
+--- 
+# Cluster Info
+
+CLUSTER_ID: test
+
+# keepalived 
+
+INSTALL_KEEPALIVED: True
+interface_network: eth0
+cluster_id: 3
+virtual_cluster_ip: 10.32.10.120
+
+# nfs server 
+
+NFS_SERVER: 10.32.10.26
+<<<<<<< HEAD
+NFS_ROOT: /srv/vol_nfs/test/es
+=======
+NFS_ROOT: /srv/vol_nfs/es/test
+>>>>>>> a6673c3a691697419c0b6564ddb0490042f00ebe
+USE_PERSISTANT_VOLUMES: True
+
+##INSTALL_NFS_HOST: False
+
+url_username: kube
+url_password: SoundFactory
+
+# Kibana 
+KIBANA_EXTERNAL_IP: 10.32.10.120
+
+# Elastic Defualt Configuration 
+
+LOGGING_ES_PV_SIZE: 100Gi
+LOGGING_ES_REPLICAS_MASTER: 1
+LOGGING_ES_REPLICAS_CLIENT: 1
+LOGGING_ES_REPLICAS_DATA: 2
+LOGGING_ES_MINIMUM_MASTERS: 1
+LOGGING_ES_JAVA_HEAP_SIZE: 2g
+

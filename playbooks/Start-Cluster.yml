@@ -1,0 +1,22 @@
+---
+
+- hosts: localhost
+  name: Installing Cluster
+  become: no
+  vars_prompt:
+    - name: "cluster_name"
+      prompt: "Cluster Name to work on"
+      default: "SF1"
+  
+  tasks:
+  - name: Debug Test
+    debug:
+      msg="{{ cluster_name }}"
+  - include_vars: ../env/{{ cluster_name }}.yml
+
+  - name: Debug Test2
+    debug:
+      msg="{{ cluster_name }}"
+
+- import_playbook: ../kubespray/cluster.yml
+

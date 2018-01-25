@@ -1,0 +1,8 @@
+*.OK
+*.OLD
+*.EM
+
+
+
+deployments/elastic.txt
+kubespray/artifacts

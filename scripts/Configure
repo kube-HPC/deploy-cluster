@@ -1,0 +1,17 @@
+#!/bin/bash
+
+ENV_NAME=$1
+
+if [[ -z "${KUBESPRAY_HOME}" ]]; then
+  KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
+  source ${KUBESPRAY_HOME}/scripts/util
+fi
+
+source ${KUBESPRAY_HOME}/env/$1
+
+echo_blue 'Setup your cluster Parameters ... '
+
+ansible-playbook -i ${KUBESPRAY_HOME}/env/inventory.$1 ../playbooks/configure.yml
+
+echo_green 'Done.'
+

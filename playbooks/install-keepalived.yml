@@ -1,0 +1,17 @@
+---
+
+- hosts: kube-master
+  name: Installing keepalived 
+  become: yes
+  vars_prompt:
+    - name: "cluster_name"
+      prompt: "Cluster Name to work on"
+      default: "IT"
+
+  vars_files:
+   - ../env/{{ cluster_name }}.yml
+  roles:
+   - roles/keepalived
+  tags:
+   - keepalived
+

@@ -1,0 +1,9 @@
+---
+
+- hosts: all
+  name: Installing ntp 
+  become: yes
+  roles:
+   - ../roles/docker-ce
+  tags:
+    - docker-ce

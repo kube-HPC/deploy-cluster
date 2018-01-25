@@ -1,0 +1,20 @@
+#!/bin/bash 
+cd ~/SoundFactory/deploy/kubespray/ubuntu_repo
+
+dpkg-sig -f ../scripts/ubuntu-repo.asc --sign builder ansible/*.deb
+dpkg-sig -f ../scripts/ubuntu-repo.asc --sign builder docker/*.deb
+gpg -a --export > key.pub
+dpkg-scanpackages -m . /dev/null | tee Packages | gzip > Packages.gz
+apt-ftparchive release . > Release
+gpg --yes --armor --output Release.gpg --detach-sign Release
+
+
+##gpg --gen-key
+#note: if the key generation complains about not having enough random numbers, open a new terminal and run find / | xargs file
+#passphrase = soundfactory
+#dpkg-sig --sign builder *.deb
+#gpg -a --export > key.pub
+#dpkg-scanpackages -m . /dev/null | tee Packages | gzip > Packages.gz
+#apt-ftparchive release . > Release
+#gpg --yes --armor --output Release.gpg --detach-sign Release
+#http-server -p 9999

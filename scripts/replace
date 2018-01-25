@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [[ -z "${GREEN}" ]]; then
+  source $( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd )/util
+fi
+
+if [ $# -ne 2 ]
+then
+  echo must supply 2 arguments - src \& dst
+
+  while [ "$SRC" == "" ]; do
+    echo -n 'replace: '
+    read SRC
+  done
+
+  while [ "$DST" == "" ]; do
+    echo -n 'replace with: '
+    read DST
+  done
+else
+  SRC=$1
+  DST=$2
+fi
+
+echo -n -e 'replacing' ${BLUE}${SRC} ${WHITE}'with' ${BLUE}${DST} ${WHITE}'... '
+grep -rl ${SRC} ./ | xargs sed -i "s/${SRC}/${DST}/g" >/dev/null 2>&1;
+
+if [[ $? == 0 ]]; then
+  echo -e "${GREEN}OK."; tput sgr0
+else
+  echo -e "${YELLOW}'NOT FOUND!'"; tput sgr0
+fi
+

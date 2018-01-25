@@ -1,0 +1,11 @@
+---
+
+- hosts: localhost
+  vars: 
+    KUBESPRAY_HOME: "~/SoundFactory/deploy/kubespray"
+  become: no
+  tasks:
+    - name: Load ubunto local Registry in  Docker
+      command: docker load -i {{ KUBESPRAY_HOME }}/nginx/nginx-autoindex-latest.tar.gz 
+    - name: Run web-server for ubuntu on localhost as docker
+      command: docker run --restart=always --name=websrv -p 8081:80 -h web -v {{ KUBESPRAY_HOME }}/ubuntu_repo:/usr/share/nginx/html -d jorgeandrada/nginx-autoindex

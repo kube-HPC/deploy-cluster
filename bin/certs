@@ -1,0 +1,2 @@
+KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
+ansible-playbook --ask-become-pass -i $KUBESPRAY_HOME/kubespray/inventory/inventory $KUBESPRAY_HOME/playbooks/getcerts.yml

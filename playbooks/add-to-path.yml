@@ -1,0 +1,25 @@
+---
+
+- hosts: localhost
+  vars:
+    extra_path: '$HOME/SoundFactory/deploy/kubespray/bin'
+    home_directory: /home/$USER
+  tasks:
+
+    - name: Add kubernetes bin to PATH
+      lineinfile:
+        path: '{{ home_directory }}/.bashrc'
+        state: present
+        line: 'export PATH={{ extra_path }}:$PATH'
+    
+    - name: Add kubectl autocomplition to .bashrc
+      lineinfile:
+        path: '{{ home_directory }}/.bashrc'
+        state: present
+        line: 'source <(kubectl completion bash)'
+
+    - name: Add NS = --namespace=kube-system
+      lineinfile:
+        path: '{{ home_directory }}/.bashrc'
+        state: present
+        line: 'export NS=--namespace=kube-system'

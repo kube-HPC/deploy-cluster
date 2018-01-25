@@ -1,0 +1,27 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: es-logging-curator
+  namespace: kube-system
+  labels:
+    component: elasticsearch
+    role: curator
+    group: system
+spec:
+  schedule: "1 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: es-logging-curator
+            image: quay.io/pires/docker-elasticsearch-curator:5.4.1  
+            args: ["--config", "/etc/config/config.yml", "/etc/config/action_file.yml"]
+            volumeMounts:
+              - name: config-volume
+                mountPath: /etc/config
+          volumes:
+            - name: config-volume
+              configMap:
+                name: es-logging-curator-config
+          restartPolicy: OnFailure

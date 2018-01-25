@@ -1,0 +1,20 @@
+---
+
+# Create a kubernetes namespace
+kubernetes:
+  api_endpoint: sound-test
+  url_username: kube
+  url_password: SoundFactory
+  inline_data:
+    kind: namespace
+    apiVersion: v1
+    metadata:
+      name: ansible-test
+      labels:
+        lables_env: production
+        lable_ver: latest
+      annotation:
+        a1: value1
+        a2: value2
+  state: present
+      

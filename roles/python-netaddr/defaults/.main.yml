@@ -1,0 +1,9 @@
+---
+
+nfs_source: 30.0.12.1:/s1arc14/circle_NFS_arc1
+docker_packages:
+  - libltdl7_2.4.6-0.1_amd64.deb
+  - aufs-tools_3.2+20130722-1.1ubuntu1_amd64.deb
+  - cgroupfs-mount_1.2_all.deb
+  - docker-engine_1.13.0-0-ubuntu-xenial_amd64.deb
+base_dir: "{{ '/home/' + ansible_ssh_user }}"

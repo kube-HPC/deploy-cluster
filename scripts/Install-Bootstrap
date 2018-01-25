@@ -1,0 +1,16 @@
+#!/bin/bash
+export ENV_NAME=$1
+
+if [[ -z "${KUBESPRAY_HOME}" ]]; then
+  KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
+  source ${KUBESPRAY_HOME}/scripts/util
+fi
+
+echo_blue "Start System Componnent On Cluster $1 ..." 
+
+sudo dpkg -i ~/SoundFactory/deploy/kubespray/ubuntu_repo/docker/docker-engine_1.13.1-0-ubuntu-xenial_amd64.deb 
+sudo dpkg -i ~/SoundFactory/deploy/kubespray/ubuntu_repo/ansible/ansible_2.4.0.0-1ppa~xenial_all.deb 
+sudo apt-get install -f -y
+sudo apt autoremove -y
+sudo usermod -aG docker $USER
+ssh-keygen

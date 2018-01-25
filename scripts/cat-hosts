@@ -1,0 +1,2 @@
+#!/bin/bash
+for i in `seq 1 16`; do echo sound$i; ssh ubadmin@sound$i "cat /etc/hosts"; done

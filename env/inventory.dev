@@ -1,0 +1,36 @@
+[all]
+# ## Configure 'ip' variable to bind kubernetes services on a
+# ## different ip than the default iface
+node12 ansible_ssh_host=10.32.10.27  # ip=10.3.0.1
+node13 ansible_ssh_host=10.32.10.28  # ip=10.3.0.2
+node14 ansible_ssh_host=10.32.10.29  # ip=10.3.0.3
+node15 ansible_ssh_host=10.32.10.30  # ip=10.3.0.4
+node16 ansible_ssh_host=10.32.10.31  # ip=10.3.0.5
+node17 ansible_ssh_host=10.32.10.32  # ip=10.3.0.6
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansibler_ssh_pass=ubadmin
+ansible_user=ubadmin
+bootstrap_os=ubuntu
+loadbalancer_apiserver_localhost=false
+kube_api_pwd=ubadmin
+cluster_name=azure-dev
+
+[kube-master]
+node12
+
+[etcd]
+node12
+
+[kube-node]
+node12
+node13
+node14
+node15
+node16
+node17
+
+[k8s-cluster:children]
+kube-node
+kube-master

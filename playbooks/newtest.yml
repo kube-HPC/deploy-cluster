@@ -1,0 +1,17 @@
+  # - name: Start pv for NFS SERVER for Elastic
+  #   kubernetes:
+  #       api_endpoint: "{{ virtual_cluster_ip }}:6443"
+  #       url_username: "{{ url_username }}"
+  #       url_password: "{{ url_password }}"
+  #       inline_data:
+  #         kind: Namespace
+  #         apiVersion: v1
+  #         metadata:
+  #           name: my_namespace
+  #           labels:
+  #             label_env: production
+  #             lable_ver: latest
+  #           annotations:
+  #             a1: value2
+  #             a2: value3
+  #         state: present

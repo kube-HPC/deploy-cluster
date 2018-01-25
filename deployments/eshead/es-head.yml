@@ -1,0 +1,40 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: elasticsearch-head
+  name: elasticsearch-head
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    name: elasticsearch-head
+  ports:
+  - name: http
+    port: 9100
+    nodePort: 32111
+    protocol: TCP
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: elasticsearch-head
+  labels:
+    group: elastic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: elasticsearch-head
+  template:
+    metadata:
+      labels:
+        name: elasticsearch-head
+    spec:
+      containers:
+        - name: elasticsearch-head
+          image: "mobz/elasticsearch-head:5
+          imagePullPolicy: IfNotPresent
+  

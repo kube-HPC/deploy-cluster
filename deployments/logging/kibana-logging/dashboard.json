@@ -1,0 +1,369 @@
+{
+  "_index": ".kibana",
+  "_type": "search",
+  "_id": "search-in-message",
+  "_score": 0,
+  "_source": {
+    "title": "search in message",
+    "description": "",
+    "hits": 0,
+    "columns": [
+      "level",
+      "message",
+      "meta.internal.component",
+      "kubernetes.pod_name",
+      "meta.hostName"
+    ],
+    "sort": [
+      "@timestamp",
+      "desc"
+    ],
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"index\":\"logstash-*\",\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}}},\"filter\":[],\"query\":{\"query_string\":{\"query\":\"kubernetes.namespace_name:default AND  _exists_:message AND _exists_:meta.type AND NOT message:statistics AND message:Zik4\",\"analyze_wildcard\":true}}}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "visualization",
+  "_id": "services-pie",
+  "_score": 0,
+  "_source": {
+    "title": "services pie",
+    "visState": "{\"type\":\"pie\",\"params\":{\"addLegend\":true,\"addTooltip\":true,\"isDonut\":false,\"shareYAxis\":true},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"meta.type\",\"size\":50,\"order\":\"desc\",\"orderBy\":\"1\",\"row\":false}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"level\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+    "description": "",
+    "savedSearchId": "all",
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"filter\":[]}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "search",
+  "_id": "statistics",
+  "_score": 0,
+  "_source": {
+    "title": "statistics",
+    "description": "",
+    "hits": 0,
+    "columns": [
+      "meta.internal.statistics.vid",
+      "meta.internal.statistics.data.outboundrtp.packetsSent",
+      "meta.internal.statistics.data.outboundrtp.packetsLost",
+      "meta.internal.statistics.data.inboundrtp.packetsReceived",
+      "meta.internal.statistics.data.inboundrtp.packetsLost",
+      "meta.internal.statistics.data.endpoint.videoE2ELatency",
+      "meta.internal.statistics.data.endpoint.inputVideoLatency"
+    ],
+    "sort": [
+      "@timestamp",
+      "desc"
+    ],
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"index\":\"logstash-*\",\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}}},\"filter\":[],\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"kubernetes.namespace_name:default AND _exists_:message AND _exists_:meta.type AND message:statistics\"}}}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "visualization",
+  "_id": "statistics",
+  "_score": 0,
+  "_source": {
+    "title": "statistics",
+    "visState": "{\"type\":\"line\",\"params\":{\"addLegend\":true,\"addTooltip\":true,\"defaultYExtents\":false,\"shareYAxis\":true},\"aggs\":[{\"id\":\"1\",\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"meta.internal.statistics.bps\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"meta.internal.statistics.vid\",\"size\":500,\"order\":\"desc\",\"orderBy\":\"1\",\"row\":true}},{\"id\":\"3\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"second\",\"min_doc_count\":1,\"extended_bounds\":{}}}],\"listeners\":{}}",
+    "description": "",
+    "savedSearchId": "statistics",
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"filter\":[]}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "dashboard",
+  "_id": "statistics",
+  "_score": 0,
+  "_source": {
+    "title": "statistics",
+    "hits": 0,
+    "description": "",
+    "panelsJSON": "[{\"col\":1,\"id\":\"statistics\",\"row\":5,\"size_x\":12,\"size_y\":6,\"type\":\"visualization\"},{\"col\":1,\"id\":\"statistics-sensors\",\"row\":1,\"size_x\":4,\"size_y\":4,\"type\":\"visualization\"},{\"id\":\"statistics-all\",\"type\":\"visualization\",\"size_x\":8,\"size_y\":4,\"col\":5,\"row\":1}]",
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "visualization",
+  "_id": "levels-pie",
+  "_score": 0,
+  "_source": {
+    "title": "levels pie",
+    "visState": "{\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"isDonut\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"level\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+    "description": "",
+    "savedSearchId": "all",
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"filter\":[]}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "dashboard",
+  "_id": "main",
+  "_score": 0,
+  "_source": {
+    "title": "main",
+    "hits": 0,
+    "description": "",
+    "panelsJSON": "[{\"col\":1,\"id\":\"levels-pie\",\"row\":1,\"size_x\":5,\"size_y\":4,\"type\":\"visualization\"},{\"col\":6,\"id\":\"services-pie\",\"row\":1,\"size_x\":6,\"size_y\":4,\"type\":\"visualization\"},{\"col\":1,\"id\":\"services-bar\",\"row\":5,\"size_x\":11,\"size_y\":4,\"type\":\"visualization\"},{\"col\":1,\"id\":\"all\",\"row\":13,\"size_x\":11,\"size_y\":5,\"type\":\"search\"},{\"col\":10,\"id\":\"users-metric\",\"row\":22,\"size_x\":2,\"size_y\":3,\"type\":\"visualization\"},{\"col\":7,\"id\":\"users-table\",\"row\":22,\"size_x\":3,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"users\",\"row\":22,\"size_x\":6,\"size_y\":3,\"type\":\"search\"}]",
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "search",
+  "_id": "all",
+  "_score": 0,
+  "_source": {
+    "title": "all",
+    "description": "",
+    "hits": 0,
+    "columns": [
+      "level",
+      "message",
+      "meta.type",
+      "meta.internal.component",
+      "kubernetes.pod_name",
+      "meta.hostName"
+    ],
+    "sort": [
+      "@timestamp",
+      "desc"
+    ],
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"index\":\"logstash-*\",\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}}},\"filter\":[],\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"kubernetes.namespace_name:default AND  _exists_:message AND _exists_:meta.type AND NOT message:statistics\"}}}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "search",
+  "_id": "users",
+  "_score": 0,
+  "_source": {
+    "title": "users",
+    "description": "",
+    "hits": 0,
+    "columns": [
+      "meta.internal.videoData.vid",
+      "meta.internal.videoData.appId",
+      "meta.internal.videoData.userId",
+      "meta.internal.videoData.usersCount"
+    ],
+    "sort": [
+      "@timestamp",
+      "desc"
+    ],
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"index\":\"logstash-*\",\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}}},\"filter\":[],\"query\":{\"query_string\":{\"query\":\"kubernetes.namespace_name:default AND _exists_:message AND _exists_:meta.type AND _exists_:meta.internal.videoData.userId\",\"analyze_wildcard\":true}}}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "visualization",
+  "_id": "statistics-sensors",
+  "_score": 0,
+  "_source": {
+    "title": "statistics sensors",
+    "visState": "{\"type\":\"table\",\"params\":{\"perPage\":10,\"showMeticsAtAllLevels\":false,\"showPartialRows\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"meta.internal.statistics.vid\",\"size\":500,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+    "description": "",
+    "savedSearchId": "statistics",
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"filter\":[]}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "visualization",
+  "_id": "users-table",
+  "_score": 0,
+  "_source": {
+    "title": "users table",
+    "visState": "{\n  \"type\": \"table\",\n  \"params\": {\n    \"perPage\": 10,\n    \"showMeticsAtAllLevels\": false,\n    \"showPartialRows\": false\n  },\n  \"aggs\": [\n    {\n      \"id\": \"1\",\n      \"type\": \"sum\",\n      \"schema\": \"metric\",\n      \"params\": {\n        \"field\": \"meta.internal.videoData.usersCount\"\n      }\n    },\n    {\n      \"id\": \"2\",\n      \"type\": \"terms\",\n      \"schema\": \"bucket\",\n      \"params\": {\n        \"field\": \"meta.internal.videoData.vid\",\n        \"size\": 5000,\n        \"order\": \"desc\",\n        \"orderBy\": \"1\"\n      }\n    }\n  ],\n  \"listeners\": {}\n}",
+    "description": "",
+    "savedSearchId": "users",
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\n  \"filter\": []\n}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "search",
+  "_id": "search-by-type",
+  "_score": 0,
+  "_source": {
+    "title": "search by type",
+    "description": "",
+    "hits": 0,
+    "columns": [
+      "level",
+      "meta.type",
+      "message",
+      "meta.internal.component",
+      "kubernetes.pod_name",
+      "meta.hostName",
+      "meta.timestamp"
+    ],
+    "sort": [
+      "meta.timestamp",
+      "desc"
+    ],
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"index\":\"logstash-*\",\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}}},\"filter\":[],\"query\":{\"query_string\":{\"query\":\"kubernetes.namespace_name:default AND  _exists_:message AND _exists_:meta.type AND meta.type:<enter type here>\",\"analyze_wildcard\":true}}}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "visualization",
+  "_id": "services-bar",
+  "_score": 0,
+  "_source": {
+    "title": "services bar",
+    "visState": "{\"aggs\":[{\"id\":\"1\",\"params\":{},\"schema\":\"metric\",\"type\":\"count\"},{\"id\":\"2\",\"params\":{\"field\":\"kubernetes.pod_name\",\"order\":\"desc\",\"orderBy\":\"1\",\"size\":1500},\"schema\":\"segment\",\"type\":\"terms\"},{\"id\":\"3\",\"params\":{\"field\":\"level\",\"order\":\"desc\",\"orderBy\":\"1\",\"size\":5},\"schema\":\"group\",\"type\":\"terms\"}],\"listeners\":{},\"params\":{\"addLegend\":true,\"addTooltip\":true,\"defaultYExtents\":false,\"mode\":\"stacked\",\"shareYAxis\":true},\"type\":\"histogram\"}",
+    "description": "",
+    "savedSearchId": "all",
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"filter\":[]}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "visualization",
+  "_id": "users-metric",
+  "_score": 0,
+  "_source": {
+    "title": "users metric",
+    "visState": "{\n  \"type\": \"metric\",\n  \"params\": {\n    \"fontSize\": 60\n  },\n  \"aggs\": [\n    {\n      \"id\": \"1\",\n      \"type\": \"sum\",\n      \"schema\": \"metric\",\n      \"params\": {\n        \"field\": \"meta.internal.videoData.usersCount\"\n      }\n    }\n  ],\n  \"listeners\": {}\n}",
+    "description": "",
+    "savedSearchId": "users",
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\n  \"filter\": []\n}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "visualization",
+  "_id": "statistics-all",
+  "_score": 0,
+  "_source": {
+    "title": "statistics all",
+    "visState": "{\"type\":\"line\",\"params\":{\"addLegend\":true,\"addTooltip\":true,\"defaultYExtents\":false,\"shareYAxis\":true},\"aggs\":[{\"id\":\"1\",\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"meta.internal.statistics.bps\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"meta.internal.statistics.vid\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}},{\"id\":\"3\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"second\",\"min_doc_count\":1,\"extended_bounds\":{}}}],\"listeners\":{}}",
+    "description": "",
+    "savedSearchId": "statistics",
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"filter\":[]}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "visualization",
+  "_id": "Third-Party-visualization",
+  "_score": 0,
+  "_source": {
+    "title": "Third-Party",
+    "visState": "{\"title\":\"Third-Party\",\"type\":\"pie\",\"params\":{\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"kubernetes.container_name\",\"size\":200,\"order\":\"asc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
+    "uiStateJSON": "{}",
+    "description": "",
+    "savedSearchId": "Third-Party-search",
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"filter\":[]}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "search",
+  "_id": "Third-Party-search",
+  "_score": 0,
+  "_source": {
+    "title": "Third-Party",
+    "description": "",
+    "hits": 0,
+    "columns": [
+      "log",
+      "kubernetes.container_name",
+      "kubernetes.namespace_name",
+      "stream"
+    ],
+    "sort": [
+      "@timestamp",
+      "desc"
+    ],
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"index\":\"logstash-*\",\"highlightAll\":true,\"version\":true,\"filter\":[],\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"NOT  _exists_:message\"}}}"
+    }
+  }
+}
+{
+  "_index": ".kibana",
+  "_type": "dashboard",
+  "_id": "Third-Party-dashboard",
+  "_score": 0,
+  "_source": {
+    "title": "Third-Party",
+    "hits": 0,
+    "description": "",
+    "panelsJSON": "[{\"col\":1,\"id\":\"Third-Party-visualization\",\"panelIndex\":1,\"row\":1,\"size_x\":7,\"size_y\":5,\"type\":\"visualization\"},{\"col\":1,\"columns\":[\"log\",\"kubernetes.container_name\",\"kubernetes.namespace_name\"],\"id\":\"Third-Party-search\",\"panelIndex\":3,\"row\":6,\"size_x\":12,\"size_y\":5,\"sort\":[\"@timestamp\",\"desc\"],\"type\":\"search\"},{\"size_x\":5,\"size_y\":5,\"panelIndex\":4,\"type\":\"visualization\",\"id\":\"Third-Party-Levels\",\"col\":8,\"row\":1}]",
+    "version": 1,
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}],\"highlightAll\":true,\"version\":true}"
+    }
+  }
+}
+{
+            "_index": ".kibana",
+            "_type": "visualization",
+            "_id": "Third-Party-Levels",
+            "_score": 1,
+            "_source": {
+               "title": "Third-Party-Levels",
+               "visState": "{\"title\":\"Third-Party-Levels\",\"type\":\"pie\",\"params\":{\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"stream.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+               "uiStateJSON": "{}",
+               "description": "",
+               "savedSearchId": "Third-Party-search",
+               "version": 1,
+               "kibanaSavedObjectMeta": {
+                  "searchSourceJSON": "{\"filter\":[]}"
+               }
+            }
+}

@@ -1,0 +1,42 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: kibana
+  namespace: kube-system
+  labels:
+    component: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+     component: kibana
+  template:
+    metadata:
+      labels:
+        component: kibana
+    spec:
+      containers:
+      - name: kibana
+        image: docker.elastic.co/kibana/kibana-oss:6.1.2 
+        env:
+        - name: ELASTICSEARCH_URL
+          value: http://elasticsearch:9200
+        - name: CLUSTER_NAME
+          value: myesdb
+        - name: SERVER_BASEPATH
+          value: /api/v1/proxy/namespaces/kube-system/services/kibana
+#        - name: XPACK_SECURITY_ENABLED
+#          value: 'false'
+#        - name: XPACK_GRAPH_ENABLED
+#          value: 'false'
+#        - name: XPACK_ML_ENABLED
+#          value: 'false'
+#        - name: XPACK_REPORTING_ENABLED
+#          value: 'false'
+        resources:
+          limits:
+            cpu: 1000m
+          requests:
+            cpu: 100m
+        ports:
+        - containerPort: 5601

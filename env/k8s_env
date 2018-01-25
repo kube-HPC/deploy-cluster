@@ -1,0 +1,20 @@
+##########################################################################################
+# Kubernetes -----------------------------------------------------------------------------
+# Kubernetes stuff:
+# Kubernetes -----------------------------------------------------------------------------
+
+
+PATH=/home/$USER/K8S/bin:$PATH
+PATH=/home/$USER/bin:$PATH
+
+
+if [ -f /home/$USER/K8S/env/k8s_aliases ]; then
+<<<<<<< HEAD
+    . /home/$USER/K8S/env/k8s_aliases
+=======
+    . /home/$USER/K8S/scripts/env/k8s_aliases
+>>>>>>> a6673c3a691697419c0b6564ddb0490042f00ebe
+fi
+
+NS=--namespace=kube-system
+NA=--all-namespaces

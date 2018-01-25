@@ -1,0 +1,15 @@
+---
+
+- hosts: localhost
+  vars: 
+    KUBESPRAY_HOME: "~/SoundFactory/deploy/kubespray"
+  become: no
+  tasks:
+    - name: Load Registry Docker on localhost Installing Cluster
+      command: docker load -i {{ KUBESPRAY_HOME }}/deployments/registry/Registry.tar
+    - name: Run Registry Docker on localhost
+      command: docker run -d -p 5000:5000 --restart=always --name registry -v /opt/nfs/registry/data:/var/lib/registry registry:2.6
+    - name: Load docker-registry-web 
+      command: docker load -i {{ KUBESPRAY_HOME }}/deployments/registry/docker-registry-web.tar
+    - name: Run Web Index for Docker Registry
+      command: docker run --restart=always -d -p 8082:8080 --name registry-web --link registry -e REGISTRY_URL=http://registry:5000/v2 -e REGISTRY_NAME=localhost:5000 hyper/docker-registry-web 

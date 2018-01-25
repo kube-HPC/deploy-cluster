@@ -1,0 +1,78 @@
+---
+
+- hosts: kube-master[0]
+  gather_facts: no
+  become: yes
+  tasks:
+    - fetch:
+        src: "/etc/kubernetes/ssl/{{ item }}.pem"
+        dest: "{{ playbook_dir }}/../kubespray/kubectl/{{ item }}.pem"
+        flat: True
+      with_items:
+        - admin-{{ inventory_hostname }}-key
+        - admin-{{ inventory_hostname }}
+        - ca
+    - name: export hostname
+      set_fact:
+        kubectl_name: "{{ inventory_hostname }}"
+      # set_fact:
+      #   kubectl_address: "{{ ansible_ssh_host }}"
+ 
+- hosts: localhost
+  gather_facts: yes
+  connection: local
+  vars:
+    kubectl_name: "{{ hostvars[groups['kube-master'][0]].kubectl_name }}"
+    # kubectl_address: "{{ hostvars[groups['kube-master'][0]].kubectl_address }}"
+  tasks:
+  
+    - name: Delete if exists config file
+      file: path='~/.kube/config' state=absent
+      register: file
+    
+    - name: check if context exists
+      command: kubectl config get-contexts kargo
+      register: kctl
+      failed_when: kctl.rc == 0
+
+    - name: config set-cluster default-cluster
+      command: kubectl config set-cluster default-cluster --server=https://{{ kubectl_name }}:6443 --certificate-authority={{ playbook_dir }}/../kubespray/kubectl/ca.pem
+
+    - name: create credentials kargo-admin
+      command: kubectl config set-credentials default-admin --certificate-authority={{ playbook_dir }}/../kubespray/kubectl/ca.pem --client-key={{ playbook_dir }}/../kubespray/kubectl/admin-{{ kubectl_name }}-key.pem --client-certificate={{ playbook_dir }}/../kubespray/kubectl/admin-{{ kubectl_name }}.pem
+
+    - name: create credentials kargo-admin
+      command: kubectl config set-credentials default-admin --certificate-authority={{ playbook_dir }}/../kubespray/kubectl/ca.pem --client-key={{ playbook_dir }}/../kubespray/kubectl/admin-{{ kubectl_name }}-key.pem --client-certificate={{ playbook_dir }}/../kubespray/kubectl/admin-{{ kubectl_name }}.pem
+
+    - name: set-context default-system
+      command: kubectl config set-context default-system --cluster=default-cluster --user=default-admin
+
+    - name: use-context default-system
+      command: kubectl config use-context default-system
+
+- include: add-to-path.yml
+    # - name: Add kubernetes bin to PATH
+    #   vars:
+    #     extra_path: '$HOME/SoundFactory/deploy/kubespray/bin'
+    #     home_directory: /home/ubadmin
+    #   lineinfile:
+    #     path: '{{ home_directory }}/.bashrc'
+    #     state: present
+    #     line: 'export PATH={{ extra_path }}:$PATH'
+    
+    # - name: Add kubectl autocomplition to .bashrc
+    #   vars:
+    #     home_directory: /home/ubadmin
+    #   lineinfile:
+    #     path: '{{ home_directory }}/.bashrc'
+    #     state: present
+    #     line: 'source <(kubectl completion bash)'
+    
+    # - name: Add NS = --namespace=kube-system
+    #   vars:
+    #     home_directory: /home/ubadmin
+    #   lineinfile:
+    #     path: '{{ home_directory }}/.bashrc'
+    #     state: present
+    #     line: 'export NS=--namespace=kube-system'
+    

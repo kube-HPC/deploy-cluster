@@ -1,0 +1,16 @@
+#!/bin/bash
+
+ENV_NAME=$1
+
+if [[ -z "${KUBESPRAY_HOME}" ]]; then
+  KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
+  source ${KUBESPRAY_HOME}/scripts/util
+fi
+
+source ${KUBESPRAY_HOME}/env/$1
+
+echo_blue 'Reseting kubernetes cluster' 
+
+ansible-playbook -i ../env/inventory.$1 -b --ask-become-pass ../kubespray/reset.yml
+
+echo_green 'Done.'

@@ -1,0 +1,10 @@
+---
+
+- name: Install pre-requisits python-netaddr
+  apt: name=python-netaddr state=present
+
+#- name: Create mount entrypoint
+#  file: path=/opt/storage state=directory
+
+#- name: Mount NFS directory for Docker registry
+#  mount: name=/opt/storage src={{ nfs_source }} fstype=nfs state=mounted

@@ -1,0 +1,32 @@
+---
+
+- hosts: registry[0]
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: export hostname
+      set_fact:
+        registry_host_ip: "{{ ansible_ssh_host }}"
+    - name:
+      debug:
+        msg="{{ registry_host_ip }}"
+
+- hosts: all
+  name: Type Cluster Name
+  become: yes
+  vars_prompt:
+    - name: "cluster_name"
+      prompt: "Type The Cluster Name you are working"
+      configrm: yes
+  
+  tasks:
+ 
+  - name: Hosts | populate inventory into hosts file
+    lineinfile:
+      dest: /etc/hosts
+      line: "{{ hostvars[groups['registry'][0]].registry_host_ip }} registry.hkube ubuntu.hkube"
+      #line: "101.150.3.35 registry.hkube ubuntu.hkube"
+      state:  present #absent
+      create: yes
+      backup: yes
+  

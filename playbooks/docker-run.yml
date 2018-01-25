@@ -1,0 +1,22 @@
+---
+
+- hosts: localhost
+  name: Create docker containers
+  vars:
+    - container_state: started
+    - container_privileged: true
+    - docker_containers:
+        - name: web-srv
+          image: jorgeandrada/nginx-autoindex
+          expose:
+            - "80"
+          ports:
+            - "8081:80"
+          volumes:
+            - "~/SoundFacroty/deploy/kubespray/ubuntu_repo:/usr/share/nginx/html"
+           
+  roles:
+    - roles/ansible-role-docker
+
+  tags:
+    - docker-start

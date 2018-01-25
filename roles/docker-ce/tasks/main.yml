@@ -1,0 +1,26 @@
+---
+
+- name: Set the correct timezone.
+  file:
+    src: "/usr/share/zoneinfo/{{ ntp_timezone }}"
+    dest: /etc/localtime
+    state: link
+    force: yes
+
+- name: Config docker daemon.
+  template:
+    src: docker.j2
+    dest: /etc/docker
+    force: yes
+
+- name: Install Docker-ce 17.03.1.
+  apt: name=docker-ce state=installed
+
+- name: Ensure Docker is running and enabled as configured.
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: restart dcoker
+  service: name=ntp state=restarted

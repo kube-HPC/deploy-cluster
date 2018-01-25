@@ -1,0 +1,13 @@
+#!/bin/bash
+ENV_NAME=$1
+
+if [[ -z "${KUBESPRAY_HOME}" ]]; then
+  KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
+  source ${KUBESPRAY_HOME}/scripts/util
+fi
+
+echo_blue "Start ubuntu repo on localhost" 
+
+ansible-playbook --ask-become-pass -i ${KUBESPRAY_HOME}/env/inventory.$1 -e KUBESPRAY_HOME=~/SoundFactory/deploy/kubespray  ../playbooks/run-nginx.yml -vvv
+
+echo_green 'Done.'

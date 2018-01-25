@@ -1,0 +1,49 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  # This name uniquely identifies the StatefulSet
+  name: minio
+spec:
+  serviceName: minio
+  replicas: 4
+  selector:
+    matchLabels:
+      app: minio # has to match .spec.template.metadata.labels
+  template:
+    metadata:
+      labels:
+        app: minio # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+      - name: minio
+        env:
+        - name: MINIO_ACCESS_KEY
+          value: "Rafael-Minio-Access-Key"
+        - name: MINIO_SECRET_KEY
+          value: "RaFaElMiNiO2018"
+        image: registry.hkube:5000/minio/minio:RELEASE.2017-12-28T01-21-00Z
+        args:
+        - server
+        - http://minio-0.minio/data
+        - http://minio-1.minio/data
+        - http://minio-2.minio/data
+        - http://minio-3.minio/data
+        ports:
+        - containerPort: 9000
+          hostPort: 9000
+        # These volume mounts are persistent. Each pod in the PetSet
+        # gets a volume mounted based on this field.
+        volumeMounts:
+        - name: data
+          mountPath: /data
+  # These are converted to volume claims by the controller
+  # and mounted at the paths mentioned above.
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Gi

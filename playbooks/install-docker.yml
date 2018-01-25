@@ -1,0 +1,38 @@
+---
+
+- hosts: localhost
+  name: Installing Cluster
+  become: yes
+  vars_prompt:
+    - name: "cluster_name"
+      prompt: "Type The Cluster Name you are  working"
+      #default: "SF1"
+  
+  tasks:
+  - name: Inport Vars form Cluster Config yaml
+    debug:
+      msg="{{ lookup('env','ENV_NAME') }}"
+  - include_vars: ../env/{{ lookup('env','ENV_NAME') }}.yml
+
+  - name: Debug Test2
+    debug:
+      msg="You are Working On {{ cluster_name }} Cluster"
+
+  - name: Debug ENV_NAME 
+    debug:
+      msg="{{ lookup('env','ENV_NAME') }}"  
+
+  - name: Installing docker-engine on local host 
+    command: sudo dpkg -i /home/ubadmin/SoundFactory/deploy/kubespray/ubuntu_repo/docker/docker-engine_1.13.1-0-ubuntu-xenial_amd64.deb 
+    tags:
+     - docker-engine
+  
+  - name: Install ansible on localhost
+    command: sudo dpkg -i /home/ubadmin/SoundFactory/deploy/kubespray/ubuntu_repo/ansible/ansible_2.4.0.0-1ppa~xenial_all.deb 
+    tags:
+     - ansible
+
+   - name: Finish Install ansible and docker-engine on localhost
+    command: apt-get install -f
+    tags:
+     - fix

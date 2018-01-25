@@ -1,0 +1,99 @@
+---
+
+- hosts: localhost
+  name: Configur file for Cluster
+  become: no
+  vars_prompt:
+
+    - name: "USERNAME"
+      prompt: "Enter Your User Name"
+      config: yes
+
+    - name: "CLUSTER_ID"
+      prompt: "Cluster Name to work on"
+      confirm: yes
+     
+    - name: "REGISTRY_HOST"
+      prompt: "Type your REGISTRY_HOST"
+      config: yes
+
+    - name: "INSTALL_KEEPALIVED"
+      prompt: "Need To Install KeepAlived Yes  / No "
+    
+    - name: "INTERFACE_NETWORK"
+      prompt: "Type YOUR Interface Network Type"
+      default: "ens160"
+      config: yes
+    
+    - name: "virtual_cluster_ip"
+      prompt: "Type your virtual_cluster_ip"
+      config: yes
+    
+    - name: "CEPH_NAME_SERVER"
+      prompt: "What is your CEPH_NAME_SERVER"
+      default: "ceph-srv"
+      config: yes
+    
+    - name: "CEPH_SERVER_PUB_KEY"
+      prompt: "Enter Your CEPH PUB KEY"
+      default: "QAWSEDRFTGYHUJIKOLPZXCVBNM"
+      config: yes
+
+  tasks:
+  - name: Debug Test
+    debug:
+      msg:
+       - "{{ CLUSTER_ID }}"
+       - "{{ REGISTRY_HOST }}"
+       - "{{ CEPH_NAME_SERVER }}"
+       - "{{ USERNAME }}"
+       - "{{ INSTALL_KEEPALIVED }}"
+       - "{{ INTERFACE_NETWORK }}"
+       - "{{ virtual_cluster_ip }}"
+  
+  - name: Create Config file for "{{ CLUSTER_ID }}"
+    copy:
+      content: '### Cluster yaml Config file   ###'
+      dest: '{{ home_directory }}/SoundFactory/deploy/kubespray/env/{{ CLUSTER_ID }}.yml'
+      force: no
+      group: '{{ USERNAME }}'
+      owner: '{{ USERNAME }}'
+      mode: 0664
+
+  - name: Make yml file for Cluster 
+
+    lineinfile:
+      path: '{{ home_directory }}/SoundFactory/deploy/kubespray/env/{{ CLUSTER_ID }}.yml'
+      state: present
+      line: '{{ item }}'
+    with_items:
+      - '#Cluster ID'
+      - 'CLUSTER_ID: "{{ CLUSTER_ID }}"'
+      - '#keepalived'
+      - 'INSTALL_KEEPALIVED: "{{ INSTALL_KEEPALIVED }}"'
+      - 'interface_network: "{{ INTERFACE_NETWORK }}"'
+      - 'virtual_cluster_ip: "{{ virtual_cluster_ip }}"'
+  
+    lineinfile:
+      path: '{{ home_directory }}/.bashrc'
+      state: present
+      line: 'source {{ home_directory }}/SoundFactory/deploy/kubespray/env/k8s_env'
+    
+    lineinfile:
+      path: '{{ home_directory }}/.bashrc'
+      state: present
+      line: 'source {{ home_directory }}/SoundFactory/deploy/kubespray/env/k8s_aliases'
+
+    lineinfile:
+      path: '{{ home_directory }}/.bashrc'
+      state: present
+      line: 'source <(kubectl completion bash)'
+
+    lineinfile:
+      path: '{{ home_directory }}/.bashrc'
+      state: present
+      line: 'export NS=--namespace=kube-system'
+    
+  vars:
+    home_directory: '/home/{{ USERNAME }}'
+

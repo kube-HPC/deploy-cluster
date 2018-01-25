@@ -1,0 +1,13 @@
+---
+
+- hosts: localhost
+  become: no
+  tasks:
+   - name: Create docker containers
+     docker:
+     image: jorgeandrada/nginx-autoindex
+     state: reloaded 
+     ports:
+     - "8081:80"
+     volumes:
+     - ~/SoundFacroty/deploy/kubespray/ubuntu_repo

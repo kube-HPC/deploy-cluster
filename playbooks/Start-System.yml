@@ -1,0 +1,56 @@
+---
+
+- hosts: localhost
+  name: Installing Cluster
+  become: no
+  vars_prompt:
+    - name: "cluster_name"
+      prompt: "Type The Cluster Name you are  working"
+      configrm: yes
+  
+  tasks:
+  - name: Inport Vars form Cluster Config yaml
+    debug:
+      msg="{{ lookup('env','ENV_NAME') }}"
+  - include_vars: ../env/{{ lookup('env','ENV_NAME') }}.yml
+  - include_vars: "../env/{{ cluster_name }}.yml"
+
+  - name: Debug Test2
+    debug:
+      msg="You are Working On {{ cluster_name }} Cluster"
+
+  - name: Debug ENV_NAME 
+    debug:
+      msg="{{ lookup('env','ENV_NAME') }}"  
+
+  - name: Check the Cluster Virtual IP.
+    debug:
+      msg="The System Virtual IP is = {{ virtual_cluster_ip }}"
+
+  - name: Installing WeaveScope On Cluster "{{ cluster_name }}"
+    command: kubectl apply -f ../deployments/weave.scope/scope.yaml
+    tags: WeaveScope
+       
+  - name: Installing Prometheus PV On Cluster "{{ cluster_name }}"
+    shell: |
+      export CLUSTER_ID={{ cluster_name }}
+      export PROM_PV_SIZE={{ PROM_PV_SIZE }}
+      export NFS_SERVER={{ NFS_SERVER }}
+      export NFS_ROOT={{ NFS_ROOT }}
+      envsubst <  ../deployments/monitoring/k8s-prometheus/prometheus-pv-nfs.yml | kubectl apply -f -
+      exit 0
+   tags: prometheus 
+
+  - name: Installing Prometheus On Cluster "{{ cluster_name }}"
+    shell: |
+      export VIRTUAL_IP={{ virtual_cluster_ip }}
+      envsubst <  ../deployments/monitoring/k8s-prometheus/manifests-all.yaml | kubectl apply -f -
+      exit 0
+    tags: prometheus
+
+  - name: Installing Kibana On Cluster "{{ cluster_name }}"
+    shell: |
+      export VIRTUAL_IP={{ virtual_cluster_ip }}
+      envsubst <  ../deployments/logging/kibana.yaml | kubectl apply -f - 
+      exit 0
+    tags: Kibana

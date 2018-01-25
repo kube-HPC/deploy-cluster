@@ -1,0 +1,11 @@
+---
+
+- hosts: localhost 
+  # conaction: local
+  gather_facts: yes
+  pre_tasks:
+    - name: Installing python netaddr
+      raw: sudo apt-get -y install python-netaddr
+
+- include: nodes-ssh-copy-id.yml
+

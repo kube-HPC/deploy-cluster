@@ -1,0 +1,25 @@
+#!/bin/bash
+export ENV_NAME=$1
+
+if [[ -z "${KUBESPRAY_HOME}" ]]; then
+  KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
+  source ${KUBESPRAY_HOME}/scripts/util
+fi
+
+echo_blue "Start Cluster $1 ..." 
+
+cd ${KUBESPRAY_HOME}/scripts
+
+echo ${KUBESPRAY_HOME} start Ubuntu Local Repo
+
+ansible-playbook -i ../env/inventory.$1 -e ${ENV_NAME} ../playbooks/run-nginx.yml
+
+echo_green 'Done.'
+
+echo Start Local Docker Repo 
+
+cd ${KUBESPRAY_HOME}/scripts
+
+ansible-playbook -i ../env/inventory.$1 -e  ${ENV_NAME} ../playbooks/local-registry.yml 
+
+echo_green 'Done'

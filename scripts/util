@@ -1,0 +1,909 @@
+#!/bin/bash
+
+KUBE_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
+
+if [[ "${DEBUG}" == "true" ]] ; then
+  set -x
+fi
+
+#lilox
+#set -e
+
+function get-host()
+{
+  local host=$(ip route get 1 | awk '{print $NF;exit}')
+  if [[ -z "${host}" ]]; then
+    host='127.0.0.1'
+  fi
+  echo ${host}
+}
+
+# -------------------------------------------------------------------------------------------
+# cluster-info
+# -------------------------------------------------------------------------------------------
+
+function cluster-info()
+{
+  export API_SERVER_IPS=""
+  export CLUSTER_USER=""
+
+  local ii=0
+  roles_array=($roles)
+  for i in ${nodes}
+  do
+    {
+      if [[ -z "${CLUSTER_USER}" ]]; then
+        CLUSTER_USER=${i%@*}
+      fi
+
+      if [[ "${roles_array[${ii}]}" == "a" || "${roles_array[${ii}]}" == "ai" ]]; then
+        if [[ -z "${API_SERVER_IPS}" ]]; then
+          API_SERVER_IPS="${i#*@}"
+        else
+          API_SERVER_IPS="${API_SERVER_IPS} ${i#*@}"
+        fi
+      fi
+    }
+
+    ((ii=ii+1))
+  done
+}
+
+# -------------------------------------------------------------------------------------------
+# check-passwd
+# -------------------------------------------------------------------------------------------
+
+CHECK_PASSWD=true
+CORRECT_PASSWD=""
+function check-passwd()
+{
+  local node=${1}
+  local pass=${2}
+
+  CORRECT_PASSWD=""
+
+  local e_was_set=false
+  if is_shell_attribute_set e; then e_was_set=true; fi
+  set +e # turn it off
+
+  local ii=0
+  local max_tries=3
+  while [ ${ii} -lt ${max_tries} ] ; do
+    echo
+    echo -n 'checking password... '
+
+    $(ssh -t ${node} "echo '${pass}' | sudo -S ls" >/dev/null 2>&1)
+    if [[ "$?" == "0" ]]; then
+      if [[ "${e_was_set}" == "true" ]]; then set -e; fi # turn it on
+      CORRECT_PASSWD=${pass}
+      echo_green 'OK.'
+      return 0
+    fi
+
+    ((ii=ii+1))
+    if [[ "${ii}" == "${max_tries}" ]]; then
+      break
+    fi
+
+    echo_yellow "incorrect password, try again."
+    read -s -p "[sudo] password for ${node}: " pass
+  done
+
+  CORRECT_PASSWD=""
+  if [[ "${e_was_set}" == "true" ]]; then set -e; fi # turn it on
+  echo_red 'FAILED!'
+  exit -1
+}
+
+# -------------------------------------------------------------------------------------------
+# sudo-passwd
+# -------------------------------------------------------------------------------------------
+
+function sudo-passwd()
+{
+  if [[ -z "${PASSWD}" ]]; then
+    local prompt=${1}
+    if [[ -z "${prompt}" ]]; then
+      local nodes_array=($nodes)
+      prompt="[sudo] password (${nodes_array[0]}): "
+    fi
+
+    read -s -p "${prompt}" PASSWD
+
+    # check-passwd (+retries)
+    if [[ "${CHECK_PASSWD}" == "true" && -n "${nodes}" ]]; then
+      local nodes_array=(${nodes})
+      check-passwd ${nodes_array[0]} ${PASSWD}
+      PASSWD=${CORRECT_PASSWD}
+    fi
+
+    export PASSWD
+    echo
+  fi
+}
+
+# -------------------------------------------------------------------------------------------
+# sudo-passwd-local
+# -------------------------------------------------------------------------------------------
+
+function sudo-passwd-local()
+{
+  if [[ -z "${PASSWD_BS}" ]]; then
+
+    local HOST=$(get-host)
+
+    # try ${PASSWD} (if success -> set PASSWD_BS=${PASSWD})
+    if [[ -n "${PASSWD}" && -n "${nodes}" ]]; then
+
+      local e_was_set=false
+      if is_shell_attribute_set e; then e_was_set=true; fi
+      set +e # turn it off
+
+      $(ssh -t ${USER}@${HOST} "echo '${PASSWD}' | sudo -S ls" >/dev/null 2>&1)
+      if [[ "$?" == "0" ]]; then
+        if [[ "${e_was_set}" == "true" ]]; then set -e; fi # turn it on
+        PASSWD_BS=${PASSWD}
+        return 0
+      fi
+
+      if [[ "${e_was_set}" == "true" ]]; then set -e; fi # turn it on
+    fi
+
+    local prompt=${1}
+    if [[ -z "${prompt}" ]]; then
+      prompt="[sudo] password (${USER}@${HOST}): "
+    fi
+
+    read -s -p "${prompt}" PASSWD_BS
+
+    # check-passwd (+retries)
+    if [[ "${CHECK_PASSWD}" == "true" ]]; then
+      check-passwd ${USER}@${HOST} ${PASSWD_BS}
+      PASSWD_BS=${CORRECT_PASSWD}
+    fi
+
+    export PASSWD_BS
+    echo
+  fi
+}
+
+# -------------------------------------------------------------------------------------------
+# prompt-run
+# -------------------------------------------------------------------------------------------
+function prompt-run()
+{
+  if [[ -n "${QUITE_MODE}" ]]; then
+    # quite-mode: just run it !
+    ${1} ${2} ${3} ${4} ${5} # ${2} ${3} ... are parameters for ${1}
+    return
+  fi
+
+  # prompt user
+  echo -n 'Run' ${1} ${2} ${3} ${4} ${5} '(y/n)? [y]'
+  read answer
+  if echo ${answer} | grep -iq '^n' ;then
+    return; # don't run it !
+  fi
+
+  # run it
+  ${1} ${2} ${3} ${4} ${5} # ${2} ${3} ... are parameters for ${1}
+}
+
+# -------------------------------------------------------------------------------------------
+# confirm
+# -------------------------------------------------------------------------------------------
+function confirm()
+{
+  local prompt=${1:-'confirm'}
+
+  echo -n "${prompt} (y/n)? [y]"
+
+  read answer
+
+  if echo ${answer} | grep -iq '^n' ;then
+    confirmed='no'
+  else
+    confirmed='yes'
+  fi
+}
+
+# -------------------------------------------------------------------------------------------
+# colors example: echo -e "${color_green}some message ${MY_ENVIRONMENT_VAR}.${color_norm}"
+# -------------------------------------------------------------------------------------------
+
+if [[ -z "${color_start-}" ]]; then
+  declare -r color_start="\033["
+  declare -r color_red="${color_start}0;31m"
+  declare -r color_yellow="${color_start}0;33m"
+  declare -r color_green="${color_start}0;32m"
+  declare -r color_norm="${color_start}0m"
+fi
+
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[0;33m"
+BLUE="\033[0;34m"
+GRAY="\033[0;37m"
+WHITE="\033[0;38m"
+
+function echo_green
+{
+  local newline
+  if [[ "${1}" == "-n" ]]; then
+    newline="-n"
+    shift
+  fi
+  echo -e ${newline} "${GREEN}${1}${2}${3}${4}${5}"; tput sgr0
+}
+
+function echo_red
+{
+  local newline
+  if [[ "${1}" == "-n" ]]; then
+    newline="-n"
+    shift
+  fi
+  echo -e ${newline} "${RED}${1}${2}${3}${4}${5}"; tput sgr0
+}
+
+function echo_yellow
+{
+  local newline
+  if [[ "${1}" == "-n" ]]; then
+    newline="-n"
+    shift
+  fi
+  echo -e ${newline} "${YELLOW}${1}${2}${3}${4}${5}"; tput sgr0
+}
+
+function echo_blue
+{
+  local newline
+  if [[ ${1} == "-n" ]]; then
+    newline="-n"
+    shift
+  fi
+  echo -e ${newline} "${BLUE}${1}${2}${3}${4}${5}"; tput sgr0
+}
+
+function echo_gray
+{
+  local newline
+  if [[ "${1}" == "-n" ]]; then
+    newline="-n"
+    shift
+  fi
+  echo -e ${newline} "${GRAY}${1}${2}${3}${4}${5}"; tput sgr0
+}
+
+function echo_white
+{
+  local newline
+  if [[ "${1}" == "-n" ]]; then
+    newline="-n"
+    shift
+  fi
+  echo -e ${newline} "${WHITE}${1}${2}${3}${4}${5}"; tput sgr0
+}
+
+# ---------------------------------------------------------------------------------------
+# verify kubernetes cluster is up
+# ---------------------------------------------------------------------------------------
+
+function verify-kube-up()
+{
+  local e_was_set=false
+  if is_shell_attribute_set e; then e_was_set=true; fi
+  set +e # turn it off
+
+  local res=$(wget -q -O- http://${API_SERVER}:8080/healthz | grep 'ok' | wc -l)
+  if [[ "${e_was_set}" == "true" ]]; then set -e; fi # turn it on
+  if [[ ${res} != '1' ]]; then
+    echo 'cluster not ready! you should first call kube-up.'
+    return -1;
+  fi
+}
+
+# ---------------------------------------------------------------------------------------
+# get pod and namespace by partial string
+# ---------------------------------------------------------------------------------------
+
+function get-pod-and-ns()
+{
+  local target=${1}
+  if [[ -z "${target}" ]]; then
+    echo 'missing argument!';
+    return -1;
+  fi
+
+  local num_pods=$(kubectl get pods --all-namespaces | grep ${target} | wc -l)
+  if [[ ${num_pods} == 0 ]]; then
+    echo_yellow "no pods matching ${target}"
+    return -1;
+  fi
+
+  if [[ ${num_pods} > 1 ]]; then
+    echo_yellow 'which one ?'
+    kubectl get pods --all-namespaces | grep ${target}
+    return -1;
+  fi
+
+  read ns pod <<< $(kubectl get pods --all-namespaces | grep ${target} | awk '{print $1, $2;}')
+  export pod=${pod}
+  export ns=${ns}
+  return 0;
+}
+
+# ---------------------------------------------------------------------------------------
+# get pod name by partial string
+# ---------------------------------------------------------------------------------------
+function get-pod-name()
+{
+  local name=${1}
+  if [[ -z "${name}" ]]; then
+    echo 'missing argument!';
+    return -1
+  fi
+
+  kubectl get pods  --all-namespaces | grep ${name} | awk '{print $2;}'
+}
+
+# ---------------------------------------------------------------------------------------
+# wait for pod to be ready
+# $1: pod name or partial pod name
+# ---------------------------------------------------------------------------------------
+function wait-pods()
+{
+  local name=${1}
+  if [[ -z "${name}" ]]; then
+    echo 'missing argument!';
+    return -1;
+  fi
+
+  verify-kube-up
+
+  local tries=60 # try for 5 minute (60 x 5s.sleep)
+
+  local success=0
+
+  echo -n "waiting for ${name} pod(s) ..."
+
+  local ii=1
+  while true; do
+
+    local res=$(kubectl get pods --all-namespaces | grep ${name} | grep -P '(.)/\1')
+    if [[ -n ${res} ]]; then
+      success=1
+      break
+    fi
+
+    echo -n '.'
+
+    ((ii=ii+1))
+    if [[ ${ii} -gt ${tries} ]]; then
+      break
+    fi
+
+    sleep 5.s
+
+  done
+
+  if [[ "${success}" == "1" ]]; then
+    echo_green ' OK.'
+  else
+    echo_red ' FAILED! ('${tries}' times)'
+    return -1;
+  fi
+}
+
+# ---------------------------------------------------------------------------------------
+# wait for all terminating pods to complete
+# ---------------------------------------------------------------------------------------
+
+function wait-terminating()
+{
+  PODS=$(kubectl get pods --all-namespaces | grep 'Terminating')
+  if [[ -n "${PODS}" ]]; then
+    echo -n 'waiting for pod(s) termination '
+    while true; do
+      PODS=$(kubectl get pods --all-namespaces | grep 'Terminating')
+      if [[ -z "${PODS}" ]]; then
+        break;
+      fi
+      sleep 1.s
+      echo -n '.'
+    done
+    echo_green ' OK.'
+  fi
+}
+
+# ---------------------------------------------------------------------------------------
+# kubectl-create
+# ---------------------------------------------------------------------------------------
+
+function kubectl-create()
+{
+  local target=${1}
+  if [[ -z "${target}" ]]; then
+    echo 'missing argument!';
+    return -1;
+  fi
+
+  if [[ ! -f "${target}" ]]; then
+    echo "file not found: ${target}";
+    return -1;
+  fi
+
+  envsubst < ${target} | kubectl create -f -
+}
+
+# ---------------------------------------------------------------------------------------
+# kubectl-create
+# ---------------------------------------------------------------------------------------
+
+function kubectl-apply()
+{
+  local target=${1}
+  if [[ -z "${target}" ]]; then
+    echo 'missing argument!';
+    return -1;
+  fi
+
+  if [[ ! -f "${target}" ]]; then
+    echo "file not found: ${target}";
+    return -1;
+  fi
+
+  envsubst < ${target} | kubectl apply -f -
+}
+# ---------------------------------------------------------------------------------------
+# get-masters
+# ---------------------------------------------------------------------------------------
+
+function get-masters()
+{
+  local masters=""
+
+  local ii=0
+  roles_array=($roles)
+  for i in $nodes; do
+    if [[ "${roles_array[${ii}]}" == "ai" || "${roles_array[${ii}]}" == "a" ]]; then
+      masters="${masters} ${i}"
+    fi
+    ((ii=ii+1))
+  done
+
+  echo ${masters}
+}
+
+# -------------------------------------------------------------------------------------------
+# function: merge-bootstrap-and-nodes
+#   concatinate result into ${bootstrap_and_nodes}
+#	${1} : node-list ( optional; default to ${nodes} )
+# -------------------------------------------------------------------------------------------
+
+function merge-bootstrap-and-nodes()
+{
+  if [[ $# != 0 ]]; then
+    node_list=${1}
+    while (( "$#" )); do
+      shift
+      node_list="${node_list} ${1}"
+    done
+  fi
+
+  if [[ -z "${node_list}" ]]; then
+    node_list=${nodes}
+  fi
+
+  if [[ -z "${node_list}" ]]; then
+    echo_red 'ERROR: ${nodes} not defined! exiting... '
+    return -1
+  fi
+
+  local bootstrap_host=${USER}@${HOST}
+  local bootstrap_and_nodes="${bootstrap_host}"
+  for i in ${node_list}; do
+    if [[ "${i}" != "${bootstrap_host}" ]]; then
+      bootstrap_and_nodes="${bootstrap_and_nodes} ${i}"
+    fi
+  done
+
+  echo ${bootstrap_and_nodes}
+}
+
+# ----------------------------------------------------------------
+# git-latest-version-with-prefix
+#   - ${1} : git_repo
+#   - ${2} : git_ver_prefix
+# ----------------------------------------------------------------
+
+function git-latest-version-with-prefix()
+{
+  local git_repo=${1}
+  local git_ver_prefix=$(echo "${2}" | sed 's/\./\\\./')
+
+  if [[ -z "${git_repo}" ]]; then
+    echo_red 'git-repo not specified!'
+    return -1
+  fi
+
+  if [[ -z "${git_ver_prefix}" ]]; then
+    echo_red 'git-version not specified!'
+    return -1
+  fi
+
+  local git_ver=$(git ls-remote -t git@gitlab.rms:RMS/${git_repo}.git | grep "${git_ver_prefix}" \
+	| awk '{print $2}' | cut -d '/' -f 3 | cut -d '^' -f 1 | sort -b -t . -k 1,1nr -k 2,2nr -k 3,3nr | uniq | head -n1)
+
+  if [[ -z "${git_ver}" ]]; then
+    # try as branch-name
+    local branch=$(git ls-remote --heads git@cir-srv01:RMS/${git_repo}.git | grep "refs/heads/${git_ver_prefix}")
+    if [[ -n "${branch}" ]]; then
+      git_ver=${git_ver_prefix}
+    fi
+  fi
+
+  echo "${git_ver}";
+}
+
+# ----------------------------------------------------------------
+# verify-git-access
+# ----------------------------------------------------------------
+
+function verify-git-access()
+{
+  # verify git is installed on local node
+  git_version=$(git --version | grep 'git version')
+  if [[ -z ${git_version} ]]; then
+    echo_red "git is not installed."
+    echo_red "You can install it by typing: ${BLUE}sudo apt-get install git${WHITE}"
+    return -1
+  fi
+
+  # verify git user
+  local git_has_user=$(git ls-remote --refs git@gitlab.rms:RMS/common | grep master)
+  if [[ -z ${git_has_user} ]]; then
+    echo_red "${USER} does not have git access."
+    return -1
+  fi
+
+  return 0
+}
+
+# ----------------------------------------------------------------
+# replace-in-file
+# replace <src> with <dst> in <file>
+# ----------------------------------------------------------------
+
+function escape_slashes
+{
+  sed 's/\//\\\//g'
+}
+
+function replace-in-file()
+{
+  if [[ $# -ne 3 ]]; then
+    echo_red 'missing arguments! required: file_path + src + dst'
+    return -1
+  fi
+
+  local file_path=${1}
+  local src=${2}
+  local dst=${3}
+
+  grep -rl "${src}" "${file_path}" | xargs sed -i "s/'${src}'/'${dst}'/g"
+}
+
+# --------------------------------------------------------------------------------------
+# get-nodes
+#	$@ : node-list (optional - defaults to ${nodes})
+# returns list of node to operate on
+# --------------------------------------------------------------------------------------
+function get-nodes()
+{
+  local target_nodes=$@
+
+  if [[ -z "${target_nodes}" ]]; then
+    target_nodes=${nodes}
+  fi
+
+  if [[ -z "${target_nodes}" ]]; then
+    return -1
+  fi
+
+  echo ${target_nodes}
+}
+
+# --------------------------------------------------------------------------------------
+# nodes-ssh
+#	${1} : command
+#	$@ : node-list
+# - reads command up to the ${CMD_SEPARATOR} (defaults to ' ; ' with spaces around!)
+# - examples:
+#	./nodes-ssh "command" (run on ${nodes})
+#	./nodes-ssh "command user@host1 user@host2 ..."
+# --------------------------------------------------------------------------------------
+
+function nodes-ssh()
+{
+  local command=${1}
+  shift
+
+  if [[ -z "${command}" ]]; then
+    echo_red 'missing required argument ${command}!'
+    return -1
+  fi
+
+  # consume command upto first node (if any)
+  for arg in $@; do
+    if [[ -n "$(echo ${arg} | grep '@')" ]]; then
+      break
+    fi
+    command="${command} ${arg}"
+    shift
+  done
+
+  local nodes=$(get-nodes $@)
+
+  if [[ $? != 0 ]]; then
+    echo_red 'nodes-list is empty!'
+    return -1
+  fi
+
+  for node in ${nodes}; do
+    echo -n "${node} ... "
+    ssh -t $SSH_OPTS ${node} "${command}" >/dev/null 2>&1;
+    echo_green "OK."
+  done
+}
+
+# ------------------------------------------------------------------------
+# nodes-install
+#	${1} : package
+#	$@ : node-list
+# examples:
+#	./nodes-install "pkg-name" (install on ${nodes})
+#	./nodes-install "pkg-name user@host1 user@host2 ..."
+# ------------------------------------------------------------------------
+
+function nodes-install()
+{
+  local package=${1}
+  shift
+
+  if [[ -z "${package}" ]]; then
+    echo_red 'missing required argument ${package}!'
+    return -1
+  fi
+
+  echo -e "installing ${BLUE}${package}${WHITE} ... "
+  nodes-ssh "
+    echo '${PASSWD}' | sudo -S apt-get purge --yes ${package}
+    sudo apt-get install --yes --force-yes ${package}
+  " $@
+
+  echo_green "Done."
+}
+
+# ------------------------------------------------------------------------
+# nodes-update-sources-list
+#	$@ : node-list (optional - defaults to ${nodes})
+# ------------------------------------------------------------------------
+
+function nodes-update-sources-list()
+{
+  local VSFTP_HOST=${VSFTP_HOST:-cir-srv01}
+  if [[ -z "${VSFTP_HOST}" ]]; then
+    echo_red '${VSFTP_HOST} not defined!'
+    return -1
+  fi
+
+  local default_sources_list_data=""
+  if [[ "${OVERRIDE_SOURCES_LIST}" == "true" ]]; then
+    local default_sources_list=${1}
+    if [[ -f ${default_sources_list} ]]; then
+      shift
+      default_sources_list_data=$(<${default_sources_list}) # read file content into variable
+    fi
+  fi
+
+  # create local rms.list (then copy to proper location on target)
+  local rms_tmp_dir=/tmp/rms
+  mkdir -p ${rms_tmp_dir}
+  local rms_sources_list=${rms_tmp_dir}/rms.list
+  cat <<EOF > ${rms_sources_list}
+deb ftp://${VSFTP_HOST} ./
+EOF
+
+  local nodes=$(get-nodes $@)
+  for i in ${nodes}; do
+    echo -n "${i} ... "
+    ssh $SSH_OPTS ${i} "mkdir -p ${rms_tmp_dir}" >/dev/null 2>&1;
+    scp $SSH_OPTS ${rms_sources_list} "${i}:${rms_tmp_dir}" >/dev/null 2>&1;
+    ssh $SSH_OPTS -t ${i} "
+	echo '${PASSWD}' | sudo -S sed -i '/${VSFTP_HOST}/d' /etc/apt/sources.list
+	if [[ ! -f '/etc/apt/sources.list-ORIG' ]]; then sudo cp /etc/apt/sources.list /etc/apt/sources.list-ORIG; fi
+	if [[ -n '${default_sources_list_data}' ]]; then sudo bash -c 'echo \"${default_sources_list_data}\" > /etc/apt/sources.list'; fi
+	sudo cp ${rms_sources_list} /etc/apt/sources.list.d
+	sudo apt-get update
+    " >/dev/null 2>&1;
+    echo_green 'OK.'
+  done
+}
+
+# ------------------------------------------------------------------------
+# is_shell_attribute_set
+#	usage example: if is_shell_attribute_set e; then ... fi
+# ------------------------------------------------------------------------
+
+function is_shell_attribute_set()
+{
+  case "$-" in
+    *"$1"*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+# ------------------------------------------------------------------------
+# function: is-ip-address ${1}
+# usage:
+#	if [[ "$(is-ip-address ${1})" == "true" ]]; then
+#	fi
+# ------------------------------------------------------------------------
+
+function is-ip-address()
+{
+  local rx='([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])'
+  if [[ ${1} =~ ^${rx}\.${rx}\.${rx}\.${rx} ]]; then
+    echo 'true'
+  fi
+}
+
+# ---------------------------------------------------------------------------------------
+# num-masters
+# ---------------------------------------------------------------------------------------
+
+function num-masters()
+{
+  echo $(get-masters) | wc -w
+}
+
+# --------------------------------------------------------------------------------------------------
+# get-image-names
+# --------------------------------------------------------------------------------------------------
+
+function get-all-image-names-from-yaml-files()
+{
+  local pattern=".*image:\s*${DOCKER_REGISTRY_HOST}:5000\/\(.*\)$"
+  local images=$(grep -rP "image:\s*${DOCKER_REGISTRY_HOST}" ${RMS_HOME}/scripts | sed -n 's/'"${pattern}"'/\1/p' | sort -u)
+  local res=$(echo "${images}" | envsubst)
+  echo "${res}"
+}
+
+function get-3rd-party-image-names()
+{
+  local images=$(get-all-image-names-from-yaml-files | grep -v 'vod')
+  echo "${images}" | uniq
+}
+
+function get-vod-image-names()
+{
+  local images=$(get-all-image-names-from-yaml-files | grep 'vod/')
+  echo "${images}" | uniq
+}
+
+function get-tar-name-from-image-name()
+{
+  local tar_file_name="${1//:/-}.tar"
+  echo ${tar_file_name##*/} | uniq
+}
+
+function get-tar-names()
+{
+  local res=""
+  for i in ${1}; do
+    res="${res}\n$(get-tar-name-from-image-name ${i})"
+  done
+  echo -e "${res}" | uniq
+}
+
+# --------------------------------------------------------------------------------------------------
+# exec-pod
+# --------------------------------------------------------------------------------------------------
+
+function exec-pod() {
+  if [[ -z "${1}" ]]; then
+    echo 'missing argument: pod name';
+    exit -1;
+  fi
+
+  local name=${1}
+  shift
+  local cmd=${@:-'sh'}
+
+  local RES=''
+  local ns_and_pods=$(kubectl get pods --all-namespaces | grep ${name} | awk '{print $1,$2;}')
+
+  local num_lines=$(echo "${ns_and_pods}" | wc -l)
+
+
+  if [[ ${num_lines} > 1 ]]; then
+    echo "there are ${num_lines} pods. Choose one:"
+    echo "${ns_and_pods}"
+    return 0;
+  fi
+
+  local pod=$(echo "${ns_and_pods}" | awk '{print $2;}');
+  local ns=$(echo "${ns_and_pods}" | awk '{print $1;}');
+
+  if [[ "${ns}" == "default" ]]; then
+    cmd=${@:-'bash'}
+  fi
+
+  kubectl exec -it ${pod} --namespace=${ns} ${cmd}
+}
+
+# --------------------------------------------------------------------------------------------------
+# exec-pod
+# --------------------------------------------------------------------------------------------------
+
+function camel-to-dash() {
+  if [[ -z "${1}" ]]; then
+    return -1;
+  fi
+
+  echo "${1}" | sed -re 's/([a-z])([A-Z])/\1-\L\2/g'
+}
+
+# --------------------------------------------------------------------------------------------------
+# clean-node
+# --------------------------------------------------------------------------------------------------
+
+function clean-node()
+{
+  local node=${1}
+
+  echo -n "cleaning" ${node} "... "
+
+  ssh $SSH_OPTS -t ${node} "
+    echo '$PASSWD' | sudo -S service kubelet stop;
+    sudo service kube-proxy stop;
+    sudo service flanneld stop;
+    sudo service etcd stop;
+    sudo service kube-apiserver stop;
+    sudo service kube-scheduler stop;
+    sudo service kube-controller-manager stop;
+
+    sudo rm /etc/default/kubelet;
+    sudo rm /etc/default/kube-proxy;
+    sudo rm /etc/default/kube-apiserver;
+    sudo rm /etc/default/etcd;
+    sudo rm /etc/default/kube-controller-manager;
+    sudo rm /etc/default/kube-scheduler;
+    sudo rm /etc/default/flanneld;
+
+    sudo rm /var/log/kube-*;
+    sudo rm /var/log/es-*;
+    sudo rm /var/log/upstart/kube*;
+    sudo rm /var/log/upstart/etcd*;
+    sudo rm /var/log/upstart/flanneld.log;
+
+    sudo rm -rf /var/etcd/data/;
+
+    sudo rm -rf ~/.kube;
+
+    sudo rm -rf /srv/kubernetes;
+
+    sudo rm /etc/kubernetes/manifests/*;
+
+    sudo sed -i '/'${API_SERVER}'/d' /etc/hosts;
+    sudo sed -i '/'${DOCKER_REGISTRY_HOST}'/d' /etc/hosts;
+
+    docker rm -f $(docker ps -a -q);
+    sudo service docker restart;
+    rm -rf ~/kube;
+  " >/dev/null 2>&1;
+
+  echo_green 'OK.'
+}

@@ -1,0 +1,2 @@
+~/SoundFactory/deploy/kubespray/kubespray/roles/docker/tasks/main.yml
+~/SoundFactory/deploy/kubespray/kubespray/roles/kubernetes/preinstall/tasks/verify-settings.yml

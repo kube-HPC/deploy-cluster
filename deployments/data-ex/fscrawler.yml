@@ -1,0 +1,52 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: fscrawler-rest-service
+  labels:
+     group: data-ex
+spec:
+  selector:
+    name: fscrawler-rest-service
+  ports:
+    - protocol: HTTP
+      port: 8080
+      targetPort: 8080
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: fscrawler-rest-service
+  labels:
+    group: data-ex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: fscrawler-rest-service
+  template:
+    metadata:
+      labels:
+        name: fscrawler-rest-service
+    spec:
+      nodeSelector:
+        backend: backend
+      containers:
+       - name: fscrawler-rest-service
+         image: dvd12af:5005/fscrawler-rest:1.0.0
+         imagePullPolicy: IfNotPresent
+         env:
+           - name: NODE_ENV
+             value: "lab"
+           - name: BASE_URL_HOST
+             value: "${BASE_URL_HOST}"
+           - name: BASE_URL_PORT
+             value: "${BASE_URL_PORT}"
+           - name: BASE_URL_PATH
+             value: "${BASE_URL_PATH}/vod-service"
+           - name: BASE_URL_SECURED
+             value: "${BASE_URL_SECURED}"
+         ports:
+           - name: fscrawler-rest
+             containerPort: 8080
