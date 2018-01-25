@@ -124,4 +124,4 @@ bin_dir: /usr/local/bin
 #etcd_metrics: basic
 
 #  cAdvisor port on nodes
-kube_cadvisor_port: 0 
+kube_cadvisor_port: 4194 
