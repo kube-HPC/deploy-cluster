@@ -87,6 +87,10 @@
     command: kubectl apply -f ../deployments/weave.scope/scope.yaml
     tags: WeaveScope
        
+  - name: Creating monitoring namespace On Cluster "{{ cluster_name }}"
+    command: kubectl create namespace monitoring 
+    tags: monitoring
+
   - name: Installing Prometheus PV On Cluster "{{ cluster_name }}"
     shell: |
       export CLUSTER_ID={{ cluster_name }}
@@ -96,6 +100,10 @@
       envsubst <  ../deployments/monitoring/k8s-prometheus/prometheus-pv-nfs.yml | kubectl apply -f -
       exit 0
     tags: prometheus 
+
+  - name: add access to Cluster "{{ cluster_name }}"
+    command: kubectl apply -f ../deployments/monitoring/k8s-prometheus/rolebinding-monitoring.yaml 
+    tags: rolebinding
 
   - name: Installing Prometheus On Cluster "{{ cluster_name }}"
     shell: |
@@ -110,10 +118,6 @@
       envsubst <  ../deployments/logging/fluentd-kube-es-ds/fluentd-daemonset-elasticsearch.yaml | kubectl apply -f - 
       exit 0
     tags: fluentd
-
-  - name: add access to Cluster "{{ cluster_name }}"
-    command: kubectl apply -f ../deployments/monitoring/k8s-prometheus/rolebinding-monitoring.yaml 
-    tags: rolebinding
 
   - name: Installing kibana On Cluster "{{ cluster_name }}"
     command: kubectl apply -f ../deployments/es-pires/kibana.yaml 
