@@ -3,6 +3,10 @@
 *.EM
 *.pem
 
+kubespray/kubectl/admin-node12-key.pem
+kubespray/kubectl/admin-node12.pem
+kubespray/kubectl/ca.pem
+
 deployments/elastic.txt
 kubespray/artifacts
 Install
