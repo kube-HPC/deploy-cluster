@@ -1,8 +1,10 @@
 *.OK
 *.OLD
 *.EM
+
 kubespray/kubectl/*.pem
 *.pem
 
 deployments/elastic.txt
 kubespray/artifacts
+Install
