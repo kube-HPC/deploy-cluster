@@ -1,2 +1,10 @@
 alias a=alias
 a     c=clear
+a     k=kubectl
+a     kl='kubectl logs $@'
+a     kgn='kubectl get namespace $@'
+a     kgd='kubectl get deployment $@'
+a     kgp='kubectl get pods $@'
+a     kdp='kubectl delete pod $@'
+a     kdd='kubectl delete deployment $@' 
+a     kdn='kubectl delete namespace $@' 
