@@ -1,0 +1,24 @@
+---
+
+#################################################
+# Downloads all images for kubespray Instlation #
+#################################################
+- hosts: localhost
+  tasks:
+    - name: downloadall
+      with_dict: "{{ downloads }}"
+      include_role:
+        name: kubespray/kubespray/roles/download
+      vars:
+        local_release_dir: ~/SoundFactory/deploy/k8s
+        download_localhost: True
+        download_run_once: True
+        file: "{{ item.value|combine({'enabled':True}) }}"
+        key: "{{ item.key }}"
+        deploy_netchecker: False
+        kube_network_plugin: canal
+        docker_bin_dir: /usr/bin
+  vars_files:
+    - kubespray/kubespray/inventory/group_vars/k8s-cluster.yml
+    - kubespray/kubespray/roles/download/defaults/main.yml
+  

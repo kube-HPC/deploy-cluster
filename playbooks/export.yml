@@ -1,0 +1,12 @@
+---
+
+#################################################
+#   Archive project folder to Instlation Disk   #
+#################################################
+- hosts: localhost
+  tasks:
+    - name: arcive-project
+      archive: 
+        path: ~/SoundFactory
+        dest: ~/SoundFactory.tgz
+        exclude_path: ~/SoundFactory/vol_sound
