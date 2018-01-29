@@ -44,7 +44,7 @@ spec:
         - name: HTTP_ENABLE
           value: "false"
         - name: ES_JAVA_OPTS
-          value: -Xms{LOGGING_ES_JAVA_HEAP_SIZE} -Xmx{LOGGING_ES_JAVA_HEAP_SIZE}
+          value: -Xms${LOGGING_ES_JAVA_HEAP_SIZE} -Xmx${LOGGING_ES_JAVA_HEAP_SIZE}
         - name: MAX_LOCAL_STORAGE_NODES
           value: "30"
         ports:
