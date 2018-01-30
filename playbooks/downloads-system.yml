@@ -8,7 +8,7 @@
     - name: search images on files 
       shell: |
         export DOCKER_REGISTRY_HOST="cir-srv01"
-        export KUBESPRAY_HOME=~/SoundFactory/deploy/kubespray
+        export KUBESPRAY_HOME=/home/ubadmin/deploy-cluster
         export pattern=".*image:\s*${DOCKER_REGISTRY_HOST}:5000\/\(.*\)$"
         grep -rP "image:\s*${DOCKER_REGISTRY_HOST}" ${KUBESPRAY_HOME}/deployments |  sed -n 's/'"${pattern}"'/\1/p' | sort -u
       tags: pull-images
