@@ -8,9 +8,9 @@
     - name: downloadall
       with_dict: "{{ downloads }}"
       include_role:
-        name: kubespray/roles/download
+        name: ../kubespray/roles/download
       vars:
-        local_release_dir: ~/SoundFactory/deploy/k8s
+        local_release_dir: ~/deploy-cluster/k8s
         download_localhost: True
         download_run_once: True
         file: "{{ item.value|combine({'enabled':True}) }}"
@@ -19,6 +19,5 @@
         kube_network_plugin: flannel
         docker_bin_dir: /usr/bin
   vars_files:
-    - kubespray/inventory/group_vars/k8s-cluster.yml
-    - kubespray/roles/download/defaults/main.yml
-  
+    - ../kubespray/inventory/group_vars/k8s-cluster.yml
+    - ../kubespray/roles/download/defaults/main.yml

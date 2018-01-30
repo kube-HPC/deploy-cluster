@@ -1,19 +1,13 @@
 #!/bin/bash
-
 ENV_NAME=$1
 
 if [[ -z "${KUBESPRAY_HOME}" ]]; then
-  KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/kubespray" && pwd )
+  KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
   source ${KUBESPRAY_HOME}/scripts/util
 fi
 
+echo_blue "Start Cluster $1 ..." 
+
 echo ${KUBESPRAY_HOME}
-source ${KUBESPRAY_HOME}/env/$1
 
-echo_blue "Downloads all  Instlation Packeges for deploymnet ... "
-
-cd ${KUBESPRAY_HOME}/..
-
-ansible-playbook -i ../kubespray/env/inventory.$1 ../playbooks/downloads-k8s.yml 
-
-echo_green 'Done.'
+ansible-playbook -i ../env/inventory.$1 -e $1 ../playbooks/downloads-k8s.yml 
