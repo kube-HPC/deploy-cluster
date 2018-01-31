@@ -17,8 +17,10 @@
         file: "{{ item.value|combine({'enabled':True}) }}"
         key: "{{ item.key }}"
         deploy_netchecker: False
-        kube_network_plugin: canal
+        kube_network_plugin: flannel
         docker_bin_dir: /usr/bin
+        kubeadm_enabled: false
+        cert_management: script
   vars_files:
     - inventory/group_vars/k8s-cluster.yml
     - roles/download/defaults/main.yml
