@@ -13,11 +13,13 @@
         local_release_dir: /tmp/mykube
         download_localhost: True
         download_run_once: True
-        # file: "{{ downloads.etcd }}"
-        file: "{{ item.value|combine({'enabled':True}) }}"
+        kubeadm_enabled: False 
+        cert_management: True 
+        #file: "{{ downloads.files }}"
+        #file: "{{ item.value|combine({'enabled':True}) }}"
         key: "{{ item.key }}"
         deploy_netchecker: False
-        kube_network_plugin: canal
+        kube_network_plugin: flannel 
         docker_bin_dir: /usr/bin
   vars_files:
     - inventory/group_vars/k8s-cluster.yml
