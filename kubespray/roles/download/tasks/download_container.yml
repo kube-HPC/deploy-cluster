@@ -38,3 +38,11 @@
     - download.enabled
     - download.container
     - pull_required|default(download_always_pull)
+
+- name: "Sync container"
+  include: sync_container.yml
+  when:
+    - not skip_downloads|default(false)
+    - item.value.enabled
+    - item.value.container
+    - download_run_once

@@ -12,13 +12,13 @@
     - not skip_downloads|default(false)
     - item.value.enabled
 
-- name: "Sync container"
-  include: sync_container.yml
-  vars:
-    download: "{{ download_defaults | combine(item.value) }}"
-  with_dict: "{{ downloads }}"
-  when:
-    - not skip_downloads|default(false)
-    - item.value.enabled
-    - item.value.container
-    - download_run_once
+# - name: "Sync container"
+#   include: sync_container.yml
+#   vars:
+#     download: "{{ download_defaults | combine(item.value) }}"
+#   with_dict: "{{ downloads }}"
+#   when:
+#     - not skip_downloads|default(false)
+#     - item.value.enabled
+#     - item.value.container
+#     - download_run_once
