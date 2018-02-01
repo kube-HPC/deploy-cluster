@@ -6,7 +6,7 @@
 kubespray/kubectl/*
 
 deployments/elastic.txt
-deployments/containers
+deployments/minio/my
 containers
 playbooks/credentials
 kubespray/artifacts
