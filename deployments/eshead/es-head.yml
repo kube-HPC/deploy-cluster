@@ -35,6 +35,6 @@ spec:
     spec:
       containers:
         - name: elasticsearch-head
-          image: "mobz/elasticsearch-head:5
+          image: "mobz/elasticsearch-head:5"
           imagePullPolicy: IfNotPresent
   
