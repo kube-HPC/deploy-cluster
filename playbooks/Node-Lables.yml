@@ -25,4 +25,4 @@
 
   - name: add lables to nodes  for Cluster "{{ cluster_name }}"
     command: kubectl lable nodes --overwrite=true  ${nideIP} master=master worker=worker frontend=frontend backend=backend
-    tags: labeling
+    tags: labelling
