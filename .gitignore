@@ -6,6 +6,7 @@
 kubespray/kubectl/*
 
 deployments/elastic.txt
+deployments/containers
 playbooks/credentials
 kubespray/artifacts
 Install

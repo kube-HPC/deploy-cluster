@@ -7,16 +7,15 @@
   tasks:
     - name: search images on files 
       shell: |
-        export DOCKER_REGISTRY_HOST="cir-srv01"
         export KUBESPRAY_HOME=/home/$USER/deploy-cluster
-        export pattern=".*image:\s*${DOCKER_REGISTRY_HOST}:5000\/\(.*\)$"
-        grep -rP "image:\s*${DOCKER_REGISTRY_HOST}" ${KUBESPRAY_HOME}/deployments |  sed -n 's/'"${pattern}"'/\1/p' | sort -u
+        export pattern=".*image:\s*\/\(.*\)$"
+        grep -rP "image:\s*" ${KUBESPRAY_HOME}/deployments   | sed -n 's/'".*image:\s\(.*\)$"'/\1/p' | sort -u
       tags: pull-images
       register: list_items_found
     - debug: var=list_items_found
           
     - name: pull images 
-      command: docker pull {{ DOCKER_REGISTRY_HOST }}:5000/{{ item }}
+      command: docker pull {{ item }}
       vars: 
         DOCKER_REGISTRY_HOST: "cir-srv01"
       with_items: "{{ list_items_found.stdout_lines }}"
@@ -25,5 +24,5 @@
       vars: 
         itemx: "{{ item | regex_replace('\\/','_') | regex_replace('\\:','-') }}"
         DOCKER_REGISTRY_HOST: "cir-srv01"
-      command: docker save -o {{ itemx }}.tar  {{ DOCKER_REGISTRY_HOST }}:5000/{{ item }}
+      command: docker save -o {{ itemx }}.tar  {{ item }}
       with_items: "{{ list_items_found.stdout_lines  }}"
