@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: nfs-client-provisioner
-          image: "registry.hkube:5000/quay.io/external_storage/nfs-client-provisioner:latest"
+          image: "quay.io/external_storage/nfs-client-provisioner:latest"
           volumeMounts:
             - name: nfs-client-root
               mountPath: /persistentvolumes
