@@ -34,7 +34,7 @@ spec:
         backend: backend
       containers:
        - name: fscrawler-rest-service
-         image: dvd12af:5005/fscrawler-rest:1.0.0
+        # image: fscrawler-rest:1.0.0
          imagePullPolicy: IfNotPresent
          env:
            - name: NODE_ENV
