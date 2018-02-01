@@ -23,21 +23,6 @@
     debug:
       msg="{{ lookup('env','ENV_NAME') }}"  
 
-  - name: add rolebinding for Cluster "{{ cluster_name }}"
-    command: kubectl apply -f ../playbooks/rolebinding-kube-system.yaml
-    tags: rolebinding
- 
-  - name: Installing Elastic Master Cluster "{{ cluster_name }}"  
-    shell: |
-      export LOGGING_ES_PV_SIZE={{ LOGGING_ES_PV_SIZE }}
-      export LOGGING_ES_REPLICAS_MASTER={{ LOGGING_ES_REPLICAS_MASTER }}
-      export LOGGING_ES_REPLICAS_CLIENT={{ LOGGING_ES_REPLICAS_CLIENT }}
-      export LOGGING_ES_REPLICAS_DATA={{ LOGGING_ES_REPLICAS_DATA }}
-      export LOGGING_ES_MINIMUM_MASTERS={{ LOGGING_ES_MINIMUM_MASTERS }}
-      export LOGGING_ES_JAVA_HEAP_SIZE={{ LOGGING_ES_JAVA_HEAP_SIZE }}
-      envsubst < ../deployments/es-pires/es-master.yaml | kubectl apply -f -  
-     
-  - name: add access to Cluster "{{ cluster_name }}"
-    command: kubectl apply -f ../deployments/monitoring/k8s-prometheus/rolebinding-monitoring.yaml 
-    tags: rolebinding
-
+  - name: add lables to nodes  for Cluster "{{ cluster_name }}"
+    command: kubectl lable nodes --overwrite=true  ${nideIP} master=master worker=worker frontend=frontend backend=backend
+    tags: labeling
