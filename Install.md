@@ -10,3 +10,5 @@ Befor you begin
 sudo apt-get update
 sudo apt-get install sshpass
 
+
+See README.md
