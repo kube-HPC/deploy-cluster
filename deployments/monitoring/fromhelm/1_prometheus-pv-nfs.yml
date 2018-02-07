@@ -1,0 +1,120 @@
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-nfs-pv
+  labels:
+    group: monitoring 
+    type: nfs
+    role: prometheus
+spec:
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.32.10.26
+    path: "/srv/vol_nfs/dev/prom"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-nfs-pvc
+  namespace: monitoring 
+  labels:
+    group: monitoring
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  selector:
+    matchLabels:
+      type: nfs
+      group: monitoring
+      role: prometheus
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-alertmanager-nfs-pv
+  labels:
+    group: monitoring 
+    type: nfs
+    role: prometheus-alertmanager
+spec:
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.32.10.26
+    path: "/srv/vol_nfs/dev/alertmanager"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-alertmanager-nfs-pvc
+  namespace: monitoring 
+  labels:
+    group: monitoring
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  selector:
+    matchLabels:
+      type: nfs
+      group: monitoring
+      role: prometheus-alertmanager
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: grafana-storage-nfs-pv
+  labels:
+    group: monitoring 
+    type: nfs
+    role: grafana-storage
+spec:
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.32.10.26
+    path: "/srv/vol_nfs/dev/grafana"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-storage-nfs-pvc
+  namespace: monitoring 
+  labels:
+    group: monitoring
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  selector:
+    matchLabels:
+      type: nfs
+      group: monitoring
+      role: grafana-storage
+
