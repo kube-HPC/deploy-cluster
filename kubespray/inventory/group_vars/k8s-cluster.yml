@@ -77,7 +77,7 @@ weave_password: EnterPasswordHere
 # Weave uses consensus mode by default
 # Enabling seed mode allow to dynamically add or remove hosts
 # https://www.weave.works/docs/net/latest/ipam/
-weave_mode_seed: false
+weave_mode_seed: true
 
 # This two variable are automatically changed by the weave's role, do not manually change these values
 # To reset values :
@@ -87,7 +87,7 @@ weave_seed: uninitialized
 weave_peers: uninitialized
 
 # Enable kubernetes network policies
-enable_network_policy: false
+enable_network_policy: true
 
 # Kubernetes internal network for services, unused block of space.
 kube_service_addresses: 10.233.0.0/18
@@ -117,7 +117,7 @@ dns_mode: kubedns
 # Can be docker_dns, host_resolvconf or none
 resolvconf_mode: docker_dns
 # Deploy netchecker app to verify DNS resolve as an HTTP service
-deploy_netchecker: false
+deploy_netchecker: true
 # Ip address of the kubernetes skydns service
 skydns_server: "{{ kube_service_addresses|ipaddr('net')|ipaddr(3)|ipaddr('address') }}"
 dnsmasq_dns_server: "{{ kube_service_addresses|ipaddr('net')|ipaddr(2)|ipaddr('address') }}"
@@ -151,21 +151,21 @@ dashboard_enabled: true
 efk_enabled: true
 
 # Helm deployment
-helm_enabled: false
+helm_enabled: true
 
 # Istio deployment
-istio_enabled: false
+istio_enabled: true
 
 # Local volume provisioner deployment
-local_volumes_enabled: false
+local_volumes_enabled: true
 
 # Add Persistent Volumes Storage Class for corresponding cloud provider ( OpenStack is only supported now )
-persistent_volumes_enabled: false
+persistent_volumes_enabled: true
 
 # Make a copy of kubeconfig on the host that runs Ansible in GITDIR/artifacts
 kubeconfig_localhost: true
 # Download kubectl onto the host that runs Ansible in GITDIR/artifacts
-# kubectl_localhost: false
+kubectl_localhost: true
 
 # dnsmasq
 # dnsmasq_upstream_dns_servers:
