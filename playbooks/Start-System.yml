@@ -87,8 +87,12 @@
     command: kubectl apply -f ../deployments/weave.scope/scope.yaml
     tags: WeaveScope
        
+  # - name: Creating monitoring namespace On Cluster "{{ cluster_name }}"
+  #   command: kubectl create namespace monitoring 
+  #   tags: monitoring
+
   - name: Creating monitoring namespace On Cluster "{{ cluster_name }}"
-    command: kubectl create namespace monitoring 
+    command: kubectl apply -f ../deployments/monitoring/fromhelm/0_namespace.yml
     tags: monitoring
 
   - name: Installing Prometheus PV On Cluster "{{ cluster_name }}"
@@ -97,20 +101,28 @@
       export PROM_PV_SIZE={{ PROM_PV_SIZE }}
       export NFS_SERVER={{ NFS_SERVER }}
       export NFS_ROOT={{ NFS_ROOT }}
-      envsubst <  ../deployments/monitoring/k8s-prometheus/prometheus-pv-nfs.yml | kubectl apply -f -
+      envsubst <  ../deployments/monitoring/fromhelm/1_prometheus-pv-nfs.yml | kubectl --namespace=monitoring apply -f -
       exit 0
     tags: prometheus 
 
-  - name: add access to Cluster "{{ cluster_name }}"
-    command: kubectl apply -f ../deployments/monitoring/k8s-prometheus/rolebinding-monitoring.yaml 
-    tags: rolebinding
+  # - name: add access to Cluster "{{ cluster_name }}"
+  #   command: kubectl apply -f ../deployments/monitoring/k8s-prometheus/rolebinding-monitoring.yaml 
+  #   tags: rolebinding
 
   - name: Installing Prometheus On Cluster "{{ cluster_name }}"
     shell: |
       export VIRTUAL_IP={{ virtual_cluster_ip }}
-      envsubst <  ../deployments/monitoring/k8s-prometheus/manifests-all.yaml | kubectl apply -f -
+      envsubst <  ../deployments/monitoring/fromhelm/2_prometheus.yml | kubectl --namespace=monitoring apply -f -
       exit 0
     tags: prometheus
+
+  - name: Installing Grafana On Cluster "{{ cluster_name }}"
+    shell: |
+      export VIRTUAL_IP={{ virtual_cluster_ip }}
+      envsubst <  ../deployments/monitoring/fromhelm/3_grafana.yml | kubectl --namespace=monitoring apply -f -
+      exit 0
+    tags: prometheus
+
 
   - name: Installing fluentd  On Cluster "{{ cluster_name }}"
     shell: |
