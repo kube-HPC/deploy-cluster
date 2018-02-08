@@ -10,12 +10,13 @@ metadata:
     role: prometheus
 spec:
   capacity:
-    storage: 100Gi
+    storage: ${PROM_PV_SIZE}
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.32.10.26
-    path: "/srv/vol_nfs/dev/prom"
+    server: ${NFS_SERVER}
+    path: "${NFS_ROOT}/${CLUSTER_ID}/prom"
+
 
 ---
 
@@ -31,7 +32,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 100Gi
+      storage: ${PROM_PV_SIZE}
   selector:
     matchLabels:
       type: nfs
@@ -50,12 +51,12 @@ metadata:
     role: prometheus-alertmanager
 spec:
   capacity:
-    storage: 100Gi
+      storage: ${PROM_PV_SIZE}
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.32.10.26
-    path: "/srv/vol_nfs/dev/alertmanager"
+    server: ${NFS_SERVER}
+    path: "${NFS_ROOT}/${CLUSTER_ID}/alertmanager"
 
 ---
 
@@ -71,7 +72,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 100Gi
+      storage: ${PROM_PV_SIZE}
   selector:
     matchLabels:
       type: nfs
@@ -90,12 +91,12 @@ metadata:
     role: grafana-storage
 spec:
   capacity:
-    storage: 100Gi
+    storage: ${PROM_PV_SIZE}
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.32.10.26
-    path: "/srv/vol_nfs/dev/grafana"
+    server: ${NFS_SERVER}
+    path: "${NFS_ROOT}/${CLUSTER_ID}/grafana"
 
 ---
 
