@@ -1,0 +1,9 @@
+- set_fact: node="{{item.node}}"
+- name: add labels to nodes  for Cluster 
+  command: kubectl label nodes --overwrite=true  {{node}} {{label}}=true --dry-run
+  tags: labelling
+  with_items: "{{item.labels}}"
+  loop_control:
+    loop_var: "label"
+  
+  
