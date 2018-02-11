@@ -40,6 +40,9 @@
       envsubst < ../deployments/es-pires/es-pv-nfs.yaml | kubectl apply -f -
     tags: es-pv-nfs
 
+  - name: Installing Elastic config On Cluster "{{ cluster_name }}"
+    command: kubectl apply -f ../deployments/es-pires/es-configmap.yaml
+  
   - name: Installing Elastic curator-cm On Cluster "{{ cluster_name }}"
     command: kubectl apply -f ../deployments/es-pires/es-curator-cm.yaml
 
