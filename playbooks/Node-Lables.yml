@@ -24,5 +24,7 @@
       msg="{{ lookup('env','ENV_NAME') }}"  
 
   - name: add lables to nodes  for Cluster "{{ cluster_name }}"
-    command: kubectl lable nodes --overwrite=true  {{ LABLES[0]}} master=master worker=worker frontend=frontend backend=backend
+    command: kubectl lable nodes --overwrite=true  {{ item[1] }} {{ item[1].item[2] }}=item[1].item[2] }} 
     tags: labelling
+#    command: kubectl lable nodes --overwrite=true  {{ LABLES[0]}} master=master worker=worker frontend=frontend backend=backend
+#    tags: labelling
