@@ -26,6 +26,8 @@ spec:
       containers:
       - name: es-client
         image: quay.io/pires/docker-elasticsearch-kubernetes:6.1.2
+        # command: ["/bin/sh"]
+        # args: ["-c", "while true; do echo hello; sleep 10;done"]
         env:
         - name: NAMESPACE
           valueFrom:
@@ -64,7 +66,13 @@ spec:
         volumeMounts:
         - name: storage
           mountPath: /data
+        - name: config
+          mountPath: /elasticsearch/config/elasticsearch.yml
+          subPath: elasticsearch.yml
       volumes:
           - emptyDir:
               medium: ""
             name: storage
+          - name: config
+            configMap:
+              name: es-configmap
