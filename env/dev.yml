@@ -41,26 +41,34 @@ PROM_PV_SIZE: 100Gi
 
 # Nodes Labels 
 
+# Nodes Labels 
+
 LABLES:
-  - node12:
-    - master
-    - backend
-    - worker
-  - node13:
-    - master
-    - backend
-    - worker
-  - node14:
-    - master
-    - backend
-    - worker
-  - node15: 
-    - worker
-  - node16:
-    - worker
-  - node17:
-    - worker
-    
+  - node: node12
+    labels:
+      - master
+      - backend
+      - worker
+  - node: node13
+    labels: 
+      - master
+      - backend      
+      - worker
+  - node: node14
+    labels:
+      - master
+      - backend
+      - worker
+  - node: node15
+    labels:
+      - worker    
+  - node: node16
+    labels:
+      - worker    
+  - node: node17
+    labels:
+      - worker    
+        
  
  
   

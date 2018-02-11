@@ -12,19 +12,21 @@
   - name: Inport Vars form Cluster Config yaml
     debug:
       msg="{{ lookup('env','ENV_NAME') }}"
-  - include_vars: ../env/{{ lookup('env','ENV_NAME') }}.yml
   - include_vars: "../env/{{ cluster_name }}.yml"
+  - include: "./labelNode.yml"
+    with_items: "{{ LABLES }}"
 
-  - name: Debug Test2
-    debug:
-      msg="You are Working On {{ cluster_name }} Cluster"
+  # - name: Debug 
+  #   debug:
+  #     msg="You are Working On {{ cluster_name }} Cluster"
 
-  - name: Debug ENV_NAME 
-    debug:
-      msg="{{ lookup('env','ENV_NAME') }}"  
+  # - name: Debug ENV_NAME 
+  #   debug:
+  #     msg="{{ item[0] }}" #,  item[1], item[2]}}" 
+  #   LABLES:
 
-  - name: add lables to nodes  for Cluster "{{ cluster_name }}"
-    command: kubectl lable nodes --overwrite=true  {{ item[1] }} {{ item[1].item[2] }}=item[1].item[2] }} 
-    tags: labelling
-#    command: kubectl lable nodes --overwrite=true  {{ LABLES[0]}} master=master worker=worker frontend=frontend backend=backend
-#    tags: labelling
+#   - name: add lables to nodes  for Cluster "{{ cluster_name }}"
+#     command: kubectl lable nodes --overwrite=true  {{ item[1] }} {{ item[1].item[2] }}=item[1].item[2] }} 
+#     tags: labelling
+# #    command: kubectl lable nodes --overwrite=true  {{ LABLES[0]}} master=master worker=worker frontend=frontend backend=backend
+# #    tags: labelling
