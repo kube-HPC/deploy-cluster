@@ -58,7 +58,13 @@ spec:
         volumeMounts:
         - name: storage
           mountPath: /data
+        - name: config
+          mountPath: /elasticsearch/config/elasticsearch.yml
+          subPath: elasticsearch.yml
       volumes:
           - emptyDir:
               medium: ""
             name: "storage"
+          - name: config
+            configMap:
+              name: es-configmap

@@ -58,7 +58,14 @@ spec:
         volumeMounts:
         - name: storage
           mountPath: /data
+        - name: config
+          mountPath: /elasticsearch/config/elasticsearch.yml
+          subPath: elasticsearch.yml
       volumes:
-       - name: storage
-         persistentVolumeClaim:
-           claimName: elastic-nfs-pvc
+        - name: storage
+          persistentVolumeClaim:
+            claimName: elastic-nfs-pvc
+        - name: config
+          configMap:
+            name: es-configmap
+
