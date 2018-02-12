@@ -29,7 +29,7 @@ data:
       logs: /data/log
 
     bootstrap:
-      memory_lock: ${MEMORY_LOCK}
+      memory_lock: true
 
     http:
       enabled: ${HTTP_ENABLE}
@@ -37,6 +37,8 @@ data:
       cors:
         enabled: ${HTTP_CORS_ENABLE}
         allow-origin: ${HTTP_CORS_ALLOW_ORIGIN}
+        allow-methods: OPTIONS, HEAD, GET, POST, PUT, DELETE
+        allow-headers: X-Requested-With,X-Auth-Token,Content-Type, Content-Length
 
     discovery:
       zen:
