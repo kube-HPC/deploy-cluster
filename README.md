@@ -189,4 +189,11 @@ enter to ``kubespray/artifacts``
 
 
 
+###Other
+
+nfs server configuration   
+enter to ```/etc/exports```    
+add the folowing line at the end of the file ```/srv/vol_nfs or other mounting path 10.32.10.0/24(rw,sync,no_subtree_check,no_root_squash)```
+
+ 
 
