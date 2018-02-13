@@ -189,7 +189,7 @@ enter to ``kubespray/artifacts``
 
 
 
-###Other
+### Other
 
 nfs server configuration   
 enter to ```/etc/exports```    
