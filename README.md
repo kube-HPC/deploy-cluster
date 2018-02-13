@@ -17,7 +17,10 @@ sudo apt-add-repository ppa:ansible/ansible sudo apt-get update sudo apt-get ins
 sudo apt-get install sshpass
 ```
 
-## edit enviroment 
+## edit enviroment
+
+enter to ``/env`` folder
+
  ### for each enviroment do the follows
 #### create file 
 - inventory.[cluster-name]
