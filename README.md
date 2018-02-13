@@ -166,7 +166,9 @@ password should be found in  ``kube_user`` (without ``\``)
     
 * in order to set your own password just create ``kube_user`` file under the following path 
 
-
+### config kubectl 
+enter to ``kubespray/artifacts``    
+`` cp admin.conf  ~/.kube/config``    
 
 ### install system
 
