@@ -159,11 +159,11 @@ do the follows:
 
 
 #### Entering to cluster 
-for entering to the cluster enter to ``https://[master-ip]:6443``
-insert your congured user for ``env/[cluster-name]``
-go to ``kubespray/credentials``
-password should be found in  ``kube_user`` (without ``\``)
-
+for entering to the cluster enter to ``https://[master-ip]:6443``   
+insert your congured user for ``env/[cluster-name]``   
+go to ``kubespray/credentials``    
+password should be found in  ``kube_user`` (without ``\``)     
+    
 * in order to set your own password just create ``kube_user`` file under the following path 
 
 
