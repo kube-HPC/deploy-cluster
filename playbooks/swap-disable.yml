@@ -1,0 +1,23 @@
+--- 
+
+- hosts: all
+  name: Set Swap off nodes
+  become: yes
+  tasks:
+#    - name: Create swap space 
+#      command: dd if=/dev/zero of=/extraswap bs=1M count=512
+#      when: ansible_swaptotal_mb < 1
+
+#    - name: Make swap
+#      command: mkswap /extraswap
+#      when: ansible_swaptotal_mb < 1
+
+    - name: Add to fstab
+      action: lineinfile dest=/etc/fstab regexp="swap" line="/swap none sw 0 0" state=absent
+
+    - name: Turn swap off
+      command: swapoff -a
+
+    - name: Set swapiness
+      shell: echo 0 | sudo tee /proc/sys/vm/swappiness 
+
