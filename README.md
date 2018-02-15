@@ -3,7 +3,9 @@
 ## prerequiste
 - install ansible 
 ```
-sudo apt-add-repository ppa:ansible/ansible sudo apt-get update sudo apt-get install ansible
+sudo apt-add-repository ppa:ansible/ansible  
+sudo apt-get update  
+sudo apt-get install ansible  
 
 ```
 - install python-netaddr
@@ -16,9 +18,20 @@ sudo apt-add-repository ppa:ansible/ansible sudo apt-get update sudo apt-get ins
 ``` 
 sudo apt-get install sshpass
 ```
+- install kubectl 
+```
+kubectl config set-cluster maty  --server=http://127.0.0.1:8080 
+kubectl config set-context maty --cluster="maty_"
+kubectl config use-context maty
+kubectl cluster-info
+```
 
-## edit enviroment 
- ### for each enviroment do the follows
+## edit enviroment
+
+enter to ``/env`` folder
+
+### for each enviroment do the follows
+
 #### create file 
 - inventory.[cluster-name]
 ```yaml
@@ -147,6 +160,18 @@ do the follows:
 #### run ./Post-Install [cluster-name]
 
 
+#### Entering to cluster 
+for entering to the cluster enter to ``https://[master-ip]:6443``   
+insert your congured user for ``env/[cluster-name]``   
+go to ``kubespray/credentials``    
+password should be found in  ``kube_user`` (without ``\``)     
+    
+* in order to set your own password just create ``kube_user`` file under the following path 
+
+### config kubectl 
+enter to ``kubespray/artifacts``    
+`` cp admin.conf  ~/.kube/config``    
+
 ### install system
 
 #### run ./Start-System [cluster-name] 
@@ -164,4 +189,11 @@ do the follows:
 
 
 
+### Other
+
+nfs server configuration   
+enter to ```/etc/exports```    
+add the folowing line at the end of the file ```/srv/vol_nfs or other mounting path 10.32.10.0/24(rw,sync,no_subtree_check,no_root_squash)```
+
+ 
 
