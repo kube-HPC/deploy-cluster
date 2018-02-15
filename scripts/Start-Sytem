@@ -1,5 +1,13 @@
 #!/bin/bash
 export ENV_NAME=$1
+source util
+
+if [[ -z "${ENV_NAME}" ]]; then
+  echo "option are"
+  ls ../env/*.yml | awk '{ print $1 }'
+  echo_red "Must Enter Cluster Name"
+  exit
+fi
 
 if [[ -z "${KUBESPRAY_HOME}" ]]; then
   KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
@@ -10,4 +18,4 @@ echo_blue "Start System Componnent On Cluster $1 ..."
 
 echo ${KUBESPRAY_HOME}
 
-ansible-playbook -i ../env/inventory.$1 -e ${ENV_NAME} ../playbooks/Start-System.yml -v
+ansible-playbook -i ../env/inventory.$ENV_NAME -e  cluster_name=$ENV_NAME ../playbooks/Start-System.yml -v
