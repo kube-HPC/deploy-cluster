@@ -1,9 +1,10 @@
 #!/bin/bash
+
 export ENV_NAME=$1
 
 source util
 
-if [[ -z "${ENV_HOME}" ]]; then
+if [[ -z "${ENV_NAME}" ]]; then
    echo "options are"
    ls ../env/*.yml | awk '{ print $1 }'
    echo_red "Must Enter Cluster Name"
