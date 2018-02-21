@@ -1,0 +1,56 @@
+---
+
+- hosts: localhost
+  name: Installing Cluster
+  become: no
+  # vars_prompt:
+  #   - name: "cluster_name"
+  #     prompt: "Type The Cluster Name you are  working"
+  #     default: "dev"
+  
+  tasks:
+  - name: Inport Vars form Cluster Config yaml
+    debug:
+      msg="{{ lookup('env','ENV_NAME') }}"
+  - include_vars: ../env/{{ lookup('env','ENV_NAME') }}.yml
+    tags: importvars
+
+  - name: Debug Test2
+    debug:
+      msg="You are Working On {{ cluster_name }} Cluster"
+
+  - name: Debug ENV_NAME 
+    debug:
+      msg="{{ lookup('env','ENV_NAME') }}"  
+
+  - name: Delete Elastic PV On Cluster "{{ cluster_name }}"
+    command: kubectl delete -f ../deployments/es-pires/es-pv-nfs.yaml
+    tags: Elastic
+
+  - name: Delete Elastic curator-cm On Cluster "{{ cluster_name }}"
+    command: kubectl delete -f ../deployments/es-pires/es-curator-cm.yaml
+    tags: Elastic
+
+  - name: Delete Elastic curator On Cluster "{{ cluster_name }}"
+    command: kubectl delete -f ../deployments/es-pires/es-curator.yaml
+    tags: Elastic
+
+  - name: Delete Elastic PV On Cluster "{{ cluster_name }}" 
+    command: kubectl delete -f ../deployments/es-pires/es-svc.yaml
+    tags: Elastic
+
+  - name: Delete Elastic svc for Cluster "{{ cluster_name }}"
+    command: kubectl delete -f ../deployments/es-pires/es-discovery-svc.yaml
+    tags: Elastic
+
+  - name: Delete Elastic Master Cluster "{{ cluster_name }}"
+    command: kubectl delete -f ../deployments/es-pires/es-master.yaml
+    tags: Elastic
+  
+  - name: Delete Elastic Client On Cluster "{{ cluster_name }}"
+    command: kubectl delete -f ../deployments/es-pires/es-client.yaml
+    tags: Elastic
+  
+  - name: Delete Elastic Data On  Cluster "{{ cluster_name }}"
+    command: kubectl delete -f ../deployments/es-pires/es-data.yaml
+    tags: Elastic 
