@@ -8,6 +8,26 @@ fi
 
 echo_blue "Start Cluster $1 ..." 
 
-echo ${KUBESPRAY_HOME}
+echo ${KUBESPRAY_HOME} 
 
-ansible-playbook -i ../env/inventory.$1 -e $1 --ask-become-pass -b ../playbooks/Start-Cluster.yml
+#ansible-playbook -i ../env/inventory.$1 -e $1 --ask-become-pass -b ../playbooks/Start-Cluster.yml
+
+echo_green 'done'
+
+echo_blue 'Get Cert for this Cluster'
+
+ansible-playbook -i ../env/inventory.$1 -e $1 --ask-become-pass  ../playbooks/get-certs.yml
+
+echo_green 'done'
+
+echo_blue 'Copy Certs to first master'
+
+ansible-playbook -i ../env/inventory.$1 -e $1 --ask-become-pass ../playbooks/copy-certs.yml
+
+echo_green 'done'
+
+echo_blue 'add lables to nodes'
+
+ansible-playbook -i ../env/inventory.$1 -e $1 --ask-become-pass ../playbooks/Node-Lables.yml
+
+echo_green 'done'

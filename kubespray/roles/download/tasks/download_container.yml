@@ -1,6 +1,6 @@
 ---
 - name: container_download | Make download decision if pull is required by tag or sha256
-  include: set_docker_image_facts.yml
+  include_tasks: set_docker_image_facts.yml
   delegate_to: "{{ download_delegate if download_run_once or omit }}"
   delegate_facts: no
   run_once: "{{ download_run_once }}"
@@ -38,11 +38,3 @@
     - download.enabled
     - download.container
     - pull_required|default(download_always_pull)
-
-- name: "Sync container"
-  include: sync_container.yml
-  when:
-    - not skip_downloads|default(false)
-    - item.value.enabled
-    - item.value.container
-    - download_run_once
