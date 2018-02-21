@@ -15,7 +15,7 @@ ansible_user=ubadmin
 bootstrap_os=ubuntu
 loadbalancer_apiserver_localhost=false
 kube_api_pwd=ubadmin
-cluster_name=azure-dev
+cluster_name=azure.dev
 
 [kube-master]
 node12

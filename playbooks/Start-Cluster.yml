@@ -21,6 +21,8 @@
 - import_playbook: ../kubespray/cluster.yml
 
 
-- import_playbook: ../kubespray/copy-cert.yml
+#- import_playbook: ../playbooks/get-certs.yml
 
+#- import_playbook: ../playbooks/copy-certs.yml
 
+#- import_playbook: ../playbooks/Node-Lables.yml
