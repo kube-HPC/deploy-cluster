@@ -1,6 +1,15 @@
 #!/bin/bash
 ENV_NAME=$1
 
+source util
+
+if [[ -z "${ENV_NAME}" ]]; then
+  echo "option are"
+  ls ../env/*.yml | awk '{ print $1 }'
+  echo_red "Must Enter Cluster Name"
+  exit
+fi
+
 if [[ -z "${KUBESPRAY_HOME}" ]]; then
   KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
   source ${KUBESPRAY_HOME}/scripts/util
@@ -10,24 +19,24 @@ echo_blue "Start Cluster $1 ..."
 
 echo ${KUBESPRAY_HOME} 
 
-#ansible-playbook -i ../env/inventory.$1 -e $1 --ask-become-pass -b ../playbooks/Start-Cluster.yml
+ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME --ask-become-pass -b ../playbooks/Start-Cluster.yml
 
 echo_green 'done'
 
 echo_blue 'Get Cert for this Cluster'
 
-ansible-playbook -i ../env/inventory.$1 -e $1 --ask-become-pass  ../playbooks/get-certs.yml
+ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME ../playbooks/get-certs.yml
 
 echo_green 'done'
 
 echo_blue 'Copy Certs to first master'
 
-ansible-playbook -i ../env/inventory.$1 -e $1 --ask-become-pass ../playbooks/copy-certs.yml
+ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME ../playbooks/copy-certs.yml
 
 echo_green 'done'
 
 echo_blue 'add lables to nodes'
 
-ansible-playbook -i ../env/inventory.$1 -e $1 --ask-become-pass ../playbooks/Node-Lables.yml
+ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME ../playbooks/Node-Lables.yml
 
 echo_green 'done'
