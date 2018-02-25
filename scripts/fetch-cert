@@ -1,0 +1,24 @@
+#!/bin/bash
+
+ENV_NAME=$1
+
+if [[ -z "${ENV_NAME}" ]]; then
+   echo "Options are"
+   ls ../env/*.yml | awk '{ print $1 }'
+   echo "Must Enter Cluster Name"
+   exit
+fi
+
+if [[ -z "${KUBESPRAY_HOME}" ]]; then
+  KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
+  source ${KUBESPRAY_HOME}/scripts/util
+fi
+
+source ${KUBESPRAY_HOME}/env/$ENV_NAME
+
+echo_blue "Get Cert for cluster '$ENV_NAME'" 
+
+ansible-playbook  -i ${KUBESPRAY_HOME}/env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME ../playbooks/fetch-certs.yml -v
+
+echo_green 'Done.'
+
