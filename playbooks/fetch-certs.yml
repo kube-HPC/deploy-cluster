@@ -1,0 +1,27 @@
+---
+
+- hosts: kube-master[0]
+  gather_facts: no
+  become: no
+  tasks:
+    - name: fetching the config file from first master
+      fetch:
+        src: admin.conf
+        dest: "~/.kube/config.{{ cluster_name }}"
+        flat: yes
+- hosts: localhost
+  become: no
+  tasks:
+    - stat:
+        path: ~/.kube/config
+      register: configfile
+    - name: switch context to "{{ cluster_name }}"
+      shell: | 
+        KUBECONFIG=~/.kube/config."{{ cluster_name }}":~/.kube/config kubectl config view --flatten > ~/.kube/config.tmp
+        rm ~/.kube/config/
+        mv ~/.kube/config.tmp ~/.kube/config
+        rm ~/.kube/config.tmp
+        kubectl config use-context admin-"{{ cluster_name }}"
+      tags: switchcontext
+      when: configfile.stat.exists
+
