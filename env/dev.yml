@@ -41,34 +41,33 @@ PROM_PV_SIZE: 100Gi
 
 # Nodes Labels 
 
-# Nodes Labels 
-
 LABLES:
   - node: node12
     labels:
-      - master
-      - backend
+      - api
+      - "reverse-proxy"
       - worker
+      - core
   - node: node13
-    labels: 
-      - master
-      - backend      
+    labels:
       - worker
+      - core
   - node: node14
     labels:
-      - master
-      - backend
       - worker
+      - core
   - node: node15
     labels:
-      - worker    
+      - worker
+      - core
   - node: node16
     labels:
-      - worker    
+      - worker
+      - core
   - node: node17
     labels:
-      - worker    
-        
+      - worker
+      - core
  
  
   
