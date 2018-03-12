@@ -43,44 +43,50 @@ LABLES:
   - node: node1
     labels:
       - api
-      - "reverse-proxy"
   - node: node2
     labels:
       - api
-      - "reverse-proxy"
   - node: node3
     labels:
       - api
-      - "reverse-proxy"
   - node: node4
     labels:
+      - "reverse-proxy"
       - worker
+      - "third-party"
       - core
   - node: node5
     labels:
       - worker
       - core
+      - "third-party"
   - node: node6
     labels:
       - worker
       - core
+      - "third-party"
   - node: node7
     labels:
       - worker
       - core
+      - "third-party"
   - node: node8
     labels:
       - worker
       - core
+      - "third-party"
   - node: node9
     labels:
       - worker
       - core
+      - "third-party"
   - node: node10
     labels:
       - worker
       - core
+      - "third-party"
   - node: node11
     labels:
       - worker
       - core
+      - "third-party"

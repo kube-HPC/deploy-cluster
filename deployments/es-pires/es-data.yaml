@@ -53,8 +53,9 @@ spec:
         livenessProbe:
           tcpSocket:
             port: transport
-          initialDelaySeconds: 20
-          periodSeconds: 10
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 30
         volumeMounts:
         - name: storage
           mountPath: /data
