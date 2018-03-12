@@ -48,26 +48,32 @@ LABLES:
       - "reverse-proxy"
       - worker
       - core
+      - "third-party"
   - node: node13
     labels:
       - worker
       - core
+      - "third-party"
   - node: node14
     labels:
       - worker
       - core
+      - "third-party"
   - node: node15
     labels:
       - worker
       - core
+      - "third-party"
   - node: node16
     labels:
       - worker
       - core
+      - "third-party"
   - node: node17
     labels:
       - worker
       - core
+      - "third-party"
  
  
   
