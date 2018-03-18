@@ -36,3 +36,57 @@ LOGGING_ES_JAVA_HEAP_SIZE: 2g
 # Prometheus Defualt Configuration
 
 PROM_PV_SIZE: 100Gi
+
+# Nodes Labels 
+
+LABLES:
+  - node: node1
+    labels:
+      - api
+  - node: node2
+    labels:
+      - api
+  - node: node3
+    labels:
+      - api
+  - node: node4
+    labels:
+      - "reverse-proxy"
+      - worker
+      - "third-party"
+      - core
+  - node: node5
+    labels:
+      - worker
+      - core
+      - "third-party"
+  - node: node6
+    labels:
+      - worker
+      - core
+      - "third-party"
+  - node: node7
+    labels:
+      - worker
+      - core
+      - "third-party"
+  - node: node8
+    labels:
+      - worker
+      - core
+      - "third-party"
+  - node: node9
+    labels:
+      - worker
+      - core
+      - "third-party"
+  - node: node10
+    labels:
+      - worker
+      - core
+      - "third-party"
+  - node: node11
+    labels:
+      - worker
+      - core
+      - "third-party"
