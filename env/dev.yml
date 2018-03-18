@@ -38,9 +38,6 @@ LOGGING_ES_JAVA_HEAP_SIZE: 2g
 
 PROM_PV_SIZE: 100Gi
 
-
-# Nodes Labels 
-
 # Nodes Labels 
 
 LABLES:
@@ -68,7 +65,3 @@ LABLES:
   - node: node17
     labels:
       - worker    
-        
- 
- 
-  

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# List all replication controllers and services together in ps output format
+
+kubectl get rc,services $@
