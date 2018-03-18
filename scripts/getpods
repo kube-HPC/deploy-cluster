@@ -1,0 +1,14 @@
+#!/bin/bash
+
+PODS_NAME=$1
+
+if [[ -z "${KUBESPRAY_HOME}" ]]; then
+  KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
+  source ${KUBESPRAY_HOME}/scripts/util
+fi
+
+echo_blue "Get PODS $PODS_NAME on cluster" 
+
+kubectl get pods --all-namespaces | grep $PODS_NAME | awk '{print $1,$2;}'
+
+echo_green 'Done.'

@@ -51,28 +51,3 @@
       command: kubectl config use-context default-system
 
 - include: add-to-path.yml
-    # - name: Add kubernetes bin to PATH
-    #   vars:
-    #     extra_path: '$HOME/SoundFactory/deploy/kubespray/bin'
-    #     home_directory: /home/ubadmin
-    #   lineinfile:
-    #     path: '{{ home_directory }}/.bashrc'
-    #     state: present
-    #     line: 'export PATH={{ extra_path }}:$PATH'
-    
-    # - name: Add kubectl autocomplition to .bashrc
-    #   vars:
-    #     home_directory: /home/ubadmin
-    #   lineinfile:
-    #     path: '{{ home_directory }}/.bashrc'
-    #     state: present
-    #     line: 'source <(kubectl completion bash)'
-    
-    # - name: Add NS = --namespace=kube-system
-    #   vars:
-    #     home_directory: /home/ubadmin
-    #   lineinfile:
-    #     path: '{{ home_directory }}/.bashrc'
-    #     state: present
-    #     line: 'export NS=--namespace=kube-system'
-    
