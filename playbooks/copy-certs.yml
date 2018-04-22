@@ -31,7 +31,11 @@
 
   - name: " Copy admin.config file to ~/.kube/config to hosts that don't have it"
     copy:
+<<<<<<< HEAD
       src: "~/deploy-cluster/env/artifacts/admin.conf"
+=======
+      src: "~/deploy-cluster/kubespray/artifacts/admin.conf"
+>>>>>>> bc4bd02b17039e99307854819792393cb4b44984
       dest: "/home/ubadmin/admin.conf" #{{ hostvars[groups['kube-master'][0]].kubectl_name }}:
       group: "ubadmin"
       mode: "640"
