@@ -5,8 +5,8 @@
 *.pem
 *.ORIG
 
-kubespray/kubectl/*
 bin/kubectl
+kubespray/kubectl/*
 deployments/elastic.txt
 deployments/minio/my
 containers
