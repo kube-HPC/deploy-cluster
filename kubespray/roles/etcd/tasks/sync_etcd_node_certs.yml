@@ -9,7 +9,7 @@
     sync_file: "{{ item }}"
     sync_file_dir: "{{ etcd_cert_dir }}"
     sync_file_hosts: [ "{{ inventory_hostname }}" ]
-    sync_file_is_cert: true
+    sync_file_is_cert: True
   with_items: "{{ etcd_node_cert_list|d([]) }}"
 
 - name: sync_etcd_node_certs | Set facts for etcd sync_file results
