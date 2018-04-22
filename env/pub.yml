@@ -20,7 +20,6 @@ USE_PERSISTANT_VOLUMES: True
 ##INSTALL_NFS_HOST: False
 
 url_username: kube
-url_password: SoundFactory
 
 # Kibana 
 KIBANA_EXTERNAL_IP: 40.69.222.75

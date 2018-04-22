@@ -19,11 +19,6 @@
 
 - hosts: kube-master[0]
   gather_facts: yes
-#  vars_prompt:
-
-#    - name: "USERNAME"
-#      prompt: "Enter Your User Name"
-#      default: "ubadmin"
 
   vars:
     kubectl_name: "{{ hostvars[groups['kube-master'][0]].kubectl_name }}"
@@ -32,8 +27,7 @@
   - name: " Copy admin.config file to ~/.kube/config to hosts that don't have it"
     copy:
       src: "~/deploy-cluster/env/artifacts/admin.conf"
-      src: "~/deploy-cluster/kubespray/artifacts/admin.conf"
-      dest: "/home/ubadmin/admin.conf" #{{ hostvars[groups['kube-master'][0]].kubectl_name }}:
+      dest: "/home/ubadmin/admin.conf" 
       group: "ubadmin"
       mode: "640"
       owner: "ubadmin"

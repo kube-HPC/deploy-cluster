@@ -7,7 +7,7 @@ agampub-n3 ansible_ssh_host=52.178.191.60   # ip=10.0.0.6
 agampub-n4 ansible_ssh_host=52.178.191.27   # ip=10.0.0.7
 
 [all:vars]
-
+ntp_servers=['97.74.42.79','193.2.78.228']
 ansible_become_pass=ubadmin
 ansible_python_interpreter=/usr/bin/python3
 ansibler_ssh_pass=ubadmin
@@ -15,10 +15,8 @@ ansible_user=ubadmin
 bootstrap_os=ubuntu
 loadbalancer_apiserver_localhost=false
 kube_api_pwd=ubadmin
-cluster_name=azure.agamp
+cluster_name=azure.agampub
 kube_apiserver_public_ip=40.69.222.75
-#kube_apiserver_ip=40.69.222.75
-#external_apiserver_endpoint=40.69.222.75
 
 [kube-master]
 agampub-n1
