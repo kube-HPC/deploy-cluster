@@ -5,13 +5,8 @@
 *.pem
 *.ORIG
 
-<<<<<<< HEAD
-bin/kubectl
-kubespray/kubectl/*
-=======
 kubespray/kubectl/*
 
->>>>>>> bc4bd02b17039e99307854819792393cb4b44984
 deployments/elastic.txt
 deployments/minio/my
 containers
