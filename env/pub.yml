@@ -13,7 +13,7 @@ virtual_cluster_ip: 40.69.222.75
 
 # nfs server 
 
-NFS_SERVER: 40.69.222.75
+NFS_SERVER: 10.0.0.4
 NFS_ROOT: /srv/vol_nfs
 USE_PERSISTANT_VOLUMES: True
 
