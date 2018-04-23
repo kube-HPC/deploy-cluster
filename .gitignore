@@ -6,7 +6,9 @@
 *.ORIG
 
 kubespray/kubectl/*
-
+kubespray/artifacts
+env/artifacts
+kubespray/credentials
 deployments/elastic.txt
 deployments/minio/my
 containers
