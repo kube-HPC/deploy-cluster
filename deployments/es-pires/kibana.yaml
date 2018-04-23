@@ -24,7 +24,7 @@ spec:
         - name: CLUSTER_NAME
           value: myesdb
         - name: SERVER_BASEPATH
-          value: /api/v1/proxy/namespaces/kube-system/services/kibana
+          value: /system/kibana
 #        - name: XPACK_SECURITY_ENABLED
 #          value: 'false'
 #        - name: XPACK_GRAPH_ENABLED

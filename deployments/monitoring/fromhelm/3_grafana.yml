@@ -41,6 +41,7 @@ data:
     ;domain = localhost
     ;enforce_domain = false
     ;root_url = %(protocol)s://%(domain)s:%(http_port)s/
+    root_url = /monitoring/grafana/
     ;router_logging = false
     ;static_root_path = public
     ;enable_gzip = false
