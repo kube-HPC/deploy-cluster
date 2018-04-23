@@ -13,12 +13,13 @@
   when:
     - download.enabled
     - download.file
+    - group_names | intersect(download.groups) | length
 
 - name: file_download | Download item
   get_url:
     url: "{{download.url}}"
     dest: "{{local_release_dir}}/{{download.dest}}"
-    sha256sum: "{{download.sha256 | default(omit)}}"
+    #sha256sum: "{{download.sha256 | default(omit)}}"
     owner: "{{ download.owner|default(omit) }}"
     mode: "{{ download.mode|default(omit) }}"
   register: get_url_result
@@ -28,6 +29,7 @@
   when:
     - download.enabled
     - download.file
+    - group_names | intersect(download.groups) | length
 
 - name: file_download | Extract archives
   unarchive:
@@ -40,3 +42,4 @@
     - download.enabled
     - download.file
     - download.unarchive|default(False)
+    - group_names | intersect(download.groups) | length
