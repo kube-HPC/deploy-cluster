@@ -1,0 +1,23 @@
+curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
+
+chmod 700 get_helm.sh
+
+./get_helm.sh
+helm install stable/minio --namespace kube-system --name minio
+
+
+helm repo list
+helm repo add dev https://example.com/dev-charts
+helm repo update
+
+# Example
+
+
+helm create deis-workflow
+
+helm package deis-workflow
+
+
+helm install ./deis-workflow-0.1.0.tgz
+
+
