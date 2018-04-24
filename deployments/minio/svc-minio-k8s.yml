@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: 2018-04-24T19:47:38Z
+  name: minio1
+  namespace: kube-system
+  resourceVersion: "174367"
+  selfLink: /api/v1/namespaces/kube-system/services/minio1
+  uid: 57db2f4b-47f8-11e8-88b0-000d3ab7e5fc
+spec:
+  clusterIP: 10.233.54.4
+  externalIPs:
+  - 40.69.222.75
+  ports:
+  - port: 9000
+    protocol: TCP
+    targetPort: 9000
+  selector:
+    run: minio1
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
