@@ -26,7 +26,7 @@
 
 
   - name: Install tiller on  "{{ cluster_name }}"
-    command: kubectl 
+    command: kubectl apply -f ../deployments/helm/helm.init.yml
     tags: helm-init
 
 
