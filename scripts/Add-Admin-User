@@ -1,0 +1,15 @@
+#!/bin/bash
+
+PODS_NAME=$1
+
+if [[ -z "${KUBESPRAY_HOME}" ]]; then
+  KUBESPRAY_HOME=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd )
+  source ${KUBESPRAY_HOME}/scripts/util
+fi
+
+echo_blue "Get PODS $PODS_NAME on cluster" 
+
+kubectl create -f ../playbooks/kube-admin-user.yaml
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+
+echo_green 'Done.'
