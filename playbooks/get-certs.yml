@@ -15,15 +15,12 @@
     - name: export hostname
       set_fact:
         kubectl_name: "{{ inventory_hostname }}"
-      # set_fact:
-      #   kubectl_address: "{{ ansible_ssh_host }}"
  
 - hosts: localhost
   gather_facts: yes
   connection: local
   vars:
     kubectl_name: "{{ hostvars[groups['kube-master'][0]].kubectl_name }}"
-    # kubectl_address: "{{ hostvars[groups['kube-master'][0]].kubectl_address }}"
   tasks:
   
     - name: Delete if exists config file
@@ -49,5 +46,26 @@
 
     - name: use-context default-system
       command: kubectl config use-context default-system
-
+    
+    - name: flaten config file
+      command: kubectl config view --flatten > ~/.kube/config.tmp
+    
 - include: add-to-path.yml
+
+
+- hosts: localhost
+  become: no
+  tasks:
+    - stat:
+        path: ~/.kube/config
+      register: configfile
+    - name: switch context to "{{ cluster_name }}"
+      shell: | 
+        KUBECONFIG=~/.kube/config.tmp:~/.kube/config kubectl config view --flatten > ~/.kube/config."{{ cluster_name }}"
+        rm ~/.kube/config
+        mv ~/.kube/config."{{ cluster_name }}" ~/.kube/config
+        #kubectl config use-context admin-"{{ cluster_name }}"
+      tags: switchcontext
+      when: configfile.stat.exists
+
+    

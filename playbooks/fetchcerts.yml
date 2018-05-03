@@ -24,4 +24,3 @@
         kubectl config use-context admin-"{{ cluster_name }}"
       tags: switchcontext
       when: configfile.stat.exists
-
