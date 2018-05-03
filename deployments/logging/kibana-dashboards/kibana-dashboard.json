@@ -26,7 +26,7 @@
       "title": "main",
       "hits": 0,
       "description": "",
-      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":3,\"h\":3,\"i\":\"1\"},\"id\":\"23c4f310-066a-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"2\",\"gridData\":{\"x\":0,\"y\":17,\"w\":12,\"h\":5,\"i\":\"2\"},\"id\":\"82a866c0-0668-11e8-9166-d14fd078a6e5\",\"sort\":[\"@timestamp\",\"desc\"],\"type\":\"search\",\"version\":\"6.1.2\"},{\"panelIndex\":\"3\",\"gridData\":{\"x\":3,\"y\":0,\"w\":9,\"h\":3,\"i\":\"3\"},\"id\":\"7fd35b80-066d-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"4\",\"gridData\":{\"x\":0,\"y\":9,\"w\":2,\"h\":3,\"i\":\"4\"},\"id\":\"ec1b1340-0722-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"5\",\"gridData\":{\"x\":2,\"y\":9,\"w\":2,\"h\":3,\"i\":\"5\"},\"id\":\"f7f4faf0-0722-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"6\",\"gridData\":{\"x\":4,\"y\":9,\"w\":2,\"h\":3,\"i\":\"6\"},\"id\":\"c3d8df60-0723-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"8\",\"gridData\":{\"x\":9,\"y\":3,\"w\":3,\"h\":3,\"i\":\"8\"},\"id\":\"3d1785d0-0750-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"9\",\"gridData\":{\"x\":6,\"y\":3,\"w\":3,\"h\":3,\"i\":\"9\"},\"id\":\"12f280d0-0754-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"10\",\"gridData\":{\"x\":0,\"y\":3,\"w\":3,\"h\":3,\"i\":\"10\"},\"id\":\"d63a11d0-0753-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"11\",\"gridData\":{\"x\":3,\"y\":3,\"w\":3,\"h\":3,\"i\":\"11\"},\"id\":\"2d589ef0-0754-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"12\",\"gridData\":{\"x\":0,\"y\":12,\"w\":4,\"h\":5,\"i\":\"12\"},\"id\":\"53959520-0720-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"13\",\"gridData\":{\"x\":4,\"y\":12,\"w\":8,\"h\":5,\"i\":\"13\"},\"id\":\"c1166830-071c-11e8-9166-d14fd078a6e5\",\"sort\":[\"@timestamp\",\"asc\"],\"type\":\"search\",\"version\":\"6.1.2\"},{\"panelIndex\":\"14\",\"gridData\":{\"x\":6,\"y\":9,\"w\":6,\"h\":3,\"i\":\"14\"},\"id\":\"868bd050-097a-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"15\",\"gridData\":{\"x\":0,\"y\":6,\"w\":6,\"h\":3,\"i\":\"15\"},\"version\":\"6.1.2\",\"type\":\"visualization\",\"id\":\"cecb0fe0-10cb-11e8-bd2b-5d06cccbecfb\"},{\"panelIndex\":\"16\",\"gridData\":{\"x\":6,\"y\":6,\"w\":6,\"h\":3,\"i\":\"16\"},\"version\":\"6.1.2\",\"type\":\"visualization\",\"id\":\"03ebfbd0-10cc-11e8-bd2b-5d06cccbecfb\"}]",
+      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":3,\"h\":3,\"i\":\"1\"},\"id\":\"23c4f310-066a-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"2\",\"gridData\":{\"x\":0,\"y\":6,\"w\":12,\"h\":5,\"i\":\"2\"},\"id\":\"82a866c0-0668-11e8-9166-d14fd078a6e5\",\"sort\":[\"@timestamp\",\"desc\"],\"type\":\"search\",\"version\":\"6.1.2\"},{\"panelIndex\":\"3\",\"gridData\":{\"x\":3,\"y\":0,\"w\":9,\"h\":3,\"i\":\"3\"},\"id\":\"7fd35b80-066d-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"4\",\"gridData\":{\"x\":0,\"y\":14,\"w\":2,\"h\":3,\"i\":\"4\"},\"id\":\"ec1b1340-0722-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"5\",\"gridData\":{\"x\":2,\"y\":14,\"w\":2,\"h\":3,\"i\":\"5\"},\"id\":\"f7f4faf0-0722-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"6\",\"gridData\":{\"x\":4,\"y\":14,\"w\":2,\"h\":3,\"i\":\"6\"},\"id\":\"c3d8df60-0723-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"8\",\"gridData\":{\"x\":9,\"y\":3,\"w\":3,\"h\":3,\"i\":\"8\"},\"id\":\"3d1785d0-0750-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"9\",\"gridData\":{\"x\":6,\"y\":3,\"w\":3,\"h\":3,\"i\":\"9\"},\"id\":\"12f280d0-0754-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"10\",\"gridData\":{\"x\":0,\"y\":3,\"w\":3,\"h\":3,\"i\":\"10\"},\"id\":\"d63a11d0-0753-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"11\",\"gridData\":{\"x\":3,\"y\":3,\"w\":3,\"h\":3,\"i\":\"11\"},\"id\":\"2d589ef0-0754-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"12\",\"gridData\":{\"x\":0,\"y\":17,\"w\":4,\"h\":5,\"i\":\"12\"},\"id\":\"53959520-0720-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"13\",\"gridData\":{\"x\":4,\"y\":17,\"w\":8,\"h\":5,\"i\":\"13\"},\"id\":\"c1166830-071c-11e8-9166-d14fd078a6e5\",\"sort\":[\"@timestamp\",\"asc\"],\"type\":\"search\",\"version\":\"6.1.2\"},{\"panelIndex\":\"14\",\"gridData\":{\"x\":6,\"y\":14,\"w\":6,\"h\":3,\"i\":\"14\"},\"id\":\"868bd050-097a-11e8-9166-d14fd078a6e5\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"15\",\"gridData\":{\"x\":0,\"y\":11,\"w\":6,\"h\":3,\"i\":\"15\"},\"id\":\"cecb0fe0-10cb-11e8-bd2b-5d06cccbecfb\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"16\",\"gridData\":{\"x\":6,\"y\":11,\"w\":6,\"h\":3,\"i\":\"16\"},\"id\":\"03ebfbd0-10cc-11e8-bd2b-5d06cccbecfb\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"17\",\"gridData\":{\"x\":0,\"y\":22,\"w\":6,\"h\":3,\"i\":\"17\"},\"id\":\"085ef830-4e97-11e8-829c-4d7ec33006d9\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"gridData\":{\"w\":6,\"h\":3,\"x\":6,\"y\":22,\"i\":\"18\"},\"version\":\"6.1.2\",\"panelIndex\":\"18\",\"type\":\"visualization\",\"id\":\"be24a160-4e97-11e8-829c-4d7ec33006d9\"}]",
       "optionsJSON": "{\"darkTheme\":true,\"hidePanelTitles\":false,\"useMargins\":true}",
       "uiStateJSON": "{\"P-1\":{\"spy\":{\"mode\":{\"fill\":false,\"name\":null}},\"vis\":{\"colors\":{\"error\":\"#BF1B00\"},\"legendOpen\":true}},\"P-12\":{\"spy\":{\"mode\":{\"fill\":false,\"name\":null}}},\"P-3\":{\"spy\":{\"mode\":{\"fill\":false,\"name\":null}},\"vis\":{\"colors\":{\"error\":\"#BF1B00\"}}}}",
       "version": 1,
@@ -62,7 +62,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND _exists_:meta.internal.jobId\"},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND _exists_:meta.internal.jobId\"},\"filter\":[]}"
       }
     },
     "_meta": {
@@ -90,35 +90,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.type:\\\"api-server\\\" AND _exists_:meta.internal.route\"},\"filter\":[]}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 2
-    }
-  },
-  {
-    "_id": "71e572c0-072f-11e8-9166-d14fd078a6e5",
-    "_type": "search",
-    "_source": {
-      "title": "api-server jobs",
-      "description": "",
-      "hits": 0,
-      "columns": [
-        "message",
-        "meta.type",
-        "meta.internal.component",
-        "level",
-        "meta.internal.jobId",
-        "meta.internal.status"
-      ],
-      "sort": [
-        "@timestamp",
-        "desc"
-      ],
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.type:\\\"api-server\\\" AND meta.internal.component:\\\"Jobs-Producer\\\"\"},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.type:\\\"api-server\\\" AND _exists_:meta.internal.route\"},\"filter\":[]}"
       }
     },
     "_meta": {
@@ -148,7 +120,35 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.type:\\\"api-server\\\" AND message:\\\"job failed\\\"\"},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.type:\\\"api-server\\\" AND message:\\\"job failed\\\"\"},\"filter\":[]}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "71e572c0-072f-11e8-9166-d14fd078a6e5",
+    "_type": "search",
+    "_source": {
+      "title": "api-server jobs",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "message",
+        "meta.type",
+        "meta.internal.component",
+        "level",
+        "meta.internal.jobId",
+        "meta.internal.status"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.type:\\\"api-server\\\" AND meta.internal.component:\\\"Jobs-Producer\\\"\"},\"filter\":[]}"
       }
     },
     "_meta": {
@@ -178,37 +178,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.type:\\\"api-server\\\" AND message:\\\"job active\\\"\"},\"filter\":[]}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 2
-    }
-  },
-  {
-    "_id": "f18b16e0-072c-11e8-9166-d14fd078a6e5",
-    "_type": "search",
-    "_source": {
-      "title": "waiting pipelines",
-      "description": "",
-      "hits": 0,
-      "columns": [
-        "kubernetes.pod_name",
-        "kubernetes.container_name",
-        "message",
-        "meta.type",
-        "kubernetes.namespace_name",
-        "level",
-        "meta.internal.component",
-        "meta.internal.jobId"
-      ],
-      "sort": [
-        "@timestamp",
-        "desc"
-      ],
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.type:\\\"api-server\\\" AND message:\\\"job waiting\\\"\"},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.type:\\\"api-server\\\" AND message:\\\"job active\\\"\"},\"filter\":[]}"
       }
     },
     "_meta": {
@@ -238,7 +208,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.type:\\\"api-server\\\" AND message:\\\"job completed\\\"\"},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.type:\\\"api-server\\\" AND message:\\\"job completed\\\"\"},\"filter\":[]}"
       }
     },
     "_meta": {
@@ -267,36 +237,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.internal.component:\\\"Rest-API\\\" AND meta.type:\\\"api-server\\\" AND level:error\"},\"filter\":[]}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 2
-    }
-  },
-  {
-    "_id": "c8b3cff0-0722-11e8-9166-d14fd078a6e5",
-    "_type": "search",
-    "_source": {
-      "title": "api-server responses",
-      "description": "",
-      "hits": 0,
-      "columns": [
-        "kubernetes.pod_name",
-        "kubernetes.container_name",
-        "message",
-        "meta.type",
-        "kubernetes.namespace_name",
-        "level",
-        "meta.internal.component"
-      ],
-      "sort": [
-        "@timestamp",
-        "desc"
-      ],
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.internal.component:\\\"Rest-API\\\" AND meta.type:\\\"api-server\\\" AND message:\\\"response sent\\\"\"},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.internal.component:\\\"Rest-API\\\" AND meta.type:\\\"api-server\\\" AND level:error\"},\"filter\":[]}"
       }
     },
     "_meta": {
@@ -325,7 +266,66 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.internal.component:\\\"Rest-API\\\" AND meta.type:\\\"api-server\\\" AND message:\\\"request arrived\\\"\"},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.internal.component:\\\"Rest-API\\\" AND meta.type:\\\"api-server\\\" AND message:\\\"request arrived\\\"\"},\"filter\":[]}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "f18b16e0-072c-11e8-9166-d14fd078a6e5",
+    "_type": "search",
+    "_source": {
+      "title": "waiting pipelines",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "kubernetes.pod_name",
+        "kubernetes.container_name",
+        "message",
+        "meta.type",
+        "kubernetes.namespace_name",
+        "level",
+        "meta.internal.component",
+        "meta.internal.jobId"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.type:\\\"api-server\\\" AND message:\\\"job waiting\\\"\"},\"filter\":[]}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "c8b3cff0-0722-11e8-9166-d14fd078a6e5",
+    "_type": "search",
+    "_source": {
+      "title": "api-server responses",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "kubernetes.pod_name",
+        "kubernetes.container_name",
+        "message",
+        "meta.type",
+        "kubernetes.namespace_name",
+        "level",
+        "meta.internal.component"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND meta.internal.component:\\\"Rest-API\\\" AND meta.type:\\\"api-server\\\" AND message:\\\"response sent\\\"\"},\"filter\":[]}"
       }
     },
     "_meta": {
@@ -355,7 +355,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND _exists_:meta.internal.jobId AND _exists_:meta.internal.algorithmName\"},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message AND _exists_:meta.internal.jobId AND _exists_:meta.internal.algorithmName\"},\"filter\":[]}"
       }
     },
     "_meta": {
@@ -385,7 +385,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message\"},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND _exists_:message\"},\"filter\":[]}"
       }
     },
     "_meta": {
@@ -411,7 +411,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND NOT _exists_:message\"},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"kubernetes.namespace_name:\\\"default\\\" AND NOT _exists_:message\"},\"filter\":[]}"
       }
     },
     "_meta": {
@@ -435,25 +435,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"9969fa10-05bc-11e8-9166-d14fd078a6e5\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 2
-    }
-  },
-  {
-    "_id": "868bd050-097a-11e8-9166-d14fd078a6e5",
-    "_type": "visualization",
-    "_source": {
-      "title": "api-server jobs",
-      "visState": "{\"title\":\"api-server jobs\",\"type\":\"pie\",\"params\":{\"type\":\"pie\",\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true,\"labels\":{\"show\":false,\"values\":true,\"last_level\":true,\"truncate\":100}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"significant_terms\",\"schema\":\"segment\",\"params\":{\"field\":\"meta.internal.status.keyword\",\"size\":10}}]}",
-      "uiStateJSON": "{}",
-      "description": "",
-      "savedSearchId": "71e572c0-072f-11e8-9166-d14fd078a6e5",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
       }
     },
     "_meta": {
@@ -471,7 +453,25 @@
       "savedSearchId": "c0400060-0753-11e8-9166-d14fd078a6e5",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+        "searchSourceJSON": "{}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "868bd050-097a-11e8-9166-d14fd078a6e5",
+    "_type": "visualization",
+    "_source": {
+      "title": "api-server jobs",
+      "visState": "{\"title\":\"api-server jobs\",\"type\":\"pie\",\"params\":{\"type\":\"pie\",\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true,\"labels\":{\"show\":false,\"values\":true,\"last_level\":true,\"truncate\":100}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"significant_terms\",\"schema\":\"segment\",\"params\":{\"field\":\"meta.internal.status.keyword\",\"size\":10}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "71e572c0-072f-11e8-9166-d14fd078a6e5",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
       }
     },
     "_meta": {
@@ -489,7 +489,7 @@
       "savedSearchId": "c0400060-0753-11e8-9166-d14fd078a6e5",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+        "searchSourceJSON": "{}"
       }
     },
     "_meta": {
@@ -507,7 +507,7 @@
       "savedSearchId": "c0400060-0753-11e8-9166-d14fd078a6e5",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+        "searchSourceJSON": "{}"
       }
     },
     "_meta": {
@@ -525,61 +525,7 @@
       "savedSearchId": "b05cbbb0-0722-11e8-9166-d14fd078a6e5",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 2
-    }
-  },
-  {
-    "_id": "f7f4faf0-0722-11e8-9166-d14fd078a6e5",
-    "_type": "visualization",
-    "_source": {
-      "title": "api-server responses",
-      "visState": "{\"title\":\"api-server responses\",\"type\":\"metric\",\"params\":{\"addTooltip\":true,\"addLegend\":false,\"type\":\"metric\",\"metric\":{\"percentageMode\":false,\"useRanges\":false,\"colorSchema\":\"Green to Red\",\"metricColorMode\":\"None\",\"colorsRange\":[{\"from\":0,\"to\":10000}],\"labels\":{\"show\":false},\"invertColors\":false,\"style\":{\"bgFill\":\"#000\",\"bgColor\":false,\"labelColor\":false,\"subText\":\"\",\"fontSize\":60}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}]}",
-      "uiStateJSON": "{}",
-      "description": "",
-      "savedSearchId": "c8b3cff0-0722-11e8-9166-d14fd078a6e5",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 2
-    }
-  },
-  {
-    "_id": "c3d8df60-0723-11e8-9166-d14fd078a6e5",
-    "_type": "visualization",
-    "_source": {
-      "title": "api-server errors",
-      "visState": "{\"title\":\"api-server errors\",\"type\":\"metric\",\"params\":{\"addLegend\":false,\"addTooltip\":true,\"metric\":{\"colorSchema\":\"Green to Red\",\"colorsRange\":[{\"from\":0,\"to\":10000}],\"invertColors\":false,\"labels\":{\"show\":false},\"metricColorMode\":\"None\",\"percentageMode\":false,\"style\":{\"bgColor\":false,\"bgFill\":\"#000\",\"fontSize\":60,\"labelColor\":false,\"subText\":\"\"},\"useRanges\":false},\"type\":\"metric\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}]}",
-      "uiStateJSON": "{}",
-      "description": "",
-      "savedSearchId": "9fded1f0-0723-11e8-9166-d14fd078a6e5",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"language\":\"lucene\",\"query\":\"\"}}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 2
-    }
-  },
-  {
-    "_id": "3d1785d0-0750-11e8-9166-d14fd078a6e5",
-    "_type": "visualization",
-    "_source": {
-      "title": "api-server routes",
-      "visState": "{\"title\":\"api-server routes\",\"type\":\"pie\",\"params\":{\"type\":\"pie\",\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true,\"labels\":{\"show\":false,\"values\":true,\"last_level\":true,\"truncate\":100}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"meta.internal.route.keyword\",\"size\":50,\"order\":\"desc\",\"orderBy\":\"1\"}}]}",
-      "uiStateJSON": "{}",
-      "description": "",
-      "savedSearchId": "14964290-0750-11e8-9166-d14fd078a6e5",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+        "searchSourceJSON": "{}"
       }
     },
     "_meta": {
@@ -597,7 +543,25 @@
       "savedSearchId": "b05cbbb0-0722-11e8-9166-d14fd078a6e5",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+        "searchSourceJSON": "{}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "3d1785d0-0750-11e8-9166-d14fd078a6e5",
+    "_type": "visualization",
+    "_source": {
+      "title": "api-server routes",
+      "visState": "{\"title\":\"api-server routes\",\"type\":\"pie\",\"params\":{\"type\":\"pie\",\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true,\"labels\":{\"show\":false,\"values\":true,\"last_level\":true,\"truncate\":100}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"meta.internal.route.keyword\",\"size\":50,\"order\":\"desc\",\"orderBy\":\"1\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "14964290-0750-11e8-9166-d14fd078a6e5",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
       }
     },
     "_meta": {
@@ -615,7 +579,43 @@
       "savedSearchId": "f19c3210-0c07-11e8-bbb2-5fc373892bf9",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+        "searchSourceJSON": "{}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "c3d8df60-0723-11e8-9166-d14fd078a6e5",
+    "_type": "visualization",
+    "_source": {
+      "title": "api-server errors",
+      "visState": "{\"title\":\"api-server errors\",\"type\":\"metric\",\"params\":{\"addLegend\":false,\"addTooltip\":true,\"metric\":{\"colorSchema\":\"Green to Red\",\"colorsRange\":[{\"from\":0,\"to\":10000}],\"invertColors\":false,\"labels\":{\"show\":false},\"metricColorMode\":\"None\",\"percentageMode\":false,\"style\":{\"bgColor\":false,\"bgFill\":\"#000\",\"fontSize\":60,\"labelColor\":false,\"subText\":\"\"},\"useRanges\":false},\"type\":\"metric\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "9fded1f0-0723-11e8-9166-d14fd078a6e5",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "f7f4faf0-0722-11e8-9166-d14fd078a6e5",
+    "_type": "visualization",
+    "_source": {
+      "title": "api-server responses",
+      "visState": "{\"title\":\"api-server responses\",\"type\":\"metric\",\"params\":{\"addTooltip\":true,\"addLegend\":false,\"type\":\"metric\",\"metric\":{\"percentageMode\":false,\"useRanges\":false,\"colorSchema\":\"Green to Red\",\"metricColorMode\":\"None\",\"colorsRange\":[{\"from\":0,\"to\":10000}],\"labels\":{\"show\":false},\"invertColors\":false,\"style\":{\"bgFill\":\"#000\",\"bgColor\":false,\"labelColor\":false,\"subText\":\"\",\"fontSize\":60}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "c8b3cff0-0722-11e8-9166-d14fd078a6e5",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
       }
     },
     "_meta": {
@@ -633,43 +633,7 @@
       "savedSearchId": "9d64f780-0753-11e8-9166-d14fd078a6e5",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 2
-    }
-  },
-  {
-    "_id": "23c4f310-066a-11e8-9166-d14fd078a6e5",
-    "_type": "visualization",
-    "_source": {
-      "title": "core services",
-      "visState": "{\"title\":\"core services\",\"type\":\"pie\",\"params\":{\"type\":\"pie\",\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true,\"labels\":{\"show\":false,\"values\":true,\"last_level\":true,\"truncate\":100}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"level.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}]}",
-      "uiStateJSON": "{\"vis\":{\"colors\":{\"error\":\"#BF1B00\",\"warning\":\"#E5AC0E\",\"info\":\"#705DA0\"}}}",
-      "description": "",
-      "savedSearchId": "82a866c0-0668-11e8-9166-d14fd078a6e5",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 2
-    }
-  },
-  {
-    "_id": "7fd35b80-066d-11e8-9166-d14fd078a6e5",
-    "_type": "visualization",
-    "_source": {
-      "title": "core services by level",
-      "visState": "{\"title\":\"core services by level\",\"type\":\"pie\",\"params\":{\"type\":\"pie\",\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true,\"labels\":{\"show\":false,\"values\":true,\"last_level\":true,\"truncate\":100}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"meta.type.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"row\":false}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"level.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}]}",
-      "uiStateJSON": "{\"vis\":{\"colors\":{\"error\":\"#BF1B00\",\"warning\":\"#E5AC0E\",\"info\":\"#705DA0\"}}}",
-      "description": "",
-      "savedSearchId": "82a866c0-0668-11e8-9166-d14fd078a6e5",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+        "searchSourceJSON": "{}"
       }
     },
     "_meta": {
@@ -687,7 +651,77 @@
       "savedSearchId": "c1166830-071c-11e8-9166-d14fd078a6e5",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[],\"query\":{\"language\":\"lucene\",\"query\":\"\"}}"
+        "searchSourceJSON": "{}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "7fd35b80-066d-11e8-9166-d14fd078a6e5",
+    "_type": "visualization",
+    "_source": {
+      "title": "core services by level",
+      "visState": "{\"title\":\"core services by level\",\"type\":\"pie\",\"params\":{\"type\":\"pie\",\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true,\"labels\":{\"show\":false,\"values\":true,\"last_level\":true,\"truncate\":100}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"meta.type.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"row\":false}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"level.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}]}",
+      "uiStateJSON": "{\"vis\":{\"colors\":{\"error\":\"#BF1B00\",\"warning\":\"#E5AC0E\",\"info\":\"#705DA0\"}}}",
+      "description": "",
+      "savedSearchId": "82a866c0-0668-11e8-9166-d14fd078a6e5",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "23c4f310-066a-11e8-9166-d14fd078a6e5",
+    "_type": "visualization",
+    "_source": {
+      "title": "core services",
+      "visState": "{\"title\":\"core services\",\"type\":\"pie\",\"params\":{\"type\":\"pie\",\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true,\"labels\":{\"show\":false,\"values\":true,\"last_level\":true,\"truncate\":100}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"level.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}]}",
+      "uiStateJSON": "{\"vis\":{\"colors\":{\"error\":\"#BF1B00\",\"warning\":\"#E5AC0E\",\"info\":\"#705DA0\"}}}",
+      "description": "",
+      "savedSearchId": "82a866c0-0668-11e8-9166-d14fd078a6e5",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "085ef830-4e97-11e8-829c-4d7ec33006d9",
+    "_type": "visualization",
+    "_source": {
+      "title": "s3 latency",
+      "visState": "{\"title\":\"s3 latency\",\"type\":\"line\",\"params\":{\"type\":\"line\",\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Percentiles of meta.internal.time\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"histogram\",\"mode\":\"normal\",\"data\":{\"label\":\"Percentiles of meta.internal.time\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false,\"radiusRatio\":51},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"percentiles\",\"schema\":\"metric\",\"params\":{\"field\":\"meta.internal.time\",\"percents\":[50,75,95,99]}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"meta.internal.operation.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"_term\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "be24a160-4e97-11e8-829c-4d7ec33006d9",
+    "_type": "visualization",
+    "_source": {
+      "title": "s3 latency median",
+      "visState": "{\"title\":\"s3 latency median\",\"type\":\"metric\",\"params\":{\"addTooltip\":true,\"addLegend\":false,\"type\":\"metric\",\"metric\":{\"percentageMode\":false,\"useRanges\":false,\"colorSchema\":\"Green to Red\",\"metricColorMode\":\"None\",\"colorsRange\":[{\"from\":0,\"to\":10000}],\"labels\":{\"show\":true},\"invertColors\":false,\"style\":{\"bgFill\":\"#000\",\"bgColor\":false,\"labelColor\":false,\"subText\":\"\",\"fontSize\":60}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"median\",\"schema\":\"metric\",\"params\":{\"field\":\"meta.internal.time\",\"percents\":[50]}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"meta.internal.operation.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"_term\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ee921340-26ca-11e8-ad16-cb09baa04951\",\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
       }
     },
     "_meta": {
