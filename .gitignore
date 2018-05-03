@@ -4,6 +4,7 @@
 *.EM
 *.pem
 *.ORIG
+*.TODO
 
 kubespray/kubectl/*
 kubespray/artifacts

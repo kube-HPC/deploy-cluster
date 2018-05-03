@@ -1,0 +1,20 @@
+{{- if .Values.customResources.createEtcdClusterCRD }}
+---
+apiVersion: "etcd.database.coreos.com/v1beta2"
+kind: "EtcdCluster"
+metadata:
+  name: {{ .Values.etcdCluster.name }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app: {{ template "etcd-operator.name" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    group: hkube
+    thirdparty: "true"
+spec:
+  size: {{ .Values.etcdCluster.size }}
+  version: "{{ .Values.etcdCluster.version }}"
+  pod:
+    busyboxImage: {{ toYaml .Values.etcdCluster.busyboxImage }}
+{{- end }}
+

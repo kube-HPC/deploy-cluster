@@ -11,6 +11,10 @@ interface_network: eth0
 cluster_id: 3
 virtual_cluster_ip: 40.69.222.75
 
+
+kube_apiserver_public_ip: 40.69.222.75
+supplementary_addresses_in_ssl_keys: [40.69.222.75, 10.0.0.4]
+
 # nfs server 
 
 NFS_SERVER: 10.0.0.4

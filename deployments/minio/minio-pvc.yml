@@ -12,10 +12,8 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 101.150.4.250
-    path: "/vol_vod/CEPH/minio"
-    #server: ${NFS_HOST}
-    #path: "${NFS_ROOT}/SF${CLUSTER_ID}/minio"
+    server: 40.69.222.75
+    path: "/srv/vol_nfs/storage/minio"
 ---
 
 apiVersion: v1

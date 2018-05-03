@@ -16,7 +16,9 @@ bootstrap_os=ubuntu
 loadbalancer_apiserver_localhost=false
 kube_api_pwd=ubadmin
 cluster_name=azure.agampub
-supplementary_addresses_in_ssl_keys=40.69.222.75
+#kube_apiserver_public_ip=40.69.222.75
+#supplementary_addresses_in_ssl_keys=40.69.222.75
+
 
 [kube-master]
 agampub-n1
