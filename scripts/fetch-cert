@@ -22,3 +22,8 @@ ansible-playbook  -i ${KUBESPRAY_HOME}/env/inventory.$ENV_NAME -e cluster_name=$
 
 echo_green 'Done.'
 
+echo_blue "Get info for cluster '$1'" 
+
+kubectl cluster-info
+
+echo_green 'Done.'

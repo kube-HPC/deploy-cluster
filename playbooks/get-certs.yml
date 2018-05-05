@@ -15,25 +15,25 @@
     - name: export hostname
       set_fact:
         kubectl_name: "{{ inventory_hostname }}"
- 
+
 - hosts: localhost
   gather_facts: yes
   connection: local
   vars:
     kubectl_name: "{{ hostvars[groups['kube-master'][0]].kubectl_name }}"
   tasks:
-  
-    - name: Delete if exists config file
-      file: path='~/.kube/config' state=absent
-      register: file
-    
+
+    # - name: Delete if exists config file
+    #   file: path='~/.kube/config' state=absent
+    #   register: file
+
     - name: check if context exists
       command: kubectl config get-contexts kargo
       register: kctl
       failed_when: kctl.rc == 0
 
-    - name: config set-cluster default-cluster
-      command: kubectl config set-cluster default-cluster --server=https://{{ kubectl_name }}:6443 --certificate-authority={{ playbook_dir }}/../kubespray/kubectl/ca.pem
+    - name: config set-cluster  "{{ cluster_name }}"
+      command: kubectl config set-cluster "{{ cluster_name }}" --server=https://{{ kubectl_name }}:6443 --certificate-authority={{ playbook_dir }}/../kubespray/kubectl/ca.pem
 
     - name: create credentials kargo-admin
       command: kubectl config set-credentials default-admin --certificate-authority={{ playbook_dir }}/../kubespray/kubectl/ca.pem --client-key={{ playbook_dir }}/../kubespray/kubectl/admin-{{ kubectl_name }}-key.pem --client-certificate={{ playbook_dir }}/../kubespray/kubectl/admin-{{ kubectl_name }}.pem
@@ -42,16 +42,23 @@
       command: kubectl config set-credentials default-admin --certificate-authority={{ playbook_dir }}/../kubespray/kubectl/ca.pem --client-key={{ playbook_dir }}/../kubespray/kubectl/admin-{{ kubectl_name }}-key.pem --client-certificate={{ playbook_dir }}/../kubespray/kubectl/admin-{{ kubectl_name }}.pem
 
     - name: set-context default-system
-      command: kubectl config set-context default-system --cluster=default-cluster --user=default-admin
+      command: kubectl config set-context "{{ cluster_name }}" --cluster="{{ cluster_name }}" --user=default-admin
 
     - name: use-context default-system
-      command: kubectl config use-context default-system
-    
-    - name: flaten config file
-      command: kubectl config view --flatten > ~/.kube/config.tmp
-    
-- include: add-to-path.yml
+      command: kubectl config use-context "{{ cluster_name }}"
 
+    - name: flaten config file
+      shell: |
+        kubectl config view --flatten >> ~/.kube/config."{{ cluster_name }}"
+
+    - name: if exists config file
+      file: path=~/.kube/config.tmp state=file
+      register: file-config
+
+    - name: copy  to home/ubadmin/admin.conf
+      command: scp ~/.kube/config."{{ cluster_name }}"  ubadmin@"{{ hostvars[groups['kube-master'][0]].kubectl_name }}":/home/ubadmin/admin.conf
+
+- import_playbook: add-to-path.yml
 
 - hosts: localhost
   become: no
@@ -60,12 +67,10 @@
         path: ~/.kube/config
       register: configfile
     - name: switch context to "{{ cluster_name }}"
-      shell: | 
-        KUBECONFIG=~/.kube/config.tmp:~/.kube/config kubectl config view --flatten > ~/.kube/config."{{ cluster_name }}"
+      shell: |
+        KUBECONFIG=~/.kube/config."{{ cluster_name }}":~/.kube/config kubectl config view --flatten >> ~/.kube/config."{{ cluster_name }}"
         rm ~/.kube/config
-        mv ~/.kube/config."{{ cluster_name }}" ~/.kube/config
-        #kubectl config use-context admin-"{{ cluster_name }}"
+        cp ~/.kube/config."{{ cluster_name }}" ~/.kube/config
+        kubectl config use-context "{{ cluster_name }}"
       tags: switchcontext
       when: configfile.stat.exists
-
-    

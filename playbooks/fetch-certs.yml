@@ -16,12 +16,12 @@
         path: ~/.kube/config
       register: configfile
     - name: switch context to "{{ cluster_name }}"
-      shell: | 
+      shell: |
         KUBECONFIG=~/.kube/config."{{ cluster_name }}":~/.kube/config kubectl config view --flatten > ~/.kube/config.tmp
         rm ~/.kube/config
-        mv ~/.kube/config.tmp ~/.kube/config
-        rm ~/.kube/config.tmp
-        kubectl config use-context admin-"{{ cluster_name }}"
+        cp ~/.kube/config."{{ cluster_name }}" ~/.kube/config
+        #rm ~/.kube/config.tmp
+        kubectl config use-context "{{ cluster_name }}"
       tags: switchcontext
       when: configfile.stat.exists
 

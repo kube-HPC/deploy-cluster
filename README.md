@@ -1,11 +1,22 @@
 # Deploy-Cluster
 
 ## prerequiste
-- install ansible 
+- install ansible
 ```
-sudo apt-add-repository ppa:ansible/ansible  
-sudo apt-get update  
-sudo apt-get install ansible  
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install ansible
+
+set ~/.ansible.cfg
+
+to:
+
+[vars]
+ansible_become_pass=ANSIBLE_USER_PASSWORD
+ansible_python_interpreter=/usr/bin/python3
+ansibler_ssh_pass=ANSIBLE_USER_PASSWORD
+
+
 
 ```
 - install python-netaddr
@@ -14,13 +25,13 @@ sudo apt-get install ansible
 ``
 - git clone  git@github.com:kube-HPC/deploy-cluster.git
 
-- create ssh-copy-id  for all machines 
-``` 
+- create ssh-copy-id  for all machines
+```
 sudo apt-get install sshpass
 ```
-- install kubectl 
+- install kubectl
 ```
-kubectl config set-cluster maty  --server=http://127.0.0.1:8080 
+kubectl config set-cluster maty  --server=http://127.0.0.1:8080
 kubectl config set-context maty --cluster="maty_"
 kubectl config use-context maty
 kubectl cluster-info
@@ -32,7 +43,7 @@ enter to ``/env`` folder
 
 ### for each enviroment do the follows
 
-#### create file 
+#### create file
 - inventory.[cluster-name]
 ```yaml
 
@@ -87,22 +98,22 @@ kube-master
 
 ```
 
-- [cluster-name].yaml   -that add variables   
+- [cluster-name].yaml   -that add variables
 
-``` yaml 
--- 
+``` yaml
+--
 # Cluster Info
 
-CLUSTER_ID: test 
+CLUSTER_ID: test
 
-# keepalived 
+# keepalived
 
 INSTALL_KEEPALIVED: True
 interface_network: eth0
 cluster_id: 3
 virtual_cluster_ip: 10.32.10.120
 
-# nfs server 
+# nfs server
 
 NFS_SERVER: 10.32.10.26
 NFS_ROOT: /srv/vol_nfs
@@ -113,10 +124,10 @@ USE_PERSISTANT_VOLUMES: True
 url_username: kube
 url_password: SoundFactory
 
-# Kibana 
+# Kibana
 KIBANA_EXTERNAL_IP: 10.32.10.120
 
-# Elastic Defualt Configuration 
+# Elastic Defualt Configuration
 
 LOGGING_ES_PV_SIZE: 100Gi
 LOGGING_ES_REPLICAS_MASTER: 1
@@ -130,13 +141,13 @@ LOGGING_ES_JAVA_HEAP_SIZE: 2g
 PROM_PV_SIZE: 100Gi
 
 ```
-- test ansible 
+- test ansible
 ```
 ansible all -i env/inventory.[cluster-name] -m ping
 ```
 
 
-## install 
+## install
 ### install k8s
 cd scripts
 #### run ./Pre-Config [cluster-name]
@@ -147,34 +158,27 @@ do the follows:
   <p>install ntp nfs-common</p>
 </details>
 
-
-
-#### run ./Start-Cluster [cluster-name]
+#### run ./Start-Cluster[cluster-name]
 
 <details>
   <summary>run</summary>
     <p>run kubespary</p>
 </details>
 
-#### run ./Get-Cert [cluster-name] 1 ```//copy cert to kubectl```
-#### run ./Post-Install [cluster-name]
+#### Entering to cluster
+for entering to the cluster enter to ``https://[master-ip]:6443``
+insert your congured user for ``env/[cluster-name]``
+go to ``kubespray/credentials``
+password should be found in  ``kube_user`` (without ``\``)
+* in order to set your own password just create ``kube_user`` file under the following path
 
-
-#### Entering to cluster 
-for entering to the cluster enter to ``https://[master-ip]:6443``   
-insert your congured user for ``env/[cluster-name]``   
-go to ``kubespray/credentials``    
-password should be found in  ``kube_user`` (without ``\``)     
-    
-* in order to set your own password just create ``kube_user`` file under the following path 
-
-### config kubectl 
-enter to ``kubespray/artifacts``    
-`` cp admin.conf  ~/.kube/config``    
+### config kubectl
+enter to ``kubespray/artifacts``
+`` cp admin.conf  ~/.kube/config``
 
 ### install system
 
-#### run ./Start-System [cluster-name] 
+#### run ./Start-System [cluster-name]
 
 <details>
   <summary>install the follows:</summary>
@@ -184,16 +188,10 @@ enter to ``kubespray/artifacts``
 </details>
 
 
-
 ### reset cluster  ./Reset-Cluster [cluster-name]
-
-
 
 ### Other
 
-nfs server configuration   
-enter to ```/etc/exports```    
+nfs server configuration
+enter to ```/etc/exports```
 add the folowing line at the end of the file ```/srv/vol_nfs or other mounting path 10.32.10.0/24(rw,sync,no_subtree_check,no_root_squash)```
-
- 
-

@@ -11,7 +11,7 @@
         path: '{{ home_directory }}/.bashrc'
         state: present
         line: 'export PATH={{ extra_path }}:$PATH'
-    
+
     - name: Add kubectl autocomplition to .bashrc
       lineinfile:
         path: '{{ home_directory }}/.bashrc'

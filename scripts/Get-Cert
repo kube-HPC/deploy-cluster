@@ -11,6 +11,12 @@ source ${KUBESPRAY_HOME}/env/$1
 
 echo_blue "Get Cert for cluster '$1'" 
 
-ansible-playbook --ask-become-pass -i ${KUBESPRAY_HOME}/env/inventory.$1 ../playbooks/get-certs.yml
+ansible-playbook -i ${KUBESPRAY_HOME}/env/inventory.$1 ../playbooks/get-certs.yml -v 
+
+echo_green 'Done.'
+
+echo_blue "Get info for cluster '$1'" 
+
+kubectl cluster-info
 
 echo_green 'Done.'

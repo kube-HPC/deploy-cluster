@@ -15,9 +15,9 @@ if [[ -z "${KUBESPRAY_HOME}" ]]; then
   source ${KUBESPRAY_HOME}/scripts/util
 fi
 
-echo_blue "Start Cluster $1 ..." 
+echo_blue "Start Cluster $1 ..."
 
-echo ${KUBESPRAY_HOME} 
+echo ${KUBESPRAY_HOME}
 
 ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME --ask-become-pass -b ../playbooks/Start-Cluster.yml
 
@@ -26,12 +26,6 @@ echo_green 'done'
 echo_blue 'Get Cert for this Cluster'
 
 ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME ../playbooks/get-certs.yml
-
-echo_green 'done'
-
-echo_blue 'Copy Certs to first master'
-
-ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME ../playbooks/copy-certs.yml
 
 echo_green 'done'
 

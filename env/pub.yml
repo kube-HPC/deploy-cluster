@@ -2,7 +2,7 @@
 
 # Cluster Info
 
-CLUSTER_ID: dev
+CLUSTER_ID: pub
 
 # keepalived 
 
