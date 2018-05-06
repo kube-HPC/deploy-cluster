@@ -23,10 +23,6 @@
     kubectl_name: "{{ hostvars[groups['kube-master'][0]].kubectl_name }}"
   tasks:
 
-    # - name: Delete if exists config file
-    #   file: path='~/.kube/config' state=absent
-    #   register: file
-
     - name: check if context exists
       command: kubectl config get-contexts kargo
       register: kctl
@@ -38,39 +34,38 @@
     - name: create credentials kargo-admin
       command: kubectl config set-credentials default-admin --certificate-authority={{ playbook_dir }}/../kubespray/kubectl/ca.pem --client-key={{ playbook_dir }}/../kubespray/kubectl/admin-{{ kubectl_name }}-key.pem --client-certificate={{ playbook_dir }}/../kubespray/kubectl/admin-{{ kubectl_name }}.pem
 
-    - name: create credentials kargo-admin
-      command: kubectl config set-credentials default-admin --certificate-authority={{ playbook_dir }}/../kubespray/kubectl/ca.pem --client-key={{ playbook_dir }}/../kubespray/kubectl/admin-{{ kubectl_name }}-key.pem --client-certificate={{ playbook_dir }}/../kubespray/kubectl/admin-{{ kubectl_name }}.pem
-
     - name: set-context default-system
       command: kubectl config set-context "{{ cluster_name }}" --cluster="{{ cluster_name }}" --user=default-admin
 
     - name: use-context default-system
       command: kubectl config use-context "{{ cluster_name }}"
 
+    - name: if exists config file
+      file: path=~/.kube/config state=file
+      register: config-file
+
     - name: flaten config file
       shell: |
         kubectl config view --flatten >> ~/.kube/config."{{ cluster_name }}"
-
-    - name: if exists config file
-      file: path=~/.kube/config.tmp state=file
-      register: file-config
+        rm ~/.kube/config 
+        cp ~/.kube/config."{{ cluster_name }}" ~/.kube/config
 
     - name: copy  to home/ubadmin/admin.conf
       command: scp ~/.kube/config."{{ cluster_name }}"  ubadmin@"{{ hostvars[groups['kube-master'][0]].kubectl_name }}":/home/ubadmin/admin.conf
 
 - import_playbook: add-to-path.yml
 
-- hosts: localhost
-  become: no
-  tasks:
-    - stat:
-        path: ~/.kube/config
-      register: configfile
-    - name: switch context to "{{ cluster_name }}"
-      shell: |
-        KUBECONFIG=~/.kube/config."{{ cluster_name }}":~/.kube/config kubectl config view --flatten >> ~/.kube/config."{{ cluster_name }}"
-        rm ~/.kube/config
-        cp ~/.kube/config."{{ cluster_name }}" ~/.kube/config
-        kubectl config use-context "{{ cluster_name }}"
-      tags: switchcontext
-      when: configfile.stat.exists
+# - hosts: localhost
+#   become: no
+#   tasks:
+#     - stat:
+#         path: ~/.kube/config
+#       register: configfile
+#     - name: switch context to "{{ cluster_name }}"
+#       shell: |
+#         KUBECONFIG=~/.kube/config."{{ cluster_name }}":~/.kube/config.bk kubectl config view --flatten >> ~/.kube/config."{{ cluster_name }}"
+#         rm ~/.kube/config
+#         cp ~/.kube/config."{{ cluster_name }}" ~/.kube/config
+#         kubectl config use-context "{{ cluster_name }}"
+#       tags: switchcontext
+#       when: configfile.stat.exists
