@@ -65,12 +65,10 @@ node11 ansible_ssh_host=10.32.10.18  # ip=10.3.0.6
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
-ansibler_ssh_pass=ubadmin
 ansible_user=ubadmin
 bootstrap_os=ubuntu
 loadbalancer_apiserver_localhost=false
-kube_api_pwd=ubadmin
-cluster_name=azure-test
+cluster_name=test
 
 [kube-master]
 node1
