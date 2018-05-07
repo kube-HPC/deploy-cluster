@@ -9,6 +9,7 @@
   #     configrm: yes
   
   tasks:
+
   - name: Inport Vars form Cluster Config yaml
     debug:
       msg="{{ lookup('env','ENV_NAME') }}"
@@ -27,6 +28,10 @@
   - name: Check the Cluster Virtual IP.
     debug:
       msg="The System Virtual IP is = {{ virtual_cluster_ip }}"
+
+  - name: Install ingress controller
+    command: kubectl apply -f ../deployments/ingress
+    tags: ingress-controller
 
   - name: add rolebinding for Cluster "{{ cluster_name }}"
     command: kubectl apply -f ../playbooks/rolebinding-kube-system.yaml
@@ -130,6 +135,10 @@
       exit 0
     tags: prometheus
 
+  - name: Installing Grafana ingress On Cluster "{{ cluster_name }}"
+    command: kubectl apply -f ../deployments/monitoring/fromhelm/4_ingress.yml
+    tags: kibana-svc
+
 
   - name: Installing fluentd  On Cluster "{{ cluster_name }}"
     shell: |
@@ -145,3 +154,8 @@
   - name: Installing kibana svc On Cluster "{{ cluster_name }}"
     command: kubectl apply -f ../deployments/es-pires/kibana-svc.yaml
     tags: kibana-svc
+
+  - name: Installing kibana ingress On Cluster "{{ cluster_name }}"
+    command: kubectl apply -f ../deployments/es-pires/es_kibana_ingress.yml
+    tags: kibana-svc
+

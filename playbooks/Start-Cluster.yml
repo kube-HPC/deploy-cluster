@@ -25,4 +25,4 @@
 
 #- import_playbook: ../playbooks/copy-certs.yml
 
-#- import_playbook: ../playbooks/Node-Lables.yml
+- import_playbook: ../playbooks/Node-Lables.yml
