@@ -47,6 +47,10 @@
     # - name: use-context default-system
     #   command: kubectl config --kubeconfig="{{ kubeconfig }}" use-context "{{ cluster_name }}"
 
+    - name: if exists config file
+      file: path=~/.kube/config state=file
+      register: config-file
+
     - name: flaten config file
       shell: |
         kubectl config view --kubeconfig="{{ kubeconfig }}" --flatten > "{{ lookup('env','HOME') }}/.kube/config.{{ cluster_name }}"
