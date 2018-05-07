@@ -7,7 +7,6 @@
     - name: "cluster_name"
       prompt: "Cluster Name to work on"
       default: "dev"
-  
   tasks:
   - name: Debug Test
     debug:
@@ -19,7 +18,6 @@
       msg="{{ cluster_name }}"
 
 - import_playbook: ../kubespray/cluster.yml
-
 
 #- import_playbook: ../playbooks/get-certs.yml
 
