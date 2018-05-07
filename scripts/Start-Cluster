@@ -19,7 +19,7 @@ echo_blue "Start Cluster $1 ..."
 
 echo ${KUBESPRAY_HOME}
 
-ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME --ask-become-pass -b ../playbooks/Start-Cluster.yml
+ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME -e @../env/$ENV_NAME.yml --ask-become-pass -b ../playbooks/Start-Cluster.yml
 
 echo_green 'done'
 
