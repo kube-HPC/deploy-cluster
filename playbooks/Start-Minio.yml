@@ -24,16 +24,7 @@
     debug:
       msg="{{ lookup('env','ENV_NAME') }}"  
 
-
   - name: Install tiller on  "{{ cluster_name }}"
-    command: kubectl apply -f ../deployments/helm/helm.init.yml
-    tags: helm-init
+    command: kubectl apply -f ../deployments/minio/minio-deployment-azure.yml
+    tags: minio
 
-
-  - name: add rolebinding for Cluster "{{ cluster_name }}"
-    command: kubectl apply -f ../deployments/helm/rbac-config.yaml
-    tags: helm-init
-  
-  - name: Installing Helm on "{{ cluster_name }}" 
-    command: helm init --service-account tiller 
-    tags: helm-init 
