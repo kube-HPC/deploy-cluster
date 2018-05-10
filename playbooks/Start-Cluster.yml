@@ -7,7 +7,6 @@
     - name: "cluster_name"
       prompt: "Cluster Name to work on"
       default: "dev"
-  
   tasks:
   - name: Debug Test
     debug:
@@ -20,9 +19,8 @@
 
 - import_playbook: ../kubespray/cluster.yml
 
-
 #- import_playbook: ../playbooks/get-certs.yml
 
 #- import_playbook: ../playbooks/copy-certs.yml
 
-#- import_playbook: ../playbooks/Node-Lables.yml
+- import_playbook: ../playbooks/Node-Lables.yml
