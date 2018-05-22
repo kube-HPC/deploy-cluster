@@ -25,7 +25,9 @@ spec:
           privileged: true
       containers:
       - name: es-data
-        image: quay.io/pires/docker-elasticsearch-kubernetes:6.1.2
+        securityContext:
+          runAsUser: 1000
+        image: quay.io/pires/docker-elasticsearch-kubernetes:6.2.4
         env:
         - name: NAMESPACE
           valueFrom:
@@ -47,6 +49,13 @@ spec:
           value: -Xms${LOGGING_ES_JAVA_HEAP_SIZE} -Xmx${LOGGING_ES_JAVA_HEAP_SIZE}
         - name: MAX_LOCAL_STORAGE_NODES
           value: "30"
+        - name: PROCESSORS
+          valueFrom:
+            resourceFieldRef:
+              resource: limits.cpu
+        resources:
+          limits:
+            cpu: 2
         ports:
         - containerPort: 9300
           name: transport

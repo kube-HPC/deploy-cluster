@@ -25,9 +25,9 @@ spec:
           privileged: true
       containers:
       - name: es-client
-        image: quay.io/pires/docker-elasticsearch-kubernetes:6.1.2
-        # command: ["/bin/sh"]
-        # args: ["-c", "while true; do echo hello; sleep 10;done"]
+        securityContext:
+          runAsUser: 1000
+        image: quay.io/pires/docker-elasticsearch-kubernetes:6.2.4
         env:
         - name: NAMESPACE
           valueFrom:
@@ -49,6 +49,13 @@ spec:
           value: -Xms${LOGGING_ES_JAVA_HEAP_SIZE} -Xmx${LOGGING_ES_JAVA_HEAP_SIZE}
         - name: NETWORK_HOST
           value: _site_,_lo_
+        - name: PROCESSORS
+          valueFrom:
+            resourceFieldRef:
+              resource: limits.cpu
+        resources:
+          limits:
+            cpu: 2
         ports:
         - containerPort: 9200
           name: http
