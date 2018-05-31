@@ -60,7 +60,7 @@
     #   register: file-config
 
     - name: copy to home/ubadmin/admin.conf
-      command: scp "{{ lookup('env','HOME') }}/.kube/config.{{ cluster_name }}"  ubadmin@"{{ hostvars[groups['kube-master'][0]].kubectl_name }}":/home/ubadmin/admin.conf
+      command: scp "{{ lookup('env','HOME') }}/.kube/config.{{ cluster_name }}"  ubadmin@"{{ hostvars[groups['kube-master'][0]].apiserver_host }}":/home/ubadmin/admin.conf
 
 - import_playbook: add-to-path.yml
 
