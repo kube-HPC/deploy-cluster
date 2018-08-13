@@ -1,0 +1,17 @@
+[all]
+localhost ansible_host=localhost ansible_connection=local
+
+[all:vars]
+
+[kube-master]
+localhost
+
+[etcd]
+localhost
+
+[kube-node]
+localhost
+
+[k8s-cluster:children]
+kube-node
+kube-master

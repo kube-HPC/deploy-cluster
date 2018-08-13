@@ -6,18 +6,24 @@
 - hosts: localhost
   tasks:
     - name: downloadall
-      with_dict: "{{ downloads }}"
       include_role:
-        name: ../kubespray/roles/download
+        name: "{{playbook_dir}}/../kubespray/roles/download"
       vars:
-        local_release_dir: ~/deploy-cluster/k8s
+        local_release_dir: "{{playbook_dir}}/../downloads2/"
         download_localhost: True
         download_run_once: True
-        file: "{{ item.value|combine({'enabled':True}) }}"
-        key: "{{ item.key }}"
         deploy_netchecker: False
         kube_network_plugin: flannel
         docker_bin_dir: /usr/bin
+
+        cert_manager_enabled: False
+        ingress_nginx_enabled: False
+        kubeadm_enabled: False
+        registry_enabled: False
+        cephfs_provisioner_enabled: False
+        local_volume_provisioner_enabled: False
+        loadbalancer_apiserver_localhost: False
+        cert_management: script
   vars_files:
-    - ../kubespray/inventory/group_vars/k8s-cluster.yml
-    - ../kubespray/roles/download/defaults/main.yml
+    - "{{playbook_dir}}/../env/group_vars/k8s-cluster.yml"
+    - "{{playbook_dir}}/../kubespray/roles/download/defaults/main.yml"
