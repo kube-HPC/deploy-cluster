@@ -9,7 +9,7 @@
       include_role:
         name: "{{playbook_dir}}/../kubespray/roles/download"
       vars:
-        local_release_dir: "{{playbook_dir}}/../downloads2/"
+        local_release_dir: "{{playbook_dir}}/../downloads/"
         download_localhost: True
         download_run_once: True
         deploy_netchecker: False
