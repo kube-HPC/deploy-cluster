@@ -182,3 +182,9 @@ kubeconfig_localhost: true
 ## Supplementary addresses that can be added in kubernetes ssl keys.
 ## That can be usefull for example to setup a keepalived virtual IP
 # supplementary_addresses_in_ssl_keys: [10.0.0.1, 10.0.0.2, 10.0.0.3]
+
+kube_apiserver_memory_limit: 20000M
+kube_apiserver_cpu_limit: 20000m
+kube_apiserver_memory_requests: 10000M
+kube_apiserver_cpu_requests: 4000m
+
