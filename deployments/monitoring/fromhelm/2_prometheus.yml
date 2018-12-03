@@ -23,7 +23,8 @@ data:
   
     route:
       group_wait: 10s
-      group_interval: 5m
+      #group_interval: 5m
+      group_interval: 10s
       receiver: default-receiver
       repeat_interval: 3h
   
@@ -42,7 +43,97 @@ metadata:
   name: monitoring-prometheus-server
 data:
   alerts: |
-    {}
+    groups:
+    - name: test
+      rules:
+      - alert: MyTestAlert1
+        expr: sum(hkube_worker_started_counter) > (sum(hkube_thres_mgr_test_gauge) or sum(absent(dummy)) * 3)
+    #    for: 10m
+        labels:
+          severity: error
+        annotations:
+          summary: 'TEST started algs: {{ humanize $value }} (test threshold: {{ query "sum(hkube_thres_mgr_test_gauge) or sum(absent(dummy)) * 3" | first | value }})'
+    ## Real Hkube alerts
+    # NOTE: 
+    #	- thresholds are metrics from alerts-threshold-manager, if missing (e.g. not running) => default value is used.
+    #	- threshold default value is accepted by 'or' operation with: 'sum(absent(dummy)) * <default> ' when <default> is any default value.
+    #	- threshold values may be changed by PUT requests to alerts-threshold-manager (json format body)
+    - name: hkube
+      rules:
+      - alert: HighPipelineFailureRate
+        expr: (sum(rate(hkube_api_server_pipelines_gross_counter{status='failed'}[5m])) * 60) >
+                  (sum(hkube_thres_mgr_high_pipeline_failure_rate_gauge) or sum(absent(dummy)) * 10)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High Pipeline Failure Rate: {{$value | printf `%.2f`}} failures/min for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_high_pipeline_failure_rate_gauge) or sum(absent(dummy)) * 10" | first | value }})'
+      - alert: HighPipelineFailurePercent
+        expr: sum(rate(hkube_api_server_pipelines_gross_counter{status='failed'}[5m])) / sum(rate(hkube_api_server_pipelines_gross_counter[5m])) * 100 >
+                    (sum(hkube_thres_mgr_high_pipeline_failure_precent_gauge) or sum(absent(dummy)) * 20)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High percent of Pipeline Failures: {{$value | printf `%.2f`}}% for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_high_pipeline_failure_precent_gauge) or sum(absent(dummy)) * 20" | first | value }}%)'
+      - alert: HighAlgorithmFailureRate
+        expr: sum(rate(hkube_worker_failed_counter[5m])) * 60 > (sum(hkube_thres_mgr_high_alg_failure_rate_gauge) or sum(absent(dummy)) * 20)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High Algorithm Failure Rate: {{$value | printf `%.2f`}} failures/min for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_high_alg_failure_rate_gauge) or sum(absent(dummy)) * 20" | first | value | humanize }})'
+      - alert: HighAlgorithmFailurePercent
+        expr: sum(rate(hkube_worker_failed_counter[5m])) / (sum(rate(hkube_worker_succeeded_counter[5m]) + rate(hkube_worker_failed_counter[5m]))) * 100 >
+                  (sum(hkube_thres_mgr_high_alg_failure_percent_gauge) or sum(absent(dummy)) * 20)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High percent of Algorithm Failures: {{$value | printf `%.2f`}}% for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_high_alg_failure_percent_gauge) or sum(absent(dummy)) * 20" | first | value }}%)'
+      - alert: LongAlgorithmMedianTimeInQueue
+        expr: histogram_quantile(0.5, sum(rate(hkube_algorithm_queue_time_in_queue_histogram_bucket[5m])) by (le)) >
+                  (sum(hkube_thres_mgr_long_alg_time_in_queue_gauge) or sum(absent(dummy)) * 5000)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'Long Algorithm Median Time-in-Queue: {{$value | printf `%.2f`}} ms for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_long_alg_time_in_queue_gauge) or sum(absent(dummy)) * 5000" | first | value }} ms)'
+      - alert: LongPipelineMedianTimeInQueue
+        expr: histogram_quantile(0.5, sum(rate(hkube_pipeline_driver_queue_time_in_queue_histogram_bucket[5m])) by (le)) >
+                  (sum(hkube_thres_mgr_long_pipeline_time_in_queue_gauge) or sum(absent(dummy)) * 10000)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'Long Pipeline Median Time-in-Queue: {{$value | printf `%.2f`}} ms for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_long_pipeline_time_in_queue_gauge) or sum(absent(dummy)) * 10000" | first | value }} ms)'
+      - alert: HighAlgorithmMemoryUsage
+        expr: sum(max(kube_pod_labels{label_algorithm_name!~""}) by (pod)
+                      * on(pod)
+                      label_replace(
+                          sum by(pod_name) (
+                              container_memory_working_set_bytes
+                          ), "pod", "$1", "pod_name", "(.+)")
+                      )  / (1024 * 1024) > (sum(hkube_thres_mgr_high_alg_memory_usage_gauge) or sum(absent(dummy)) * 10000)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High Algorithms Total Memory Usage: {{$value | printf `%.0f`}} MB for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_high_alg_memory_usage_gauge) or sum(absent(dummy)) * 10000" | first | value }})'
+      - alert: HighAlgorithmCpuUsage
+        expr: sum(max(kube_pod_labels{label_algorithm_name!~""}) by (pod)
+                      * on(pod)
+                      label_replace(
+                          sum by(pod_name) (
+                              rate(container_cpu_usage_seconds_total{container_name="algorunner"}[5m])
+                          ), "pod", "$1", "pod_name", "(.+)")
+                      ) > (sum(hkube_thres_mgr_high_alg_cpu_usage_gauge) or sum(absent(dummy)) * 20)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High Algorithms CPU Usage: {{$value | printf `%.2f`}} cores for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_high_alg_cpu_usage_gauge) or sum(absent(dummy)) * 20" | first | value }})'
+
     
   prometheus.yml: |
     rule_files:

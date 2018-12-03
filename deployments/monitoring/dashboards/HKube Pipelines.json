@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_PROM",
-      "label": "prom",
+      "name": "DS_HKUBE",
+      "label": "hkube",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "5.2.4"
+      "version": "5.3.2"
     },
     {
       "type": "panel",
@@ -53,7 +53,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -85,7 +85,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(pipeline_driver_queue_amount_gauge) by (pipeline_name)",
+          "expr": "sum(hkube_pipeline_driver_queue_amount_gauge) by (pipeline_name)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -138,7 +138,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -170,7 +170,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(pipeline_driver_queue_counter_counter[5m])) by (pipeline_name) * 60",
+          "expr": "sum(rate(hkube_pipeline_driver_queue_counter_counter[5m])) by (pipeline_name) * 60",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -223,7 +223,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -255,7 +255,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(api_server_pipelines_gross_counter{status='completed'}[5m])) by (pipeline_name) * 60",
+          "expr": "sum(rate(hkube_api_server_pipelines_gross_counter{status='completed'}[5m])) by (pipeline_name) * 60",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -308,7 +308,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -340,7 +340,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(api_server_pipelines_gross_counter{status='failed'}[5m])) by (pipeline_name) * 60",
+          "expr": "sum(rate(hkube_api_server_pipelines_gross_counter{status='failed'}[5m])) by (pipeline_name) * 60",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -393,7 +393,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -425,7 +425,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(pipeline_driver_queue_time_in_queue_histogram_sum) by (le, pipeline_name) /sum(pipeline_driver_queue_time_in_queue_histogram_count) by (le, pipeline_name)",
+          "expr": "sum(hkube_pipeline_driver_queue_time_in_queue_histogram_sum) by (le, pipeline_name) /sum(hkube_pipeline_driver_queue_time_in_queue_histogram_count) by (le, pipeline_name)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -478,7 +478,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -510,7 +510,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.5, sum(rate(pipeline_driver_queue_time_in_queue_histogram_bucket[5m])) by (le, pipeline_name))",
+          "expr": "histogram_quantile(0.5, sum(rate(hkube_pipeline_driver_queue_time_in_queue_histogram_bucket[5m])) by (le, pipeline_name))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -563,7 +563,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -595,7 +595,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.95, sum(rate(pipeline_driver_queue_time_in_queue_histogram_bucket[5m])) by (le, pipeline_name))",
+          "expr": "histogram_quantile(0.95, sum(rate(hkube_pipeline_driver_queue_time_in_queue_histogram_bucket[5m])) by (le, pipeline_name))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{pipeline_name}}",
@@ -647,7 +647,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -679,7 +679,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(pipeline_driver_pipelines_net_histogram_sum) by (pipeline_name) / sum(pipeline_driver_pipelines_net_histogram_count) by (pipeline_name)",
+          "expr": "sum(hkube_pipeline_driver_pipelines_net_histogram_sum) by (pipeline_name) / sum(hkube_pipeline_driver_pipelines_net_histogram_count) by (pipeline_name)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -732,7 +732,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -764,7 +764,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.5, sum(rate(pipeline_driver_pipelines_net_histogram_bucket[5m])) by (le, pipeline_name))",
+          "expr": "histogram_quantile(0.5, sum(rate(hkube_pipeline_driver_pipelines_net_histogram_bucket[5m])) by (le, pipeline_name))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -817,7 +817,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -849,7 +849,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.95, sum(rate(pipeline_driver_pipelines_net_histogram_bucket[5m])) by (le, pipeline_name))",
+          "expr": "histogram_quantile(0.95, sum(rate(hkube_pipeline_driver_pipelines_net_histogram_bucket[5m])) by (le, pipeline_name))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,

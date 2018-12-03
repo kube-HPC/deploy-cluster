@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_PROM",
-      "label": "prom",
+      "name": "DS_HKUBE",
+      "label": "hkube",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "5.2.4"
+      "version": "5.3.2"
     },
     {
       "type": "panel",
@@ -53,7 +53,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -85,7 +85,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(algorithm_queue_queue_amount_gauge) by (algorithm_name)",
+          "expr": "sum(hkube_algorithm_queue_queue_amount_gauge) by (algorithm_name)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -138,7 +138,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -170,7 +170,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(worker_started_counter[5m])) by (algorithm_name) * 60",
+          "expr": "sum(rate(hkube_worker_started_counter[5m])) by (algorithm_name) * 60",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -223,7 +223,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -255,7 +255,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(worker_succeeded_counter[5m])) by (algorithm_name) * 60",
+          "expr": "sum(rate(hkube_worker_succeeded_counter[5m])) by (algorithm_name) * 60",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -308,7 +308,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -340,7 +340,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(worker_failed_counter[5m])) by (algorithm_name) * 60",
+          "expr": "sum(rate(hkube_worker_failed_counter[5m])) by (algorithm_name) * 60",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{algorithm_name}}",
@@ -392,7 +392,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -424,7 +424,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(algorithm_queue_time_in_queue_histogram_sum) by (algorithm_name) / sum(algorithm_queue_time_in_queue_histogram_count) by (algorithm_name)",
+          "expr": "sum(hkube_algorithm_queue_time_in_queue_histogram_sum) by (algorithm_name) / sum(hkube_algorithm_queue_time_in_queue_histogram_count) by (algorithm_name)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -477,7 +477,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -509,7 +509,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.5, sum(rate(algorithm_queue_time_in_queue_histogram_bucket[5m])) by (le, algorithm_name))",
+          "expr": "histogram_quantile(0.5, sum(rate(hkube_algorithm_queue_time_in_queue_histogram_bucket[5m])) by (le, algorithm_name))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{algorithm_name}}",
@@ -561,7 +561,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -593,7 +593,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.95, sum(rate(algorithm_queue_time_in_queue_histogram_bucket[5m])) by (le, algorithm_name))",
+          "expr": "histogram_quantile(0.95, sum(rate(hkube_algorithm_queue_time_in_queue_histogram_bucket[5m])) by (le, algorithm_name))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{algorithm_name}}",
@@ -645,7 +645,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -677,7 +677,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(worker_net_histogram_sum) by (algorithm_name) / sum(worker_net_histogram_count) by (algorithm_name)",
+          "expr": "sum(hkube_worker_net_histogram_sum) by (algorithm_name) / sum(hkube_worker_net_histogram_count) by (algorithm_name)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -730,7 +730,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -762,7 +762,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.5, sum(rate(worker_net_histogram_bucket[5m])) by (le, algorithm_name))",
+          "expr": "histogram_quantile(0.5, sum(rate(hkube_worker_net_histogram_bucket[5m])) by (le, algorithm_name))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -815,7 +815,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -847,7 +847,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.95, sum(rate(worker_net_histogram_bucket[5m])) by (le, algorithm_name))",
+          "expr": "histogram_quantile(0.95, sum(rate(hkube_worker_net_histogram_bucket[5m])) by (le, algorithm_name))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -900,7 +900,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -985,7 +985,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROM}",
+      "datasource": "${DS_HKUBE}",
       "fill": 1,
       "gridPos": {
         "h": 9,
