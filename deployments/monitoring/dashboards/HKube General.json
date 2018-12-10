@@ -9,8 +9,8 @@
       "pluginName": "Prometheus AlertManager"
     },
     {
-      "name": "DS_HKUBE",
-      "label": "hkube",
+      "name": "DS_PROM",
+      "label": "prom",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
@@ -77,6 +77,7 @@
     {
       "columns": [],
       "datasource": "${DS_PROMALERT}",
+      "description": "Alert is raised when alert condition is satisfied for at least one minute",
       "fontSize": "100%",
       "gridPos": {
         "h": 6,
@@ -179,7 +180,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "50% (median) and 95% percentiles values of all pipelines time-in-queue, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -228,7 +230,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pipelines Time in  Queue Percentiles",
+      "title": "Pipelines Time in  Queue Percentiles [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -270,7 +272,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "50% (median) and 95% percentiles of all pipelines runtime, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -319,7 +322,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pipelines Total Runtime Percentiles",
+      "title": "Pipelines Total Runtime Percentiles [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -361,7 +364,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "50% (median) and 95% percentiles values of all algorithms time-in-queue, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -410,7 +414,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Algorithms Time in  Queue Percentiles",
+      "title": "Algorithms Time in  Queue Percentiles [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -452,7 +456,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "50% (median) and 95% percentiles of all algorithms runtime, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -501,7 +506,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Algorithms Total Runtime Percentiles",
+      "title": "Algorithms Total Runtime Percentiles [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -543,7 +548,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Current number of pipelines waiting in pipeline driver queues.\nNotice it doesn't include pipelines which are handled quicker than scrape interval!",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -629,7 +635,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Start rate (pipelines per minute) for all pipelines, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -672,7 +679,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pipelines Start Rate",
+      "title": "Pipelines Start Rate [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -714,7 +721,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Current number of algorithms waiting in algorithm queues.\nNotice it doesn't include algorithms which are handled quicker than scrape interval!",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -799,7 +807,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Start rate (algorithms per minute) for all algorithms, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -844,7 +853,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Algorithms Start Rate",
+      "title": "Algorithms Start Rate [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -886,7 +895,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Success rate (pipelines per minute) for all pipelines, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -929,7 +939,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pipelines Success Rate",
+      "title": "Pipelines Success Rate [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -971,7 +981,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Failure rate (pipelines per minute) for all pipelines, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -1014,7 +1025,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pipelines Failure Rate",
+      "title": "Pipelines Failure Rate [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1056,7 +1067,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Success rate (algorithms per minute) for all algorithms, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -1099,7 +1111,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Algorithms Success Rate",
+      "title": "Algorithms Success Rate [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1143,7 +1155,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Failure rate (algorithms per minute) for all algorithms, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -1186,7 +1199,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Algorithms Failure Rate",
+      "title": "Algorithms Failure Rate [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1263,5 +1276,5 @@
   "timezone": "",
   "title": "HKube General",
   "uid": "YiqDrv1mk",
-  "version": 5
+  "version": 6
 }

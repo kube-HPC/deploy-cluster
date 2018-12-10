@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_HKUBE",
-      "label": "hkube",
+      "name": "DS_PROM",
+      "label": "prom",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
@@ -53,7 +53,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Current number of algorithms (by type) waiting in algorithm queues.\nNotice it doesn't include algorithms which are handled quicker than scrape interval!",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -138,7 +139,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Start rate (algorithms per minute) for each algorithm type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -181,7 +183,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Algorithms Start Rate",
+      "title": "Algorithms Start Rate [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -223,7 +225,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Success rate (algorithms per minute) for each algorithm type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -266,7 +269,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Algorithms Success Rate",
+      "title": "Algorithms Success Rate [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -308,7 +311,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Failure rate (algorithms per minute) for each algorithm type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -350,7 +354,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Algorithms Failure Rate",
+      "title": "Algorithms Failure Rate [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -392,7 +396,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Total average time-in-queue for each algorithm type",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -477,7 +482,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Median (50% percentile) value of time-in-queue for each algorithm type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -519,7 +525,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Algorithms Median Time in  Queue",
+      "title": "Algorithms Median Time in  Queue [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -561,7 +567,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "95% percentile value of time-in-queue for each algorithm type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -603,7 +610,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Algorithms 95% Percentile Time in  Queue",
+      "title": "Algorithms 95% Percentile Time in  Queue [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -645,7 +652,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Total average runtime for each algorithm type",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -730,7 +738,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Median (50% percentile) value of time-in-queue for each algorithm type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -773,7 +782,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Algorithms Median Total Runtime",
+      "title": "Algorithms Median Total Runtime [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -815,7 +824,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "95% percentile value of time-in-queue for each algorithm type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -858,7 +868,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Algorithms 95% Percentile Total Runtime",
+      "title": "Algorithms 95% Percentile Total Runtime [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -900,7 +910,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "How many CPU cores are used for each algorithm",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -943,7 +954,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "CPU Usage by Algorithms",
+      "title": "CPU Usage by Algorithms [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -985,7 +996,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "How much memory is used by each algorithm",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -1105,5 +1117,5 @@
   "timezone": "",
   "title": "HKube Algorithms",
   "uid": "ZoDbnm1mz",
-  "version": 3
+  "version": 5
 }
