@@ -45,15 +45,15 @@ data:
   alerts: |
     groups:
     ## Test alerts
-    - name: test
-      rules:
-      - alert: MyTestAlert1
-        expr: sum(hkube_worker_started_counter) > (sum(hkube_thres_mgr_test_gauge) or sum(absent(dummy)) * 3)
-    #    for: 10m
-        labels:
-          severity: error
-        annotations:
-          summary: 'TEST started algs: {{ humanize $value }} (test threshold: {{ query "sum(hkube_thres_mgr_test_gauge) or sum(absent(dummy)) * 3" | first | value }})'
+#    - name: test
+#      rules:
+#      - alert: MyTestAlert1
+#        expr: sum(hkube_worker_started_counter) > (sum(hkube_thres_mgr_test_gauge) or sum(absent(dummy)) * 3)
+#    #    for: 10m
+#        labels:
+#          severity: error
+#        annotations:
+#          summary: 'TEST started algs: {{ humanize $value }} (test threshold: {{ query "sum(hkube_thres_mgr_test_gauge) or sum(absent(dummy)) * 3" | first | value }})'
 
     ## Real Hkube alerts
     - name: hkube
