@@ -44,6 +44,7 @@ metadata:
 data:
   alerts: |
     groups:
+    ## Test alerts
     - name: test
       rules:
       - alert: MyTestAlert1
@@ -53,86 +54,142 @@ data:
           severity: error
         annotations:
           summary: 'TEST started algs: {{ humanize $value }} (test threshold: {{ query "sum(hkube_thres_mgr_test_gauge) or sum(absent(dummy)) * 3" | first | value }})'
+
     ## Real Hkube alerts
-    # NOTE: 
-    #	- thresholds are metrics from alerts-threshold-manager, if missing (e.g. not running) => default value is used.
-    #	- threshold default value is accepted by 'or' operation with: 'sum(absent(dummy)) * <default> ' when <default> is any default value.
-    #	- threshold values may be changed by PUT requests to alerts-threshold-manager (json format body)
     - name: hkube
       rules:
+      ### THRESHOLD RECORD RULES (including defaults)
+      # NOTE: 
+      #	- thresholds are metrics from alerts-threshold-manager, if missing (e.g. not running) => default value is used.
+      #	- threshold default value is accepted by 'or' operation with: 'sum(absent(dummy)) * <default> ' when <default> is any default value.
+      #	- threshold values may be changed by PUT requests to alerts-threshold-manager (json format body)
+      - record: GENERAL_RATE_GROW_THRES
+        expr: (sum(hkube_thres_mgr_general_warn_rate_grow_gauge) or sum(absent(dummy))*0.2 )
+      - record: PIPE_FAIL_RATE_FRACTION_THRES
+        expr: (sum(hkube_thres_mgr_warn_pipeline_failure_rate_fraction_gauge) or sum(absent(dummy)) * 0.3)
+      - record: ALG_FAIL_RATE_FRACTION_THRES
+        expr: (sum(hkube_thres_mgr_warn_alg_failure_rate_fraction_gauge) or sum(absent(dummy)) * 0.3)
+      - record: MIN_PIPE_TIME_IN_QUEUE_WARN
+        expr: ((sum(hkube_thres_mgr_min_warn_pipeline_time_in_queue_gauge) or sum(absent(dummy)) * 1000 )/1000)
+      - record: MIN_ALG_TIME_IN_QUEUE_WARN
+        expr: ((sum(hkube_thres_mgr_min_warn_alg_time_in_queue_gauge) or sum(absent(dummy)) * 1000 )/1000)
+      - record: CPU_USAGE_GROW_THRES
+        expr: (sum(hkube_thres_mgr_warn_alg_cpu_usage_grow_gauge) or sum(absent(dummy)) * 0.4 )
+      - record: MIN_CPU_USAGE_WARN
+        expr: (sum(hkube_thres_mgr_warn_alg_cpu_usage_gauge) or sum(absent(dummy)) * 4 )
+      - record: ALG_MEM_MB_THRES
+        expr: (sum(hkube_thres_mgr_warn_alg_memory_usage_gauge) or sum(absent(dummy)) * 1000)
+
+
+      ### OTHER RECORD RULES
+      - record: pipeline_failures
+        expr: hkube_api_server_pipelines_gross_counter{status='failed'}
+      - record: pipe_recent_failure_rate
+        expr: (sum(rate(pipeline_failures[5m])) * 60)
+      - record: pipe_usual_failure_rate
+        expr: (sum(rate(pipeline_failures[1d])) * 60)
+      - record: alg_recent_failure_rate
+        expr: (sum(rate(hkube_worker_failed_counter[5m])) * 60)
+      - record: alg_usual_failure_rate
+        expr: (sum(rate(hkube_worker_failed_counter[1d])) * 60)
+      - record: alg_cpu_rate_5m
+        expr: rate(container_cpu_usage_seconds_total{container_name="algorunner"}[5m])
+      - record: alg_cpu_rate_1d
+        expr: rate(container_cpu_usage_seconds_total{container_name="algorunner"}[1d])
+      - record: alg_cpu_usage_5m
+        expr: sum(max(kube_pod_labels{label_algorithm_name!~""}) by (pod) * on(pod) label_replace( sum by(pod_name) (alg_cpu_rate_5m), "pod", "$1", "pod_name", "(.+)"))
+      - record: alg_cpu_usage_1d
+        expr: sum(max(kube_pod_labels{label_algorithm_name!~""}) by (pod) * on(pod) label_replace( sum by(pod_name) (alg_cpu_rate_1d), "pod", "$1", "pod_name", "(.+)"))
+      - record: alg_mem_usage_bytes
+        expr: sum(max(kube_pod_labels{label_algorithm_name!~""}) by (pod)
+                  * on(pod)
+                  label_replace(
+                      sum by(pod_name) (
+                          container_memory_working_set_bytes
+                      ), "pod", "$1", "pod_name", "(.+)")
+                  )
+      - record: pipe_recent_low_time_in_queue_sec
+        expr: (0.001 * histogram_quantile(0.3, sum(rate(hkube_pipeline_driver_queue_time_in_queue_histogram_bucket[5m])) by (le)) )
+      - record: pipe_usual_median_time_in_queue_sec
+        expr: (0.001 * histogram_quantile(0.5, sum(rate(hkube_pipeline_driver_queue_time_in_queue_histogram_bucket[1d])) by (le)) )
+      - record: alg_recent_low_time_in_queue_sec
+        expr: (0.001 * histogram_quantile(0.3, sum(rate(hkube_algorithm_queue_time_in_queue_histogram_bucket[5m])) by (le)))
+      - record: alg_usual_median_time_in_queue_sec
+        expr: (0.001 * histogram_quantile(0.5, sum(rate(hkube_algorithm_queue_time_in_queue_histogram_bucket[1d])) by (le)))
+
+      ###### ALERT RULES ######
+ 
+      ### HighPipelineFailureRate: recent pipeline failure rate is higher than daily by at least by threshold percent
       - alert: HighPipelineFailureRate
-        expr: (sum(rate(hkube_api_server_pipelines_gross_counter{status='failed'}[5m])) * 60) >
-                  (sum(hkube_thres_mgr_high_pipeline_failure_rate_gauge) or sum(absent(dummy)) * 10)
-        for: 5m
+        expr: pipe_recent_failure_rate > ( pipe_usual_failure_rate * (1 + GENERAL_RATE_GROW_THRES) )
+        for: 1m
         labels:
           severity: warning
         annotations:
-          summary: 'High Pipeline Failure Rate: {{$value | printf `%.2f`}} failures/min for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_high_pipeline_failure_rate_gauge) or sum(absent(dummy)) * 10" | first | value }})'
-      - alert: HighPipelineFailurePercent
-        expr: sum(rate(hkube_api_server_pipelines_gross_counter{status='failed'}[5m])) / sum(rate(hkube_api_server_pipelines_gross_counter[5m])) * 100 >
-                    (sum(hkube_thres_mgr_high_pipeline_failure_precent_gauge) or sum(absent(dummy)) * 20)
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: 'High percent of Pipeline Failures: {{$value | printf `%.2f`}}% for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_high_pipeline_failure_precent_gauge) or sum(absent(dummy)) * 20" | first | value }}%)'
+          summary: 'Recent 5 min Pipeline Failure Rate is higher than daily rate by at least {{ query "GENERAL_RATE_GROW_THRES * 100" | first | value }}%: {{$value | printf `%.2f`}} failures/min (daily: {{ query "pipe_usual_failure_rate" | first | value | printf `%.2f`}})'
+ 
+      ### HighAlgorithmFailureRate: recent algorithm failure rate is higher than daily by at least by threshold percent
       - alert: HighAlgorithmFailureRate
-        expr: sum(rate(hkube_worker_failed_counter[5m])) * 60 > (sum(hkube_thres_mgr_high_alg_failure_rate_gauge) or sum(absent(dummy)) * 20)
-        for: 5m
+        expr: alg_recent_failure_rate > ( alg_usual_failure_rate * ( 1 + GENERAL_RATE_GROW_THRES) )
+        for: 1m
         labels:
           severity: warning
         annotations:
-          summary: 'High Algorithm Failure Rate: {{$value | printf `%.2f`}} failures/min for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_high_alg_failure_rate_gauge) or sum(absent(dummy)) * 20" | first | value | humanize }})'
+          summary: 'Recent 5 min Algorithm Failure Rate is higher than daily rate by at least {{ query "GENERAL_RATE_GROW_THRES * 100" | first | value }}%: {{$value | printf `%.2f`}} failures/min (daily: {{ query "alg_usual_failure_rate" | first | value | printf `%.2f`}})'
+ 
+      ### HighAlgorithmFailurePercent: high percent of algorithm failures of all algorithms (if higher than threshold percent)
       - alert: HighAlgorithmFailurePercent
-        expr: sum(rate(hkube_worker_failed_counter[5m])) / (sum(rate(hkube_worker_succeeded_counter[5m]) + rate(hkube_worker_failed_counter[5m]))) * 100 >
-                  (sum(hkube_thres_mgr_high_alg_failure_percent_gauge) or sum(absent(dummy)) * 20)
-        for: 5m
+        expr: 100 * sum(rate(hkube_worker_failed_counter[5m])) / (sum(rate(hkube_worker_succeeded_counter[5m]) + rate(hkube_worker_failed_counter[5m]))) > (ALG_FAIL_RATE_FRACTION_THRES * 100)
+        for: 1m
         labels:
           severity: warning
         annotations:
-          summary: 'High percent of Algorithm Failures: {{$value | printf `%.2f`}}% for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_high_alg_failure_percent_gauge) or sum(absent(dummy)) * 20" | first | value }}%)'
-      - alert: LongAlgorithmMedianTimeInQueue
-        expr: histogram_quantile(0.5, sum(rate(hkube_algorithm_queue_time_in_queue_histogram_bucket[5m])) by (le)) >
-                  (sum(hkube_thres_mgr_long_alg_time_in_queue_gauge) or sum(absent(dummy)) * 5000)
-        for: 5m
+          summary: 'High percent of Algorithm Failures: {{$value | printf `%.2f`}}% for at least 5 min (threshold: {{ query "ALG_FAIL_RATE_FRACTION_THRES * 100" | first | value }}%)'
+ 
+       ### HighPipelineFailurePercent: high percent of pipeline failures of all pipelines (if higher than threshold percent)
+      - alert: HighPipelineFailurePercent
+        expr: 100 * sum(rate(hkube_api_server_pipelines_gross_counter{status='failed'}[5m])) / sum(rate(hkube_api_server_pipelines_gross_counter[5m])) > (PIPE_FAIL_RATE_FRACTION_THRES * 100)
+        for: 1m
         labels:
           severity: warning
         annotations:
-          summary: 'Long Algorithm Median Time-in-Queue: {{$value | printf `%.2f`}} ms for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_long_alg_time_in_queue_gauge) or sum(absent(dummy)) * 5000" | first | value }} ms)'
-      - alert: LongPipelineMedianTimeInQueue
-        expr: histogram_quantile(0.5, sum(rate(hkube_pipeline_driver_queue_time_in_queue_histogram_bucket[5m])) by (le)) >
-                  (sum(hkube_thres_mgr_long_pipeline_time_in_queue_gauge) or sum(absent(dummy)) * 10000)
-        for: 5m
+          summary: 'High percent of Pipeline Failures: {{$value | printf `%.2f`}}% for at least 5 min (threshold: {{ query "PIPE_FAIL_RATE_FRACTION_THRES * 100" | first | value }}%)'
+ 
+      ### LongAlgorithmTimeInQueue: recent low percentile algorithm time-in-queue is higher than daily median (if above some threshold)
+      - alert: LongAlgorithmTimeInQueue
+        expr: (alg_recent_low_time_in_queue_sec > alg_usual_median_time_in_queue_sec) and (alg_recent_low_time_in_queue_sec > MIN_ALG_TIME_IN_QUEUE_WARN)
+        for: 1m
         labels:
           severity: warning
         annotations:
-          summary: 'Long Pipeline Median Time-in-Queue: {{$value | printf `%.2f`}} ms for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_long_pipeline_time_in_queue_gauge) or sum(absent(dummy)) * 10000" | first | value }} ms)'
+          summary: 'Recent 5 min 30% percentile Algorithm Time-in-Queue is higher than daily median: {{ query "alg_recent_low_time_in_queue_sec" | first | value | humanizeDuration}} (median: {{ query "alg_usual_median_time_in_queue_sec" | first | value | humanizeDuration }})'
+ 
+      ### LongPipelineTimeInQueue: recent low percentile pipeline time-in-queue is higher than daily median (if above some threshold)
+      - alert: LongPipelineTimeInQueue
+        expr: (pipe_recent_low_time_in_queue_sec > pipe_usual_median_time_in_queue_sec) and (pipe_recent_low_time_in_queue_sec > MIN_PIPE_TIME_IN_QUEUE_WARN)
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'Recent 5 min 30% percentile Pipeline Time-in-Queue is higher than daily median: {{ query "pipe_recent_low_time_in_queue_sec" | first | value | humanizeDuration}} (median: {{ query "pipe_usual_median_time_in_queue_sec" | first | value | humanizeDuration }})'
+ 
+      ### HighAlgorithmMemoryUsage: total algorithms memory usage is higher than threshold
       - alert: HighAlgorithmMemoryUsage
-        expr: sum(max(kube_pod_labels{label_algorithm_name!~""}) by (pod)
-                      * on(pod)
-                      label_replace(
-                          sum by(pod_name) (
-                              container_memory_working_set_bytes
-                          ), "pod", "$1", "pod_name", "(.+)")
-                      )  / (1024 * 1024) > (sum(hkube_thres_mgr_high_alg_memory_usage_gauge) or sum(absent(dummy)) * 10000)
-        for: 5m
+        expr: alg_mem_usage_bytes / (1024 * 1024) > ALG_MEM_MB_THRES
+        for: 1m
         labels:
           severity: warning
         annotations:
-          summary: 'High Algorithms Total Memory Usage: {{$value | printf `%.0f`}} MB for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_high_alg_memory_usage_gauge) or sum(absent(dummy)) * 10000" | first | value }})'
+          summary: 'High Algorithms Total Memory Usage: {{$value | printf "%.0f"}} MB for at least 5 min (threshold: {{ query "ALG_MEM_MB_THRES" | first | value }})'
+
+      ### HighAlgorithmCpuUsage: recent CPU usage is higher than daily by at least threshold percent (if above some threshold)
       - alert: HighAlgorithmCpuUsage
-        expr: sum(max(kube_pod_labels{label_algorithm_name!~""}) by (pod)
-                      * on(pod)
-                      label_replace(
-                          sum by(pod_name) (
-                              rate(container_cpu_usage_seconds_total{container_name="algorunner"}[5m])
-                          ), "pod", "$1", "pod_name", "(.+)")
-                      ) > (sum(hkube_thres_mgr_high_alg_cpu_usage_gauge) or sum(absent(dummy)) * 20)
-        for: 5m
+        expr: (alg_cpu_usage_5m > (alg_cpu_usage_1d * (1 + CPU_USAGE_GROW_THRES))) and (alg_cpu_usage_5m > MIN_CPU_USAGE_WARN)
+        for: 1m
         labels:
           severity: warning
         annotations:
-          summary: 'High Algorithms CPU Usage: {{$value | printf `%.2f`}} cores for at least 5 min (threshold: {{ query "sum(hkube_thres_mgr_high_alg_cpu_usage_gauge) or sum(absent(dummy)) * 20" | first | value }})'
+          summary: 'Recent 5 min Algorithms CPU Usage {{query "alg_cpu_usage_5m" | first | value | printf "%.2f"}} cores is higher than daily by more than {{ query "CPU_USAGE_GROW_THRES * 100" | first | value }}%'
 
     
   prometheus.yml: |
