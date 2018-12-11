@@ -119,7 +119,7 @@ data:
 
       ###### ALERT RULES ######
  
-      ### HighPipelineFailureRate: recent pipeline failure rate is higher than daily by at least by threshold percent
+      ### HighPipelineFailureRate: recent pipeline failure rate is higher than daily by at least threshold percent
       - alert: HighPipelineFailureRate
         expr: pipe_recent_failure_rate > ( pipe_usual_failure_rate * (1 + GENERAL_RATE_GROW_THRES) )
         for: 1m
@@ -128,7 +128,7 @@ data:
         annotations:
           summary: 'Recent 5 min Pipeline Failure Rate is higher than daily rate by at least {{ query "GENERAL_RATE_GROW_THRES * 100" | first | value }}%: {{$value | printf `%.2f`}} failures/min (daily: {{ query "pipe_usual_failure_rate" | first | value | printf `%.2f`}})'
  
-      ### HighAlgorithmFailureRate: recent algorithm failure rate is higher than daily by at least by threshold percent
+      ### HighAlgorithmFailureRate: recent algorithm failure rate is higher than daily by at least threshold percent
       - alert: HighAlgorithmFailureRate
         expr: alg_recent_failure_rate > ( alg_usual_failure_rate * ( 1 + GENERAL_RATE_GROW_THRES) )
         for: 1m
