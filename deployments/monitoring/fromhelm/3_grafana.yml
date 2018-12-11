@@ -337,18 +337,3 @@ spec:
           - "--data-binary"
           - "{\"name\":\"prom\",\"type\":\"prometheus\",\"url\":\"http://monitoring-prometheus-server:9090\",\"database\":\"\",\"jsonData\":{  },\"access\":\"proxy\",\"isDefault\":true}"
       restartPolicy: OnFailure
----
-# Source: grafana/templates/dashboards-import-configmap.yaml
-
----
-# Source: grafana/templates/dashboards-import-job-configmap.yaml
-
----
-# Source: grafana/templates/dashboards-import-job.yaml
-
----
-# Source: grafana/templates/ingress.yaml
-
----
-# Source: grafana/templates/pvc.yaml
-
