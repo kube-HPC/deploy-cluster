@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_HKUBE",
-      "label": "hkube",
+      "name": "DS_PROM",
+      "label": "prom",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
@@ -53,7 +53,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Current number of pipelines (by type) waiting in pipeline driver queues.\nNotice it doesn't include pipeline which are handled quicker than scrape interval!",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -138,7 +139,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Start rate (pipelines per minute) for each pipeline type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -181,7 +183,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pipelines Start Rate",
+      "title": "Pipelines Start Rate [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -223,7 +225,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Success rate (pipelines per minute) for each pipeline type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -266,7 +269,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pipelines Success Rate",
+      "title": "Pipelines Success Rate [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -308,7 +311,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Failure rate (pipelines per minute) for each pipeline type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -351,7 +355,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pipelines Failure Rate",
+      "title": "Pipelines Failure Rate [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -393,7 +397,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Total average time-in-queue for each pipeline type",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -478,7 +483,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Median (50% percentile) value of time-in-queue for each pipeline type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -521,7 +527,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pipelines Median Time in  Queue",
+      "title": "Pipelines Median Time in  Queue [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -563,7 +569,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "95% percentile value of time-in-queue for each pipeline type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -605,7 +612,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pipelines 95% Percentile Time in  Queue",
+      "title": "Pipelines 95% Percentile Time in  Queue [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -647,7 +654,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Total average runtime for each pipeline type",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -732,7 +740,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "Median (50% percentile) value of time-in-queue for each pipeline type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -775,7 +784,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pipelines Median Total Runtime",
+      "title": "Pipelines Median Total Runtime [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -817,7 +826,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_HKUBE}",
+      "datasource": "${DS_PROM}",
+      "description": "95% percentile value of time-in-queue for each pipeline type, measured over 5 min",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -860,7 +870,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Jobs 95% Percentile Total Runtime",
+      "title": "Jobs 95% Percentile Total Runtime [5 min]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -937,5 +947,5 @@
   "timezone": "",
   "title": "HKube Pipelines",
   "uid": "syMRbv1iz",
-  "version": 2
+  "version": 4
 }
