@@ -53,7 +53,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: fluentd
-        image: fluent/fluentd-kubernetes-daemonset:elasticsearch
+        image: fluent/fluentd-kubernetes-daemonset:v1.1.3-debian-elasticsearch
         command: ["sh"]
         args: ["-c", "cp /fluentd/etc/fluent.conf.tmp /fluentd/etc/fluent.conf; /fluentd/entrypoint.sh"]
         env:
