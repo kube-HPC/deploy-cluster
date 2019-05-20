@@ -11,12 +11,13 @@ source ${KUBESPRAY_HOME}/env/$1
 
 echo_blue 'shh-copy-id to all Nodes ... '
 
+#ansible-playbook -b --ask-become-pass -i ${KUBESPRAY_HOME}/env/inventory.$1 ../playbooks/nodes-ssh-copy-id.yml -vvv
 ansible-playbook -i ${KUBESPRAY_HOME}/env/inventory.$1 ../playbooks/nodes-ssh-copy-id.yml
 
 echo_green 'Done.'
 
 echo_blue 'Pre config  cluster ... '
 
-ansible-playbook -b --ask-become-pass -i ${KUBESPRAY_HOME}/env/inventory.$1 ../playbooks/pre-install.yml
+ansible-playbook -b --ask-become-pass -i ${KUBESPRAY_HOME}/env/inventory.$1 ../playbooks/pre-install.yml 
 
 echo_green 'Done.'

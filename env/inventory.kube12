@@ -1,0 +1,38 @@
+[all]
+# ## Configure 'ip' variable to bind kubernetes services on a
+# ## different ip than the default iface
+node35 ansible_ssh_host=10.32.10.40
+node36 ansible_ssh_host=10.32.10.41
+node37 ansible_ssh_host=10.32.10.42 
+node38gpu ansible_ssh_host=10.32.10.29
+
+[all:vars]
+#ansible_python_interpreter=/usr/bin/python3
+#ansible_python_interpreter=/opt/rh/rh-python36/root/usr/bin/python
+ansible_user=ubadmin
+#bootstrap_os: ubuntu
+loadbalancer_apiserver_localhost=false
+cluster_name=kube12
+ansible_python_interpreter=/bin/python
+#host_key_checking=False
+[kube-master]
+node35
+
+[etcd]
+node35
+
+[kube-node]
+node35
+node36
+node37
+node38gpu
+
+[gpu-node]
+node38gpu
+
+[k8s-cluster:children]
+kube-node
+kube-master
+
+#[lable]
+#node35

@@ -6,13 +6,13 @@
   vars_prompt:
     - name: "cluster_name"
       prompt: "Type The Cluster Name you are  working"
-      default: "dev"
+      default: "kube12"
   
   tasks:
   - name: Inport Vars form Cluster Config yaml
     debug:
       msg="{{ lookup('env','ENV_NAME') }}"
-  - include_vars: ../env/{{ lookup('env','ENV_NAME') }}.yml
+  - include_vars: ../env/kube12.yml
 
   - name: Debug Test2
     debug:

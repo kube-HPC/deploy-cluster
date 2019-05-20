@@ -12,8 +12,6 @@
   become: yes
   roles:
     - ../roles/nfs
-  tags:
-    - nfs-common
 
 - hosts: kube-node
   become: yes

@@ -6,7 +6,7 @@
   vars_prompt:
     - name: "cluster_name"
       prompt: "Cluster Name to work on"
-      default: "dev"
+      default: "kube12"
   tasks:
   - name: Debug Test
     debug:
@@ -23,4 +23,4 @@
 
 #- import_playbook: ../playbooks/copy-certs.yml
 
-- import_playbook: ../playbooks/Node-Lables.yml
+#- import_playbook: ../playbooks/Node-Lables.yml

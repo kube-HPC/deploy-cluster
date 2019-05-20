@@ -25,5 +25,6 @@
         loadbalancer_apiserver_localhost: False
         cert_management: script
   vars_files:
-    - "{{playbook_dir}}/../env/group_vars/k8s-cluster.yml"
+# from kubespray 2.5.0 --> #    - "{{playbook_dir}}/../env/group_vars/k8s-cluster.yml"
+    - "{{playbook_dir}}/../env/group_vars/k8s-cluster/k8s-cluster.yml"
     - "{{playbook_dir}}/../kubespray/roles/download/defaults/main.yml"

@@ -3,8 +3,8 @@
 # For more information about this file, see the man pages
 # ntp.conf(5), ntp_acc(5), ntp_auth(5), ntp_clock(5), ntp_misc(5), ntp_mon(5).
 
-driftfile /var/lib/ntp/drift
-tinker panic 0
+driftfile {{ ntp_driftfile }}
+
 # Enable this if you want statistics to be logged.
 #statsdir /var/log/ntpstats/
 
@@ -26,8 +26,9 @@ restrict default nomodify notrap nopeer noquery
 # Permit all access over the loopback interface.  This could
 # be tightened as well, but to do so would effect some of
 # the administrative functions.
-restrict 127.0.0.1
-restrict ::1
+{% for item in ntp_restrict %}
+restrict {{ item }}
+{% endfor %}
 
 # Clients from this (example!) subnet have unlimited access, but only if
 # cryptographically authenticated.

@@ -2,6 +2,11 @@
 
 - name: Install pre-requisits python-netaddr
   apt: name=python-netaddr state=present
+  when: ansible_distribution == "Debian"
+
+- name: Install pre-requisits python-netaddr
+  yum: name=python-netaddr state=present
+  when: ansible_distribution == "CentOS"
 
 #- name: Create mount entrypoint
 #  file: path=/opt/storage state=directory

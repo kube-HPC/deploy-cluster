@@ -1,6 +1,6 @@
 ---
 
-- hosts: localhost
+- hosts: kube-master[0]
   name: Labeling Nodes on Cluster
   become: no
   vars_prompt:

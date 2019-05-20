@@ -19,18 +19,18 @@ echo_blue "Start Cluster $1 ..."
 
 echo ${KUBESPRAY_HOME}
 
-ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME -e @../env/$ENV_NAME.yml --ask-become-pass -b ../playbooks/Start-Cluster.yml
+ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME -e @../env/$ENV_NAME.yml --ask-become-pass -b ../playbooks/Start-Cluster.yml 
 
 echo_green 'done'
 
 echo_blue 'Get Cert for this Cluster'
 
-ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME ../playbooks/get-certs.yml
+echo "Run ===> ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME ../playbooks/get-certs.yml ===> Manually"
 
 echo_green 'done'
 
 echo_blue 'add lables to nodes'
 
-ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME ../playbooks/Node-Lables.yml
+echo "Run ===> ansible-playbook -i ../env/inventory.$ENV_NAME -e cluster_name=$ENV_NAME ../playbooks/Node-Lables.yml ===> Manually"
 
 echo_green 'done'
