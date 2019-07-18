@@ -8,7 +8,7 @@ CLUSTER_ID: test
 INSTALL_KEEPALIVED: True
 interface_network: eth0
 cluster_id: 3
-virtual_cluster_ip: 10.32.10.120
+virtual_cluster_ip: 10.32.10.6
 
 # nfs server 
 
@@ -22,7 +22,7 @@ url_username: kube
 url_password: SoundFactory
 
 # Kibana 
-KIBANA_EXTERNAL_IP: 10.32.10.120
+KIBANA_EXTERNAL_IP: 10.32.10.6
 
 # Elastic Defualt Configuration 
 
@@ -43,21 +43,29 @@ LABLES:
   - node: node1
     labels:
       - api
-      - "reverse-proxy"      
+      - "reverse-proxy"
+      - worker
+      - core
+      - "third-party" 
   - node: node2
     labels:
       - api
       - "reverse-proxy"
+      - worker
+      - core
+      - "third-party"
   - node: node3
     labels:
       - api
       - "reverse-proxy"
+      - worker
+      - core
+      - "third-party"
   - node: node4
     labels:
-      - "reverse-proxy"
       - worker
+      - core 
       - "third-party"
-      - core
   - node: node5
     labels:
       - worker
