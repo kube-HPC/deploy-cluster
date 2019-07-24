@@ -1,25 +1,30 @@
 [all]
 # ## Configure 'ip' variable to bind kubernetes services on a
 # ## different ip than the default iface
-node18 ansible_ssh_host=10.32.10.19
-node19 ansible_ssh_host=10.32.10.20
-node20 ansible_ssh_host=10.32.10.21 
-node21 ansible_ssh_host=10.32.10.22
-node22 ansible_ssh_host=10.32.10.23
+node18 ansible_ssh_host=10.32.10.4
+node19 ansible_ssh_host=10.32.10.19
+node20 ansible_ssh_host=10.32.10.20 
+node21 ansible_ssh_host=10.32.10.21
+node22 ansible_ssh_host=10.32.10.22
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
 ansible_user=ubadmin
 bootstrap_os=ubuntu
-loadbalancer_apiserver_localhost=false
+loadbalancer_apiserver_localhost=True
 cluster_name=dev2
+CONFIG_FILE=inventory/mycluster/hosts.yml python3 contrib/inventory_builder/inventory.py ${IPS[@]}
 #host_key_checking=False
 
 [kube-master]
 node18
+node19
+node20
 
 [etcd]
 node18
+node19
+node20
 
 [kube-node]
 node18

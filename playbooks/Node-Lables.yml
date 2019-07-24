@@ -2,7 +2,7 @@
 
 - hosts: kube-master[0]
   name: Labeling Nodes on Cluster
-  become: no
+  become: yes
   vars_prompt:
     - name: "cluster_name"
       prompt: "Type The Cluster Name you are  working"

@@ -5,7 +5,8 @@
   become: yes
   tasks:
     - fetch:
-        src: "/etc/kubernetes/ssl/etcd/{{ item }}.pem"
+#        src: "/etc/kubernetes/ssl/etcd/{{ item }}.pem"
+        src: "/etc/ssl/etcd/ssl/{{ item }}.pem"
         dest: "{{ playbook_dir }}/../kubespray/kubectl/{{ item }}.pem"
         flat: True
       with_items:

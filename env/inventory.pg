@@ -1,0 +1,34 @@
+[all]
+# ## Configure 'ip' variable to bind kubernetes services on a
+# ## different ip than the default iface
+agamB-dev-lrg038-playground1 ansible_ssh_host=10.32.10.33
+agamB-dev-lrg038-playground2 ansible_ssh_host=10.32.10.34
+agamB-dev-lrg038-playground3 ansible_ssh_host=10.32.10.35 
+
+[all:vars]
+#ansible_python_interpreter=/usr/bin/python3
+#ansible_python_interpreter=/opt/rh/rh-python36/root/usr/bin/python
+#ansible_user=ubadmin
+ansible_user=/usr/bin/python
+#bootstrap_os: ubuntu
+loadbalancer_apiserver_localhost=false
+cluster_name=pg
+ansible_python_interpreter=/bin/python
+#host_key_checking=False
+[kube-master]
+agamB-dev-lrg038-playground1
+
+[etcd]
+agamB-dev-lrg038-playground1
+
+[kube-node]
+agamB-dev-lrg038-playground1
+agamB-dev-lrg038-playground2
+agamB-dev-lrg038-playground3
+
+[k8s-cluster:children]
+kube-node
+kube-master
+
+#[lable]
+#node35
