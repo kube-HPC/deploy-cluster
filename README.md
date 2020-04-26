@@ -149,6 +149,9 @@ ansible all -i env/inventory.[cluster-name] -m ping
 ### install k8s
 cd scripts
 #### run ./Pre-Config [cluster-name]
+Pre-Config script, refers to ../playbooks/pre-install.yml
+This playbook contains calls to roles, please note that time sync role is different for AWS installation since it uses 'chrony' instead of NTP.
+Just uncomment the relevant block according to each installation type.
 do the follows:
 <details>
   <summary>copy id</summary>
