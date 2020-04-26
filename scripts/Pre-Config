@@ -10,6 +10,9 @@ fi
 source ${KUBESPRAY_HOME}/env/$1
 
 echo_blue 'shh-copy-id to all Nodes ... '
+echo_red '============================================================'
+echo_red 'USE Chrony Role for AWS Only, For other providers use NTP!!!'
+echo_red '============================================================'
 
 #ansible-playbook -b --ask-become-pass -i ${KUBESPRAY_HOME}/env/inventory.$1 ../playbooks/nodes-ssh-copy-id.yml -vvv
 ansible-playbook -i ${KUBESPRAY_HOME}/env/inventory.$1 ../playbooks/nodes-ssh-copy-id.yml

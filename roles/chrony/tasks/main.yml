@@ -1,0 +1,27 @@
+---
+# tasks file for chrony
+
+- name: Set timezone to Asia/Jerusalem
+  timezone:
+    name: Asia/Jerusalem
+    
+- name: Install chrony and ntpdate.
+  apt:
+    name: 
+      - chrony
+      - ntpdate
+    state: present
+
+- name: Ensure chrony is running and enabled as configured.
+  systemd:
+    name: chrony
+    state: started
+    enabled: yes
+
+- name: Generate chrony.conf file
+  template: src=chrony.conf.j2 dest=/etc/chrony/chrony.conf
+
+- name: restart chrony
+  systemd: 
+    name: chrony
+    state: restarted

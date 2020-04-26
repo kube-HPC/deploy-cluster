@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+  name: Installing ntp 
+  become: yes
+  roles:
+   - ../roles/ntp
+  tags:
+    - ntp
+
+- hosts: kube-node
+  become: yes
+  roles:
+    - ../roles/nfs
+
+- hosts: kube-node
+  become: yes
+  roles:
+    - ../roles/python-netaddr
+  tags:
+    - python-netaddr

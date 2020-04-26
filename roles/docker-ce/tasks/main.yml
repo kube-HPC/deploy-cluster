@@ -1,26 +1,56 @@
 ---
 
-- name: Set the correct timezone.
-  file:
-    src: "/usr/share/zoneinfo/{{ ntp_timezone }}"
-    dest: /etc/localtime
-    state: link
-    force: yes
+- name: Install packages
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+    state: present
+    update_cache: true
 
-- name: Config docker daemon.
-  template:
-    src: docker.j2
-    dest: /etc/docker
-    force: yes
+#- name: Download key repository
+# command: wget https://download.docker.com/linux/ubuntu/gpg ~ubuntu/gpg
+#- name: Add key repository
+#  command: apt-key add ~ubuntu/gpg
+#- name: Add To the repo
+#  command: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
 
-- name: Install Docker-ce 17.03.1.
-  apt: name=docker-ce state=installed
+- name: Install Docker-ce 18.09.9.
+  apt:
+    name:
+      - docker-ce-cli=5:18.09.9~3-0~ubuntu-xenial
+      - docker-ce=5:18.09.9~3-0~ubuntu-xenial
+    state: present
 
 - name: Ensure Docker is running and enabled as configured.
-  service:
+  systemd:
     name: docker
     state: started
     enabled: yes
 
-- name: restart dcoker
-  service: name=ntp state=restarted
+- name: Set docker service
+  template:
+    src: docker.service.j2
+    dest: /etc/systemd/system/docker.service
+
+- name: Create /etc/systemd/system/docker.service.d/ directory
+  file:
+    path: /etc/systemd/system/docker.service.d/
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: Set docker options
+  template:
+    src: docker-options.conf.j2
+    dest: /etc/systemd/system/docker.service.d/docker-options.conf
+
+- name: Restart docker service and also deamon-reload
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: docker

@@ -1,17 +1,27 @@
 ---
 
 - hosts: all
-  name: Installing ntp 
+  name: Installing chrony (AWS Only)
   become: yes
   roles:
-   - ../roles/ntp
+   - ../roles/chrony
   tags:
-    - ntp
+    - chrony
+
+#- hosts: all
+#  name: Installing NTP
+#  become: yes
+#  roles:
+#   - ../roles/ntp
+#  tags:
+#    - ntp
 
 - hosts: kube-node
   become: yes
   roles:
     - ../roles/nfs
+  tags:
+    - nfs-common
 
 - hosts: kube-node
   become: yes
@@ -19,3 +29,15 @@
     - ../roles/python-netaddr
   tags:
     - python-netaddr
+- hosts: all
+  become: yes
+  roles:
+    - ../roles/kubectl
+  tags:
+    - kubectl
+- hosts: all
+  become: yes
+  roles:
+    - ../roles/docker-ce
+  tags:
+    - docker-ce

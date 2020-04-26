@@ -6,7 +6,7 @@
   tasks:
     - name: fetching the config file from first master
       fetch:
-        src: admin.conf
+        src: /etc/kubernetes/admin.conf
         dest: "~/.kube/config.{{ cluster_name }}"
         flat: yes
 - hosts: localhost
@@ -21,7 +21,7 @@
         rm ~/.kube/config
         cp ~/.kube/config."{{ cluster_name }}" ~/.kube/config
         #rm ~/.kube/config.tmp
-        kubectl config use-context "{{ cluster_name }}"
+        #kubectl config use-context "{{ cluster_name }}"
       tags: switchcontext
       when: configfile.stat.exists
 

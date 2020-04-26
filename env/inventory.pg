@@ -1,34 +1,45 @@
 [all]
-# ## Configure 'ip' variable to bind kubernetes services on a
-# ## different ip than the default iface
-agamB-dev-lrg038-playground1 ansible_ssh_host=10.32.10.33
-agamB-dev-lrg038-playground2 ansible_ssh_host=10.32.10.34
-agamB-dev-lrg038-playground3 ansible_ssh_host=10.32.10.35 
+ip-172-22-0-246.eu-west-1.compute.internal ansible_ssh_host=172.22.0.246 # pg-m1
+ip-172-22-0-83.eu-west-1.compute.internal ansible_ssh_host=172.22.0.83  # pg-m2
+ip-172-22-0-175.eu-west-1.compute.internal ansible_ssh_host=172.22.0.175   # pg-m3
+ip-172-22-0-74.eu-west-1.compute.internal ansible_ssh_host=172.22.0.74   # pg-w1
+ip-172-22-0-174.eu-west-1.compute.internal ansible_ssh_host=172.22.0.174   # pg-w2
+ip-172-22-0-97.eu-west-1.compute.internal ansible_ssh_host=172.22.0.97   # pg-gpu
 
 [all:vars]
-#ansible_python_interpreter=/usr/bin/python3
-#ansible_python_interpreter=/opt/rh/rh-python36/root/usr/bin/python
-#ansible_user=ubadmin
-ansible_user=/usr/bin/python
-#bootstrap_os: ubuntu
-loadbalancer_apiserver_localhost=false
+ansible_python_interpreter=/usr/bin/python3
+ansible_ssh_private_key_file=/home/ubadmin/AWS/HKube/hkube-io.pem
+ansible_user=ubuntu
+bootstrap_os=ubuntu
+#supplementary_addresses_in_ssl_keys=[ 99.81.30.174, 18.200.137.168, 54.229.7.145 ]
+supplementary_addresses_in_ssl_keys=99.81.30.174
+loadbalancer_apiserver_localhost=true
 cluster_name=pg
-ansible_python_interpreter=/bin/python
-#host_key_checking=False
+
 [kube-master]
-agamB-dev-lrg038-playground1
+ip-172-22-0-246.eu-west-1.compute.internal
+ip-172-22-0-83.eu-west-1.compute.internal
+ip-172-22-0-175.eu-west-1.compute.internal
 
 [etcd]
-agamB-dev-lrg038-playground1
+
+ip-172-22-0-246.eu-west-1.compute.internal
+ip-172-22-0-83.eu-west-1.compute.internal
+ip-172-22-0-175.eu-west-1.compute.internal
 
 [kube-node]
-agamB-dev-lrg038-playground1
-agamB-dev-lrg038-playground2
-agamB-dev-lrg038-playground3
+ip-172-22-0-246.eu-west-1.compute.internal
+ip-172-22-0-83.eu-west-1.compute.internal
+ip-172-22-0-175.eu-west-1.compute.internal
+ip-172-22-0-74.eu-west-1.compute.internal
+ip-172-22-0-174.eu-west-1.compute.internal
+ip-172-22-0-97.eu-west-1.compute.internal
 
+[gpu]
+ip-172-22-0-97.eu-west-1.compute.internal
+[new]
+ip-172-22-0-74.eu-west-1.compute.internal
+ip-172-22-0-174.eu-west-1.compute.internal
 [k8s-cluster:children]
 kube-node
 kube-master
-
-#[lable]
-#node35
