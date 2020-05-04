@@ -1,0 +1,69 @@
+--- 
+
+# Cluster Info
+
+CLUSTER_ID: cicd
+
+# keepalived 
+
+INSTALL_KEEPALIVED: True
+interface_network: ens5
+cluster_id: 3
+#virtual_cluster_ip: 40.69.222.75
+
+
+# kube_apiserver_public_ip: 40.69.222.75
+supplementary_addresses_in_ssl_keys: [ 52.17.11.169 ]
+
+# nfs server 
+
+#NFS_SERVER: 10.0.0.4
+#NFS_ROOT: /srv/vol_nfs
+#USE_PERSISTANT_VOLUMES: True
+
+##INSTALL_NFS_HOST: False
+
+url_username: kube
+
+# Kibana 
+#KIBANA_EXTERNAL_IP: 40.69.222.75
+
+# Elastic Defualt Configuration 
+
+LOGGING_ES_PV_SIZE: 100Gi
+LOGGING_ES_REPLICAS_MASTER: 1
+LOGGING_ES_REPLICAS_CLIENT: 1
+LOGGING_ES_REPLICAS_DATA: 2
+LOGGING_ES_MINIMUM_MASTERS: 1
+LOGGING_ES_JAVA_HEAP_SIZE: 2g
+
+# Prometheus Defualt Configuration
+
+PROM_PV_SIZE: 100Gi
+
+
+# Nodes Labels 
+
+LABLES:
+  - node: ip-172-22-3-151.eu-west-1.compute.internal
+    labels:
+      - api
+      - "reverse-proxy"
+      - worker
+      - core
+      - "third-party"
+  - node: ip-172-22-3-243.eu-west-1.compute.internal
+    labels:
+      - worker
+      - core
+      - "third-party"
+  - node: ip-172-22-3-66.eu-west-1.compute.internal
+    labels:
+      - worker
+      - core
+      - "third-party"
+  - node: ip-172-22-3-65.eu-west-1.compute.internal
+    labels:
+      - worker
+      - core
+      - "third-party"

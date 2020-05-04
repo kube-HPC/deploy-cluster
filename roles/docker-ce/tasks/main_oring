@@ -11,24 +11,13 @@
     state: present
     update_cache: true
 
-    #- name: Download key repository
-    #  command: wget https://download.docker.com/linux/ubuntu/gpg ~ubuntu/gpg
-    #- name: Add key repository
-    #  command: apt-key add ~ubuntu/gpg
-    #- name: Add To the repo
-    #  command: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
-- name: Add Docker GPG apt Key
-  apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    state: present
+#- name: Download key repository
+# command: wget https://download.docker.com/linux/ubuntu/gpg ~ubuntu/gpg
+#- name: Add key repository
+#  command: apt-key add ~ubuntu/gpg
+#- name: Add To the repo
+#  command: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
 
-- name: Add Docker Repository
-  apt_repository:
-    repo: deb https://download.docker.com/linux/ubuntu xenial stable
-    state: present
-
-- name: Update
-  apt: update_cache=yes
 - name: Install Docker-ce 18.09.9.
   apt:
     name:
