@@ -1,0 +1,128 @@
+---
+- hosts: all
+  gather_facts: no
+  become: yes
+
+  tasks:
+
+#   - name: create ubadmin group
+#     group:
+#       name: ubadmin
+#       gid: 666
+#       state: present
+#   - name: create user ubadmin
+#     user: 
+#       name: ubadmin
+#       comment: 'cluster admin'
+#       uid: 666
+#       group: ubadmin
+#       shell: /bin/bash
+
+#   - name: copy sudoers file for ubadmin
+#     copy:
+#       src: /home/ubadmin/AWS/AWS_Ansible/stam/okd_config_files/91-ubadmin
+#       dest: /etc/sudoers.d/91-ubadmin
+#   - name: Update Yum repo
+#     yum:
+#       update_cache: yes
+#       name: python3.x86_64
+#       state: present
+    - name: create patition for /var
+      parted:
+        device: /dev/xvdd
+        number: 1
+        state: present
+#   - name: create patition for /usr/local
+#     parted:
+#       device: /dev/xvdd
+#       number: 1
+#       state: present
+    - name: Create FileSystem for /var
+      filesystem:
+        fstype: ext4
+        dev: /dev/xvdd1
+    - name: mount /var1
+      mount:
+        fstype: ext4
+        src: /dev/xvdd1
+        path: /var1
+        state: mounted
+    - name: Copy /var To /var1
+      become: yes
+      synchronize:
+        src: /var/
+        dest: /var1
+        recursive: yes
+        rsync_opts:
+           - "--exclude=lxcfs"
+      delegate_to: "{{ inventory_hostname }}"
+    - name: Umount temporary /var1
+      mount:
+        path: /var1
+        state: absent
+    - name: mount /var
+      mount:
+        fstype: ext4
+        src: /dev/xvdd1
+        path: /var
+        state: mounted
+
+#   - name: Create FileSystem for /usr/local
+#     filesystem:
+#       fstype: ext4
+#       dev: /dev/nvme1n1p1
+#   - name: mount /usr/local1
+#     mount:
+#       fstype: ext4
+#       src: /dev/nvme1n1p1
+#       path: /usr/local1
+#       state: mounted
+#   - name: Copy /usr/local to /usr/local1
+#     become: yes
+#     synchronize:
+#       src: /usr/local/
+#       dest: /usr/local1
+#       recursive: yes
+#     delegate_to: "{{ inventory_hostname }}"
+#   - name: Umount temporary /usr/local1
+#     mount:
+#       path: /usr/local1
+#       state: absent
+#   - name: mount /usr/local
+#     mount:
+#       fstype: ext4
+#       src: /dev/nvme1n1p1
+#       path: /usr/local
+#       state: mounted
+    
+#
+#    - name: Relable files for SElinux
+#      expect:
+#        command: /sbin/fixfiles relabel
+#        responses:
+#          Question:
+#            - Y
+#
+#   - name: Set sshd PasswordAuthentication
+#     copy:
+#       src: /home/ubadmin/AWS/AWS_Ansible/stam/okd_config_files/sshd_config
+#       dest: /etc/ssh/sshd_config
+#       owner: root
+#       group: root
+#       mode: 0600
+#       backup: yes
+
+#########################################################################
+#### Before using this notify option we need to set ubadmin password ####
+#########################################################################
+
+#      notify:
+#        - Restart sshd
+
+#  handlers:
+#    - name: Restart sshd
+#      service: 
+#        name: sshd
+#        state: restarted        
+#########################################################################
+

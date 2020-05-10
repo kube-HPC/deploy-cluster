@@ -1,8 +1,8 @@
 [all]
-ip-172-22-3-151.eu-west-1.compute.internal ansible_ssh_host=172.22.3.151 # cicd-m1
-ip-172-22-3-243.eu-west-1.compute.internal ansible_ssh_host=172.22.3.243  # cicd-w1
-ip-172-22-3-66.eu-west-1.compute.internal ansible_ssh_host=172.22.3.66   # cicd-w2
-ip-172-22-3-65.eu-west-1.compute.internal ansible_ssh_host=172.22.3.65   # cicd-w3
+ip-172-22-3-78.eu-west-1.compute.internal ansible_ssh_host=172.22.3.78  # cicd-m1
+ip-172-22-3-85.eu-west-1.compute.internal ansible_ssh_host=172.22.3.85  # cicd-w1
+ip-172-22-3-158.eu-west-1.compute.internal ansible_ssh_host=172.22.3.158  # cicd-w2
+ip-172-22-3-213.eu-west-1.compute.internal ansible_ssh_host=172.22.3.213  # cicd-w3
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
@@ -10,21 +10,21 @@ ansible_ssh_private_key_file=/home/ubadmin/AWS/HKube/hkube-io.pem
 ansible_user=ubuntu
 bootstrap_os=ubuntu
 #supplementary_addresses_in_ssl_keys=[ 99.81.30.174, 18.200.137.168, 54.229.7.145 ]
-supplementary_addresses_in_ssl_keys=52.17.11.169
+supplementary_addresses_in_ssl_keys=63.34.172.241
 loadbalancer_apiserver_localhost=true
 cluster_name=cicd
 
 [kube-master]
-ip-172-22-3-151.eu-west-1.compute.internal
+ip-172-22-3-78.eu-west-1.compute.internal
 
 [etcd]
-ip-172-22-3-151.eu-west-1.compute.internal
+ip-172-22-3-78.eu-west-1.compute.internal
 
 [kube-node]
-ip-172-22-3-151.eu-west-1.compute.internal
-ip-172-22-3-243.eu-west-1.compute.internal
-ip-172-22-3-66.eu-west-1.compute.internal
-ip-172-22-3-65.eu-west-1.compute.internal
+ip-172-22-3-78.eu-west-1.compute.internal
+ip-172-22-3-85.eu-west-1.compute.internal
+ip-172-22-3-158.eu-west-1.compute.internal
+ip-172-22-3-213.eu-west-1.compute.internal
 
 [k8s-cluster:children]
 kube-node

@@ -7,6 +7,7 @@
     
 - name: Install chrony and ntpdate.
   apt:
+    update_cache: yes        
     name: 
       - chrony
       - ntpdate
