@@ -1,0 +1,32 @@
+[all]
+ip-172-22-0-8.eu-west-1.compute.internal    ansible_ssh_host=172.22.0.8   #m1
+ip-172-22-0-208.eu-west-1.compute.internal  ansible_ssh_host=172.22.0.208 #w1
+ip-172-22-0-179.eu-west-1.compute.internal  ansible_ssh_host=172.22.0.179 #w2
+ip-172-22-0-57.eu-west-1.compute.internal   ansible_ssh_host=172.22.0.57  #w3
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_ssh_private_key_file=/home/ubadmin/AWS/HKube/hkube-io.pem
+ansible_user=ubuntu
+bootstrap_os=ubuntu
+supplementary_addresses_in_ssl_keys=52.210.120.202
+loadbalancer_apiserver_localhost=true
+cluster_name=test
+
+[kube-master]
+ip-172-22-0-8.eu-west-1.compute.internal
+
+[etcd]
+ip-172-22-0-8.eu-west-1.compute.internal 
+
+[kube-node]
+ip-172-22-0-8.eu-west-1.compute.internal
+ip-172-22-0-208.eu-west-1.compute.internal
+ip-172-22-0-179.eu-west-1.compute.internal
+ip-172-22-0-57.eu-west-1.compute.internal
+
+[gpu]
+
+[k8s-cluster:children]
+kube-node
+kube-master
