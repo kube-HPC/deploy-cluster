@@ -1,0 +1,5 @@
+stable          https://kubernetes-charts.storage.googleapis.com
+elastic         https://helm.elastic.co
+hkube-dev       http://hkube.io/helm/dev
+hkube           http://hkube.io/helm/
+
