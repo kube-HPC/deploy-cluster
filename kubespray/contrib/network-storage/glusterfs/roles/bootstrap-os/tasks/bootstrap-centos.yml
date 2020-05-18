@@ -24,15 +24,6 @@
 
 # CentOS ships with python installed
 
-- name: Check if this is an atomic host
-  stat:
-    path: /run/ostree-booted
-  register: ostree
-
-- name: Store the fact if this is an atomic host
-  set_fact:
-    is_atomic: "{{ ostree.stat.exists }}"
-
 - name: Check presence of fastestmirror.conf
   stat:
     path: /etc/yum/pluginconf.d/fastestmirror.conf
@@ -51,15 +42,14 @@
     - not centos_fastestmirror_enabled
 
 - name: Add proxy to /etc/yum.conf if http_proxy is defined
-  lineinfile:
+  ini_file:
     path: "/etc/yum.conf"
-    regexp: "^proxy=.*$"
-    line: "proxy={{ http_proxy }}"
-    create: true
-    state: present
+    section: main
+    option: proxy
+    value: "{{ http_proxy | default(omit) }}"
+    state: "{{ http_proxy | default(False) | ternary('present', 'absent') }}"
+    no_extra_spaces: true
   become: true
-  when:
-    - http_proxy is defined
 
 - name: Gather host facts to get ansible_distribution_major_version
   setup:
@@ -73,5 +63,3 @@
     name: "{{ ( (ansible_distribution_major_version | int) < 8) | ternary('libselinux-python','python3-libselinux') }}"
     state: present
   become: true
-  when:
-    - not is_atomic

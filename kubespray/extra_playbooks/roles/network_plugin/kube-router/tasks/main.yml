@@ -3,22 +3,6 @@
   include: annotate.yml
   tags: annotate
 
-- name: kube-router | Set cni directory permissions
-  file:
-    path: /opt/cni/bin
-    state: directory
-    owner: kube
-    recurse: true
-    mode: 0755
-
-- name: kube-router | Copy cni plugins
-  unarchive:
-    src: "{{ local_release_dir }}/cni-plugins-linux-{{ image_arch }}-{{ cni_version }}.tgz"
-    dest: "/opt/cni/bin"
-    mode: 0755
-    owner: kube
-    remote_src: yes
-
 - name: kube-router | Create config directory
   file:
     path: /var/lib/kube-router
@@ -37,7 +21,7 @@
 
 - name: kube-router | Slurp cni config
   slurp:
-    src: /etc/cni/net.d/10-kuberouter.conf
+    src: /etc/cni/net.d/10-kuberouter.conflist
   register: cni_config_slurp
   ignore_errors: true
 
@@ -49,29 +33,23 @@
 
 - name: kube-router | Set host_subnet variable
   set_fact:
-    host_subnet: "{{ cni_config.ipam.subnet }}"
+    host_subnet: "{{ cni_config | json_query('plugins[?bridge==`kube-bridge`].ipam.subnet') | first }}"
   when:
     - cni_config is defined
-    - cni_config.ipam is defined
-    - cni_config.ipam.subnet is defined
-
-- name: kube-router | Set wanted cni config variable
-  set_fact:
-    wanted_cni_config: "{{ lookup('template', 'cni-conf.json.j2') }}"
-
-- name: kube-router | Set wanted_cni_config variable
-  set_fact:
-    wanted_cni_config: "{{ wanted_cni_config | combine({ 'ipam': { 'subnet': host_subnet }}, recursive=True) }}"
-  when: host_subnet is defined
+    - cni_config | json_query('plugins[?bridge==`kube-bridge`].ipam.subnet') | length > 0
 
 - name: kube-router | Create cni config
-  copy:
-    content: "{{ wanted_cni_config | to_nice_json }}"
-    dest: /etc/cni/net.d/10-kuberouter.conf
+  template:
+    src: cni-conf.json.j2
+    dest: /etc/cni/net.d/10-kuberouter.conflist
     owner: kube
-  changed_when: wanted_cni_config != cni_config
   notify:
     - reset_kube_router
+
+- name: kube-router | Delete old configuration
+  file:
+    path: /etc/cni/net.d/10-kuberouter.conf
+    state: absent
 
 - name: kube-router | Create manifest
   template:
