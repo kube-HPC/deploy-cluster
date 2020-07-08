@@ -59,12 +59,32 @@ LABLES:
       - worker
       - core
       - "third-party"
-  - node: ip-172-22-1-239.eu-west-1.compute.internal
+        #  - node: ip-172-22-1-239.eu-west-1.compute.internal
+        #    labels:
+        #      - worker
+        #      - core
+        #      - "third-party"
+        #  - node: ip-172-22-1-59.eu-west-1.compute.internal
+        #    labels:
+        #      - worker
+        #      - core
+        #      - "third-party"
+  - node: ip-172-22-1-16.eu-west-1.compute.internal
     labels:
       - worker
       - core
       - "third-party"
-  - node: ip-172-22-1-59.eu-west-1.compute.internal
+  - node: ip-172-22-1-29.eu-west-1.compute.internal
+    labels:
+      - worker
+      - core
+      - "third-party"
+  - node: ip-172-22-1-185.eu-west-1.compute.internal
+    labels:
+      - worker
+      - core
+      - "third-party"
+  - node: ip-172-22-1-62.eu-west-1.compute.internal
     labels:
       - worker
       - core

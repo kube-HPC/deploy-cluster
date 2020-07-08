@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: spots
   gather_facts: no
   become: yes
 
@@ -29,7 +29,7 @@
 #       state: present
     - name: create patition for /var
       parted:
-        device: /dev/nvme1n1
+        device: /dev/xvdc
         number: 1
         state: present
 #   - name: create patition for /usr/local
@@ -40,11 +40,11 @@
     - name: Create FileSystem for /var
       filesystem:
         fstype: ext4
-        dev: /dev/nvme1n1p1
+        dev: /dev/xvdc1
     - name: mount /var1
       mount:
         fstype: ext4
-        src: /dev/nvme1n1p1
+        src: /dev/xvdc1
         path: /var1
         state: mounted
     - name: Copy /var To /var1
@@ -54,7 +54,7 @@
         dest: /var1
         recursive: yes
         rsync_opts:
-           - "--exclude=lxcfs"
+          - "--exclude=lxcfs"
       delegate_to: "{{ inventory_hostname }}"
     - name: Umount temporary /var1
       mount:
@@ -63,7 +63,7 @@
     - name: mount /var
       mount:
         fstype: ext4
-        src: /dev/nvme1n1p1
+        src: /dev/xvdc1
         path: /var
         state: mounted
 

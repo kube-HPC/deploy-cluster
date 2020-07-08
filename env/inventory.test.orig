@@ -1,0 +1,48 @@
+[all]
+ip-172-22-1-207.eu-west-1.compute.internal ansible_ssh_host=172.22.1.207 # m1
+ip-172-22-1-110.eu-west-1.compute.internal ansible_ssh_host=172.22.1.110 # m3
+ip-172-22-1-175.eu-west-1.compute.internal ansible_ssh_host=172.22.1.175 # m3
+ip-172-22-1-119.eu-west-1.compute.internal ansible_ssh_host=172.22.1.119 # w1
+ip-172-22-1-85.eu-west-1.compute.internal ansible_ssh_host=172.22.1.85  # w2 
+ip-172-22-1-153.eu-west-1.compute.internal ansible_ssh_host=172.22.1.153 # w3
+ip-172-22-1-45.eu-west-1.compute.internal ansible_ssh_host=172.22.1.45  # w4
+ip-172-22-1-239.eu-west-1.compute.internal ansible_ssh_host=172.22.1.239 # gp1
+ip-172-22-1-59.eu-west-1.compute.internal ansible_ssh_host=172.22.1.59  # gp2
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_ssh_private_key_file=/home/ubadmin/AWS/HKube/hkube-io.pem
+ansible_user=ubuntu
+bootstrap_os=ubuntu
+supplementary_addresses_in_ssl_keys=54.229.7.145
+loadbalancer_apiserver_localhost=true
+cluster_name=test
+
+[kube-master]
+ip-172-22-1-207.eu-west-1.compute.internal
+ip-172-22-1-110.eu-west-1.compute.internal
+ip-172-22-1-175.eu-west-1.compute.internal
+
+[etcd]
+ip-172-22-1-207.eu-west-1.compute.internal
+ip-172-22-1-110.eu-west-1.compute.internal
+ip-172-22-1-175.eu-west-1.compute.internal
+
+[kube-node]
+ip-172-22-1-207.eu-west-1.compute.internal
+ip-172-22-1-110.eu-west-1.compute.internal
+ip-172-22-1-175.eu-west-1.compute.internal
+ip-172-22-1-119.eu-west-1.compute.internal
+ip-172-22-1-85.eu-west-1.compute.internal 
+ip-172-22-1-153.eu-west-1.compute.internal
+ip-172-22-1-45.eu-west-1.compute.internal
+ip-172-22-1-239.eu-west-1.compute.internal
+ip-172-22-1-59.eu-west-1.compute.internal
+
+[gpu]
+ip-172-22-1-239.eu-west-1.compute.internal
+ip-172-22-1-59.eu-west-1.compute.internal
+
+[k8s-cluster:children]
+kube-node
+kube-master
