@@ -8,10 +8,9 @@ ip-172-22-1-153.eu-west-1.compute.internal ansible_ssh_host=172.22.1.153 # w3
 ip-172-22-1-45.eu-west-1.compute.internal ansible_ssh_host=172.22.1.45  # w4
 #ip-172-22-1-239.eu-west-1.compute.internal ansible_ssh_host=172.22.1.239 # gp1
 #ip-172-22-1-59.eu-west-1.compute.internal ansible_ssh_host=172.22.1.59 # gp2
-ip-172-22-1-16.eu-west-1.compute.internal ansible_ssh_host=172.22.1.16  # spot2
-ip-172-22-1-29.eu-west-1.compute.internal ansible_ssh_host=172.22.1.29  # spot3
-ip-172-22-1-62.eu-west-1.compute.internal ansible_ssh_host=172.22.1.62  # spot4
-ip-172-22-1-185.eu-west-1.compute.internal ansible_ssh_host=172.22.1.185  # spot5
+#ip-172-22-1-16.eu-west-1.compute.internal ansible_ssh_host=172.22.1.16  # spot2
+#ip-172-22-1-62.eu-west-1.compute.internal ansible_ssh_host=172.22.1.62  # spot4
+#ip-172-22-1-185.eu-west-1.compute.internal ansible_ssh_host=172.22.1.185  # spot5
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
@@ -42,19 +41,17 @@ ip-172-22-1-153.eu-west-1.compute.internal
 ip-172-22-1-45.eu-west-1.compute.internal
 #ip-172-22-1-239.eu-west-1.compute.internal
 #ip-172-22-1-59.eu-west-1.compute.internal
-ip-172-22-1-16.eu-west-1.compute.internal
-ip-172-22-1-29.eu-west-1.compute.internal
-ip-172-22-1-62.eu-west-1.compute.internal
-ip-172-22-1-185.eu-west-1.compute.internal
+#ip-172-22-1-16.eu-west-1.compute.internal
+#ip-172-22-1-62.eu-west-1.compute.internal
+#ip-172-22-1-185.eu-west-1.compute.internal
 [gpu]
 #ip-172-22-1-239.eu-west-1.compute.internal
 #ip-172-22-1-59.eu-west-1.compute.internal
 
 [spots]
-ip-172-22-1-16.eu-west-1.compute.internal
-ip-172-22-1-29.eu-west-1.compute.internal
-ip-172-22-1-62.eu-west-1.compute.internal
-ip-172-22-1-185.eu-west-1.compute.internal
+#ip-172-22-1-16.eu-west-1.compute.internal
+#ip-172-22-1-62.eu-west-1.compute.internal
+#ip-172-22-1-185.eu-west-1.compute.internal
 
 [k8s-cluster:children]
 kube-node
