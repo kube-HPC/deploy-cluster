@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#############################################################################
+# auto-generated file. DO NOT EDIT!
+# use ./configure <target> to generate from ${RMS_HOME}/config/<target>.conf
+#############################################################################
+
+#CLUSTER_CONFIG=/home/eli/rms/config/CIR50.conf # used by config-default
+#source /home/eli/rms/config/config-default
+

@@ -1,0 +1,16 @@
+##########################################################################################
+# Kubernetes -----------------------------------------------------------------------------
+# Kubernetes stuff:
+# Kubernetes -----------------------------------------------------------------------------
+
+PATH=/home/$USER/deploy-cluster/bin:$PATH
+PATH=/home/$USER/bin:$PATH
+
+
+if [ -f /home/$USER/deploy-cluster/env/k8s_aliases ]; then
+    . /home/$USER/deploy-cluster/env/k8s_aliases
+fi
+
+NS=--namespace=kube-system
+NA=--all-namespaces
+NM=--namespace=monitoring
