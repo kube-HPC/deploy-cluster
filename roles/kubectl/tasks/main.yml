@@ -1,8 +1,8 @@
 ---
 # tasks file for kubectl
-- name: Copy kubectl 1.16 to all clutsre nodes
+- name: Copy kubectl 1.17 to all clutsre nodes
   copy:
-    src: /home/ubadmin/AWS/HKube/deploy-cluster/roles/kubectl/files/kubectl
+    src: /usr/local/bin/kubectl
     dest: /usr/local/bin/kubectl
     owner: root
     group: root

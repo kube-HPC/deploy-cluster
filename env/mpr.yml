@@ -1,0 +1,66 @@
+--- 
+
+# Cluster Info
+
+CLUSTER_ID: mpr
+
+# keepalived 
+
+INSTALL_KEEPALIVED: True
+interface_network: ens5
+cluster_id: 3
+
+supplementary_addresses_in_ssl_keys: [ 3.248.128.107 ]
+
+url_username: kube
+
+
+# Nodes Labels 
+
+LABLES:
+  - node: ip-172-31-1-156.eu-west-1.compute.internal
+    labels:
+      - api
+      - "reverse-proxy"
+      - worker
+      - core
+      - "third-party"
+  - node: ip-172-31-9-218.eu-west-1.compute.internal
+    labels:
+      - api
+      - "reverse-proxy"
+      - worker
+      - core
+      - "third-party"
+  - node: ip-172-31-0-207.eu-west-1.compute.internal
+    labels:
+      - api
+      - "reverse-proxy"
+      - worker
+      - core
+      - "third-party"
+  - node: ip-172-31-12-206.eu-west-1.compute.internal
+    labels:
+      - worker
+      - core
+      - "third-party"
+  - node: ip-172-31-33-94.eu-west-1.compute.internal
+    labels:
+      - worker
+      - core
+      - "third-party"
+  - node: ip-172-31-38-176.eu-west-1.compute.internal
+    labels:
+      - worker
+      - core
+      - "third-party"
+  - node: ip-172-31-37-188.eu-west-1.compute.internal
+    labels:
+      - worker
+      - core
+      - "third-party"
+#  - node: ip-172-31-39-22.eu-west-1.compute.internal
+#    labels:
+#      - worker
+#      - core
+#      - "third-party"

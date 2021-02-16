@@ -1,0 +1,56 @@
+[all]
+ip-172-31-40-87.eu-west-1.compute.internal ansible_ssh_host=172.31.40.87 # m1
+ip-172-31-43-137.eu-west-1.compute.internal ansible_ssh_host=172.31.43.137 # m2
+ip-172-31-39-67.eu-west-1.compute.internal ansible_ssh_host=172.31.39.67 # m3
+ip-172-31-41-76.eu-west-1.compute.internal ansible_ssh_host=172.31.41.76 # w1
+ip-172-31-33-94.eu-west-1.compute.internal  ansible_ssh_host=172.31.33.94 # spot1
+ip-172-31-38-176.eu-west-1.compute.internal ansible_ssh_host=172.31.38.176  # spot2
+ip-172-31-37-188.eu-west-1.compute.internal ansible_ssh_host=172.31.37.188  # spot3
+#ip-172-31-39-22.eu-west-1.compute.internal ansible_ssh_host=172.31.39.22  # spot4
+#ip-172-31-45-136.eu-west-1.compute.internal ansible_ssh_host=172.31.45.136 # deployer
+
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_ssh_private_key_file=/home/ubadmin/AWS/aws-mpr.pem
+ansible_user=ubuntu
+bootstrap_os=ubuntu
+supplementary_addresses_in_ssl_keys=3.248.128.107
+loadbalancer_apiserver_localhost=true
+cluster_name=mpr
+
+[kube-master]
+ip-172-31-1-156.eu-west-1.compute.internal
+ip-172-31-9-218.eu-west-1.compute.internal
+ip-172-31-0-207.eu-west-1.compute.internal
+
+[etcd]
+ip-172-31-1-156.eu-west-1.compute.internal
+ip-172-31-9-218.eu-west-1.compute.internal
+ip-172-31-0-207.eu-west-1.compute.internal
+
+[kube-node]
+ip-172-31-1-156.eu-west-1.compute.internal
+ip-172-31-9-218.eu-west-1.compute.internal
+ip-172-31-0-207.eu-west-1.compute.internal
+ip-172-31-12-206.eu-west-1.compute.internal
+ip-172-31-33-94.eu-west-1.compute.internal
+ip-172-31-38-176.eu-west-1.compute.internal
+ip-172-31-37-188.eu-west-1.compute.internal
+
+[spots]
+ip-172-31-33-94.eu-west-1.compute.internal
+ip-172-31-38-176.eu-west-1.compute.internal
+ip-172-31-37-188.eu-west-1.compute.internal
+
+
+[new]
+
+ip-172-31-40-87.eu-west-1.compute.internal 
+ip-172-31-43-137.eu-west-1.compute.internal
+ip-172-31-39-67.eu-west-1.compute.internal 
+ip-172-31-41-76.eu-west-1.compute.internal
+
+[k8s-cluster:children]
+kube-node
+kube-master

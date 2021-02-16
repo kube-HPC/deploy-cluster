@@ -8,14 +8,14 @@
   tags:
     - chrony
 
-#- hosts: all
-#  name: Installing NTP
-#  become: yes
-#  roles:
-#   - ../roles/ntp
-#  tags:
-#    - ntp
-
+##- hosts: all
+##  name: Installing NTP
+##  become: yes
+##  roles:
+##   - ../roles/ntp
+##  tags:
+##    - ntp
+#
 - hosts: kube-node
   become: yes
   roles:

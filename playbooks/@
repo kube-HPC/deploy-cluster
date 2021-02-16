@@ -88,7 +88,7 @@
     - name: Copy /home /home1
       become: yes
       synchronize:
-        src: /home/
+        src: /home
         dest: /home1
         recursive: yes
       delegate_to: "{{ inventory_hostname }}"
